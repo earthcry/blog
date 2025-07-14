@@ -5,6 +5,18 @@ Source of earthcry.github.io.git
 
 ## Usage of githunb
 
+## Two device push/pull to github
+
+1. second device:
+   1. cp .ssh/id_rsa ~/.ssh
+   2. git clone git@github.com:earthcry/blog.git
+   3. git config email && name
+   4. 
+   
+
+
+
+
 ## By ssh band Local git and remote github 
 
 push authenfitation by ssh after clone
