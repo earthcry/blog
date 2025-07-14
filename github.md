@@ -18,6 +18,9 @@ Source of earthcry.github.io.git
   - git rebase -i 6811234
   - rewrite the numble bad commit from "pick" to "drop"
   - git push origin HEAD --force
+  - if find pubrom
+  - git reset --hard 14dfdf5
+  - git push origin HEAD --force
   
 
 
