@@ -43,4 +43,39 @@ vim filename.txt
 :r !find . -type f -name "*.txt" -print0 | xargs -0 cat
 
 这条命令做了以下几件事情： find . -type f -name \"*.txt\" -print0：在当前目录（.）及其子目录中查找所有类型为文件（-type f）且文件名匹配 *.txt 的文件，并使用 -print0 选项来以 null 字符分隔文件名，这有助于正确处理文件名中包含空格、换行符或其他特殊字符的情况。xargs -0 cat：xargs 命令从标准输入读取由 null 字符分隔的项目，并将它们作为参数传递给 cat 命令。cat 命令会将这些文件的内容串联起来并输出到标准输出。
+
+
+## 插件使用
+
+vim-markdown
+
+"安装插件
+Plug 'godlygeek/tabular' "必要插件，安装在vim-markdown前面
+Plug 'plasticboy/vim-markdown'
+"查看所有配置建议
+:help vim-markdwon
+[[ "跳转上一个标题
+]] "跳转下一个标题
+]c "跳转到当前标题
+]u "跳转到副标题
+zr "打开下一级折叠
+zR "打开所有折叠
+zm "折叠当前段落
+zM "折叠所有段落
+:Toc "显示目录
+
+
+vim-markdown-toc 是一个自动在当前光标生成目录的插件。
+
+安装与命令
+"安装插件
+Plug 'mzlogin/vim-markdown-toc'
+"在当前光标后生成目录
+:GenTocMarked
+"更新目录
+:UpdateToc
+"取消储存时自动更新目录
+let g:vmt_auto_update_on_save = 0
+
+
  
