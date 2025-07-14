@@ -13,7 +13,12 @@ Source of earthcry.github.io.git
    3. git config email && name
    4. 
    
-
+2. 撤销提交
+  - git reflog # find record number before the willback commit.
+  - git rebase -i 6811234
+  - rewrite the numble bad commit from "pick" to "drop"
+  - git push origin HEAD --force
+  
 
 
 
