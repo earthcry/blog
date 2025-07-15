@@ -1,0 +1,4 @@
+# wubi2008.custom.yaml
+# encoding: utf-8
+patch:
+  translator/dictionary: wubi2008.gushi

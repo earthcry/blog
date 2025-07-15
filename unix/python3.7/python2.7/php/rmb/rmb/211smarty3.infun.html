@@ -1,0 +1,156 @@
+<{*note*}>
+<{include file="default/header.html" title=foo}>
+<{config_load "test.conf" section="sector2"}>
+<body  text="<{#bodycolor#}>" bgcolor="<{#bodybgcolor#}>">
+
+
+<{*
+
+
+<{assign var="one" value="111111111"}>
+<{assign "two" value="22222222"}>
+<{$three="33333333"}>
+
+<{$one}><br>
+<{$two}><br>
+<{$three}><br>
+
+<{assign var="foo" value=[1,2,3,[5,6]]}>
+<{$foo[1]}><br>
+<{$foo[3][1]}><br>
+
+<{assign var="foo" value=["y"=>"yellow","b"=>"blue"]}>
+<{$foo.y}><br>
+
+<{$a=10}>
+<{$b=20}>
+<{$foo=$a+$b}>
+<{$foo}><br>
+<{$foo="$a+$b"}>
+<{$foo}><br>
+<{$foo="`$a+$b`"}>
+<{$foo}><br>
+
+<{$a=10}>
+<{if $a eq 10}>
+    11111111111<br>
+<{else}>
+    22222222222<br>
+<{/if}>
+
+<ul>
+<{for $foo=1 to 10}>
+    <li><{$foo}></li>
+<{/for}>
+</ul>
+
+<ul>
+    <{$start=1}>
+    <{$end=10}>
+<{for $foo=$start to $end step 2 max=4}>
+    <li><{$foo}></li>
+    <{forelse}>
+        ###########<br>
+<{/for}>
+</ul>
+
+<{$foo=10}>
+<{while $foo gt 0}>
+    <{$foo--}><br>
+<{/while}>
+
+
+<{function name="menu"}>
+    aaaaaaaaaa<br>
+<{/function}>
+<{menu}>
+
+<{function menu2 aa="***" level=0}>
+    bbbbbb<{$data}>bbbbbb<{$style}>bbbbb<{$aa}>bbbbb<{$level}>bbbbb<br>
+<{/function}>
+<{menu2 data="11111" style="222222"}>
+<{menu2 data="11111" style="222222" aa="@@@" level=10}>
+<{call menu2 data="3333333"}>
+
+<{foreach $arr as $item}>
+
+<{/foreach}>
+
+<{foreach $arr as $key=>$item}>
+
+    <{foreachelse}>
+<{/foreach}>
+
+
+<ul>
+<{foreach $lamp as $value1}>
+    <li><{$value1}></li>    
+<{/foreach}>
+</ul>
+<ul>
+<{foreach $lamp as $key=>$value2}>
+    <li><{$key}>=><{$value2}></li>    
+<{/foreach}>
+</ul>
+<ul>
+<{foreach $lamp as $value3}>
+    <li><{$value3@key}>=><{$value3}></li>    
+<{/foreach}>
+</ul>
+<{$value3@total}>
+
+
+<table border="1" width="800">
+    <caption><h1>users</h1></caption>
+
+    <{foreach $data as $row}>
+        <{if $row@last}>
+            <tr bgcolor="blue">
+        <{elseif $row@first}>
+            <tr bgcolor="red">
+        <{elseif $row@index is even}>
+            <tr bgcolor="#cccccc">
+        <{else}>
+            <tr>
+        <{/if}>
+            <td><{$row@index}></td>
+            <td><{$row@iteration}></td>
+            <{foreach $row as $col}>
+                <td><{$col}></td>
+            <{/foreach}>
+        </tr>
+    <{foreachelse}>
+        array error.
+    <{/foreach}>
+
+</table>
+
+
+<{section loop=$lamp1 name="one"}>
+    <{$smarty.section.one.index}>----<{$lamp1[$smarty.section.one.index]}>---<{$lamp1[one]}>---11111<br>
+<{/section}>
+
+*}>
+
+<table border="1" width="800">
+    <caption><h1>users</h1></caption>
+    <{section loop=$data name="ls" start="3" max="3"}>
+        <tr <{if $smarty.section.ls.iteration is even}>bgcolor="#cccccc"<{/if}>>
+            <td><{$smarty.section.ls.index}></td>
+            <td><{$smarty.section.ls.iteration}></td>
+            <td><{$data[ls].id}></td>
+            <td><{$data[ls].name}></td>
+            <td><{$data[ls].age}></td>
+            <td><{$data[ls].sex}></td>
+        </tr>
+        <{sectionelse}>
+            array error.
+    <{/section}>
+</table>
+
+
+
+
+
+
+<{include file="default/footer.html"}>

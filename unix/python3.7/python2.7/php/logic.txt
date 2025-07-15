@@ -1,0 +1,109 @@
+
+理解原理-独自实现；
+酝酿情绪，进入状态；
+
+18005156377
+13951670118
+在互联网行业的生存方式。
+
+  concept logic
+
+pkm base files and database.
+text for database.
+image,video,sound,program for files.
+
+talk with people.thought action thought;
+记忆联想，
+感知认知，
+逻辑推理，
+肢体技能，
+
+体貌年龄，
+心智年龄。
+Image/coreFm/English/php
+View/logic/Step/Program
+
+Image View  : Request UI Implement;actions;params;
+Core  Logic : Simple Core;upgrade;Abstract Frame;concept;
+English Step: Imple setps in english;concept;
+PHP Program : action-cmd;methods imple;sober, talk concept；anchorFunc/inc;
+物理过程要清晰，对应代码过程要清晰；猴子选大王；
+
+willfunc() --> functon func() --> reback;
+thought by image.rending.virtual by graphic.simulate.
+
+logic is yes or no.
+must associative asc
+
+Index --> Abstr --> Rect --> other
+
+cpt
+detail;
+
+认知理解领悟imagelogic异类 把握节奏
+
+php
+视频整体理解；
+代码具体理解；
+
+认知学习法：
+关键阅读、关键摘取、
+系统认知、关联构图、关联生长、表现形式3种、化身认知、
+特性体验、操作、step、应用、
+回顾文档、总结、概括、
+
+找出概念们之间的生长关系
+
+概念的代码表现形式；
+图像表现形式；
+自然语言表现形式；
+
+人类领域的对应概念；
+
+概念的化身认知；
+
+意识思维是字符默念、是影像操作、是语音操作；
+编程是可运行的逻辑；
+
+艾宾浩斯记忆曲线的原理
+
+程序员，互联网行业，眼界，职业规划、
+吃苦与享乐
+时长表象与心思融合
+爆发与恒久
+休息与放纵
+浮躁与框架
+脑知与手知
+脑力与体力
+由实至虚
+约定、结论、机制、原理、思想；
+约定规则、
+结论，由事实原理推到，饭不要吃冷的，
+机制，继承机制，异常处理机制，反射机制，多线程机制，异常应急预案。
+原理，背后的东西，是需要理解的部分，用相对应的知识体系，
+思想，软件分层，面向切面、面向接口、面向对象编程，
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,202 @@
+
+	ubuntu install
+
+
+uninstall soft
+
+sudo dpkg --list
+sudo apt --purge remove xxx
+sudo apt autoremove
+
+
+copy d:\ubuntu.iso\casper\vmlinuz   d:\
+copy d:\ubuntu.iso\casper\initrd   d:\
+copy grldr  d:\
+
+bootice.exe  insert   grub  to  mbr
+
+edit grldr
+
+bootice'menu:
+default 3
+timeout 5
+title install ubuntu
+root  (hd0,5)/vmlinuz boot=casper iso-scan/filename=/ubuntu.iso ro quiet splash locale=zh_CN.UTF-8
+initrd  (hd0,5)/initrd
+
+
+ubuntu'menu:
+menuentry 'xubuntu.iso' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos6'
+    loopback loop /iso/xubuntu.iso
+    linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/iso/xubuntu.iso
+    initrd (loop)/casper/initrd
+}
+
+sudu  df -h
+sudu umount -l /isodevice
+
+ Windows下安装ubuntu，
+1. bootice  grldr
+2. grub2
+3. easybcd
+
+/etc/grub.d/40_custom
+
+
+menuentry 'GParted live CD' {
+    set root=(hd0,6)
+    loopback loop
+    linux /live/vmlinuz ...
+    initrd /live/initrd.img
+
+
+menuentry 'SystemRescueCD' {
+    loopback loop (hd0,9)/iso/sysrescue.iso
+    set root='(loop)'
+    linux (loop)/isolinux/rescue64 docache isoloop=/iso/sysrescue.iso
+    initrd (loop)/isolinux/initram.igz
+}
+
+
+menuentry 'Ubuntu 12.04 LiveCD' {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos8)'
+    loopback loop /iso/ubuntu.iso
+    linux (loop)/casper/vmlinuz.efi boot=casper iso-scan/filename=/iso/ubuntu.iso
+    initrd (loop)/casper/initrd.lz
+}
+
+sudu  df -h
+sudu umount -l /isodevice
+
+  
+menuentry "WinPE.iso" --class windows {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos9'
+    linux16 /iso/memdisk iso raw
+    initrd16 /iso/win7pe.iso 
+}
+
+~$ update-grub2
+
+shutdown auto upgrade
+vi /etc/apt/apt.conf.d/10...  all 0
+
+tree
+vim
+sources
+gparted
+ibus-rime
+fcitx-rime
+docker
+vbox
+git,hexo
+nutstore
+nextcloud
+syncthing
+pyenv
+chrome browser
+vlc
+
+
+
+
+1. sources
+gedit /etc/apt/sources.list to 163
+# download mirrors.163.com sources.list.163
+sudo apt update         # for sources
+sudo apt dist-upgrade   # for all soft 
+
+2.ubuntu/Nutstore
+	20, sudo apt-get install vim
+	21, Python2.x  not Python3  # Nutstore only for Python2.x
+	22. install append lib
+		apt-get install openjdk-7-jre-headless gvfs-bin python-notify
+	23. download bin file
+		https://www.jianguoyun.com/static/exe/installer/nutstore_linux_dist_x64.tar.gz
+	24. rename  nutstore_bin.tar.gz
+	25. unzip into the dir
+		$mkdir -p ~/.nutstore/dist && tar zxf nutsore_bin.tar.gz -C ~/.nutstore/dist
+	26. install menu and ico
+		$ ~/.nutstore/dist/bin/install_core.sh
+	27. finish and open
+		In dash search
+
+3.python-pip
+pip list
+pip install --upgrade pip
+
+4.numpy scipy matplotlib
+
+
+ 0.调整grub2
+之所以此条设为0是因为一般单系统用户可以跳过；然而对于双系统用户来说，特别是Ubuntu作为第二系统的时候，需要调整一下默认的启动顺序。grub2（grub的升级版）是控制操作系统启动的预加载器，就是刚开机OEM之后的那个紫色界面。双系统用户刚装完Ubuntu的时候grub是默认Ubuntu作为第一启动项的。如果需要改成其他系统如Windows作为默认，需要再Ubuntu下打开bash：
+cd /etc/grub.d/
+sudo mv 30_os-prober 01_os-prober
+这里是将原有的操作系统启动的优先顺序从30提升到01。
+如果顺便修改下grub界面等待时间，则继续：
+cd /etc/default/
+sudo gedit grub
+打开图形界面。将其中的 GRUB_TIMEOUT 对应的数值改为等待的秒数；顺便检查下#GRUB_HIDDEN_TIMEOUT=0这一行如果没有前面的#号的话一定要补上。 我一般设等待时间是1秒。保存并关闭。
+最后，一定要：
+sudo update-grub2
+这时才使修改真正生效。此时可以重启欣赏一下了。
+menuentry "install  ubuntu" {
+  insmod gzio
+  insmod part_msdos
+  insmod ext4
+  set root='hd0,msdos8'
+  search --set -f /ubuntu-16.04.3-desktop-amd64.iso
+  loopback loop /ubuntu-16.04.3-desktop-amd64.iso
+  set root=(loop)
+  linux /casper/vmlinuz.efi boot=casper iso-scan/filename=/ubuntu-16.04.3-desktop-amd64.iso
+  initrd /casper/initrd.lz
+  boot
+}
+
+Ubuntu/Windows双系统导致Windows系统时间异常的解决方法
+
+￼
+
+￼  
+
+1
+
+￼
+
+￼￼HulkHaoke
+
+已关注
+
+Ubuntu/Windows双系统导致Windows系统时间异常的解决方法 原创
+
+2017-06-29￼ 2点赞
+
+￼
+
+HulkHaoke ￼
+
+码龄3年
+
+已关注
+
+       在安装Ubuntu后，重启选择Windows 10系统，突然发现系统时间比实际时间慢了八个小时。当时我乐了，难不成这系统傻了定位识别我还在英国？检查设置后确认时区设置是东八区没问题，联网更新时间后恢复了正常。但之后的几天每当我先打开Ubuntu再打开Windows就会发现时间依然不对，上网查询后发现原来是由于两个系统对时间的识别方式不同造成的。
+
+       Ubuntu 默认硬件时间为UTC（Coordinated Universal Time）即协调世界时，中国时间为UTC+8；而Windows则认定硬件时间为系统时间。这就造成了当先开启Ubuntu系统时，系统从网络得到本地时间例如为8点钟，然后其修改硬件时间为0点，再次启用Windows时，Windows读取硬件时间为本地时间，这就造成了系统显示时间比实际时间慢8小时的问题。
+
+       目前通用的解决方法有两种：一种是修改Ubuntu系统时间的读取方式，另一种是修改Windows系统时间的读取方式。在此推荐修改Ubuntu系统，因为修改方式极其简单。
+
+双系统时间不一致。
+
+#安装时间校准服务
+$ sudo apt-get install ntpdate
+#从time.windows.com获取本地时间
+$ sudo ntpdate time.windows.com
+#同步时间到硬件
+$ sudo hwclock --localtime --systohc
+

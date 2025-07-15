@@ -1,0 +1,410 @@
+
+linux
+
+test17
+
+test2:base
+@terminal
+
+terminal is difference console.
+terminal is a programe of shell.
+
+terminal --- /dev/tty--multuser login
+linux - 6*terminal == 6 * virtual console for login.
+ctrl+alt+F1~F6 goback F7
+
+
+
+@shell
+
+shell--cmd jieshiqi
+terminal, gui-gnome---graphshell,virtualshell
+shell:bash/zsh/ksh/csh
+
+@cmd line
+
+1.short key
+Tab---cmd for all.comd buquan
+ctrl + c ---over
+Ctrl+d 	键盘输入结束或退出终端
+Ctrl+s 	暂停当前程序，暂停后按下任意键恢复运行
+Ctrl+z 	将当前程序放到后台运行，恢复到前台为命令fg
+Ctrl+a 	将光标移至输入行头，相当于Home键
+Ctrl+e 	将光标移至输入行末，相当于End键
+Ctrl+k 	删除从光标所在位置到行末
+Alt+Backspace 	向前删除一个单词
+Shift+PgUp 	将终端显示向上滚动
+Shift+PgDn 	将终端显示向下滚动
+
+2.look for history cmd in line with -> <-
+
+3.* ?
+Shell 常用通配符：
+字符 	含义
+* 	匹配 0 或多个字符
+? 	匹配任意一个字符
+[list] 	匹配 list 中的任意单一字符
+[!list] 	匹配 除list 中的任意单一字符以外的字符
+[c1-c2] 	匹配 c1-c2 中的任意单一字符 如：[0-9] [a-z]
+{string1,string2,...} 	匹配 string1 或 string2 (或更多)其一字符串
+{c1..c2} 	匹配 c1-c2 中全部字符 如{1..10}
+
+
+4.help
+man --manual pages
+
+Linux 中，手册通常被分为8个区段，安排如下：
+区段 	说明
+1 	一般命令
+2 	系统调用
+3 	库函数，涵盖了C标准函数库
+4 	特殊文件（通常是/dev中的设备）和驱动程序
+5 	文件格式和约定
+6 	游戏和屏保
+7 	杂项
+8 	系统管理命令和守护进程
+
+要查看相应区段的内容，就在 man 后面加上相应区段的数字即可，如：
+
+$ man 1 ls
+
+
+通常 man 手册中的内容很多，你可能不太容易找到你想要的结果，不过幸运的是你可以在 man 中使用搜索/<你要搜索的关键字>，查找完毕后你可以使用n键切换到下一个关键字所在处，shift+n为上一个关键字所在处。使用Space（空格键）翻页，Enter（回车键）向下滚动一行，或者使用j,k（vim 编辑器的移动键）进行向前向后滚动一行。按下h键为显示使用帮助（因为 man 使用 less 作为阅读器，实为less工具的帮助），按下q退出。
+
+想要获得更详细的帮助，你还可以使用info命令，不过通常使用man就足够了。如果你知道某个命令的作用，只是想快速查看一些它的某个具体参数的作用，那么你可以使用--help参数，大部分命令都会带有这个参数，如：
+
+$ ls --help
+
+
+$ apt-get install sysvbanner
+$ banner shiyanlou
+
+$ printerbanner -w 50 A
+
+
+
+
+
+test3:user&file permission
+
+#list user
+$who -a  #/dev/tty7
+
+#creat user
+quanxian:
+system/root > admin
+
+sudo adduser xxx         # create user
+
+su -l xxx                # switch user
+
+#groups |home/company
+#list 
+$groups nu
+or 
+$cat /etc/group | sort
+$cat /etc/group | grep "nu"
+
+group_name:password:GID:user_list
+
+#add group
+$su -l lilei
+$sudo ls
+
+su shiyanlou
+groups lilei
+sudo usermod -G sudo lilei   ?
+groups lilei
+
+
+# del user
+$sudo deluser lilei --remove-home
+
+
+#fileType&permision
+
+#fileType:
+d --dir
+l --link
+b --block
+c --charactor dev
+s --socket
+p --pipe
+- --nomal file
+
+#chown owner
+sudo chown shiyanlou filename
+
+# 
+o --other
+g --group
+u --user
+
+#display file content
+less >= more > cat
+head/tail/less
+
+#list file type
+
+file ~/aa.txt
+
+test4 dir structure and base operation
+
+test5 env var
+concept
+type
+app/del/edt/ls|zeng/shan/gai/cha
+
+
+
+
+1 var
+$declare tmp
+or
+$tmp=shiyanlou
+$echo $tmp
+
+2 env var
+
+process >= scopeEnvVar > scopeVar
+process1 >= scope1
+process2 >= scope2
+
+shellVar scope:
+process and sub process
+
+
+var type:
+customVar         tmp=shiyanlou
+shellBuildInVar
+exportEnvVar
+
+
+#ls/diaplay/print var cmd:
+set > env > export
+
+$
+tmp=shiyanlou
+export tmp_env=shiyanlou
+env|sort>env.txt
+export|sort>export.txt
+set|sort>set.txt
+
+vimdiff env.txt export.txt set.txt
+
+关于哪些变量是环境变量，可以简单地理解成在当前进程的子进程有效则为环境变量，否则不是（有些人也将所有变量统称为环境变量，只是以全局环境变量和局部环境变量进行区分，我们只要理解它们的实质区别即可）
+
+shell & subshell
+
+$
+tmp=shiyanlou
+echo $tmp #shiyanlou
+bash      #run a subshell
+echo $tmp #empty
+exit
+export tmp
+bash
+echo $tmp #shiyanlou
+
+
+#forever var:
+
+/etc/bashrc   .bashrc  #shellVar
+/etc/profile  .profile #envVar,   forever
+
+#path&order of cmd find
+#echo execfile path to $PATH
+echo $PATH
+
+
+# add customPath to env var--$PATH
+
+#working in current shell, terminal shutdown, it over.
+$PATH=$PATH:/home/shiyanlou/mybin
+#working in all shell:
+$echo "PATH=$PATH:/home/shiyanlou/mybin" >> .bashrc
+
+
+#del var
+unset tmp
+
+
+#update/edit/modify/change var
+变量设置方式 说明 
+${变量名#匹配字串} 从头向后开始匹配，删除符合匹配字串的最短数据 
+${变量名##匹配字串} 从头向后开始匹配，删除符合匹配字串的最长数据 
+${变量名%匹配字串} 从尾向前开始匹配，删除符合匹配字串的最短数据 
+${变量名%%匹配字串} 从尾向前开始匹配，删除符合匹配字串的最长数据 
+${变量名/旧的字串/新的字串} 将符合旧字串的第一个字串替换为新的字串 
+${变量名//旧的字串/新的字串} 将符合旧字串的全部字串替换为新的字串
+
+$path=$PATH
+$echo $path
+$path=${path%/home/shiyanlou/mybin}
+#
+$path=${path%*/mybin}
+
+# if edit .bashrc, work imdieatly
+source .bashrc
+or 
+. ./.bashrc
+
+
+# search file
+
+whereis/which/find/locate
+
+sudo find /etc/ -name interfaces
+sudo find /etc/ -name sources.list
+
+find path option action
+
+option:
+-atime --access time
+-ctime --content
+-mtime --modify file attribute
+
+$find ~ -mtime 0
+$find ~ -newer /home/nu/test.txt
+
+
+
+6 test6 file tar(dabao) and zip
+
+
+
+
+7 test7 filesystem operate and disk manager
+
+
+
+8 test8 help cmd/ cmd shell/bash
+builtIn cmd -shell in
+outside cmd
+
+$type exit
+$type cd
+$type service
+$type ls
+
+#help/man/info
+help cd     # built in mode
+ls --help   # outside  mode
+
+#info > man > help
+
+章节数 	说明
+1 	Standard commands （标准命令）
+2 	System calls （系统调用）
+3 	Library functions （库函数）
+4 	Special devices （设备说明）
+5 	File formats （文件格式）
+6 	Games and toys （游戏和娱乐）
+7 	Miscellaneous （杂项）
+8 	Administrative Commands （管理员命令）
+9 	其他（Linux特定的）， 用来存放内核例行程序的文档。
+
+
+9 test9 crontab
+
+
+
+
+
+
+10 test10 cmd exec order & pipe
+
+
+
+
+
+
+
+11 test11 txt process
+cmd: tr/col/join/paste
+join file1 file2 to together
+
+
+
+
+12 test12 data flow redirect
+
+
+
+
+
+
+13 test13 regular
+
+
+
+
+
+
+14 test14 install
+
+
+
+
+
+
+15 test15 process
+
+procedure
+process
+	thread
+		bingfa
+		bingxing
+一个进程中可以并发多个线程，每条线程并行执行不同的任务。
+
+#process type
+
+user process
+system process
+
+inter
+bat
+shouhu
+
+#father/child process
+fork()
+exec()
+
+0 process /boot
+1 process /sbin/init
+
+$pstree
+
+father/child == ppid/pid
+
+$ps -fxo user,ppid,pid,pgid,command
+
+#process group / pgid  sessions
+
+tty --- session=processGroup - process==job
+foreground
+background
+
+$jobs 
+
+$kill
+
+16 test process mng & ctrl
+
+$top
+$ps
+$pstree
+
+$kill
+
+$nice
+renice
+
+
+
+
+
+
+
+
+

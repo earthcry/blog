@@ -1,0 +1,44 @@
+<{*note*}>
+<{include file="default/header.html" title=foo}>
+
+
+<{config_load "test.conf" section="sector2"}>
+<body  text="<{#bodycolor#}>" bgcolor="<{#bodybgcolor#}>">
+<div id="name">
+    <table border="<{#border#}>" align="<{#align#}>" width="<{#width#}>">
+        <tr>
+            <td>d</td>
+            <td>d</td>
+            <td>d</td>
+        </tr>
+        <tr bgcolor="<{$smarty.config.bgcolor}>">
+            <td>d</td>
+            <td>d</td>
+            <td>d</td>
+        </tr>
+        <tr>
+            <td>d</td>
+            <td>d</td>
+            <td>d</td>
+        </tr>
+    </table>
+</div>
+<{#one#}><br>
+<{#two#}><br>
+<{#three#}><br>
+<{#four#}><br>
+<{#five#}><br>
+<{#six#}><br>
+
+<{$smarty.get.name}>.<br>
+<{$smarty.now}>.<br>
+<{$smarty.const.ROOT}>.<br>
+<{$smarty.const.M_PI}>.<br>
+<{$smarty.const.__FILE__}>.<br>
+<{$smarty.template}>.<br>
+<{$smarty.current_dir}>.<br>
+<{$smarty.version}>.<br>
+
+
+
+<{include file="default/footer.html"}>

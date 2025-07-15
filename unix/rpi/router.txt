@@ -1,0 +1,147 @@
+员工公寓 卧室宽带 员工自费 最大20个点的组网方案
+	方案产生背景
+		少数员工 卧室宽带，硬需求，工作生活学习，必需品。
+		公司不打算布网，但允许员工自费拉宽带
+		现已拉的几条光纤，现状，2-3人一条光纤。
+			为什么不多找几个人合租光纤宽带?
+				人多了慢
+				费用高，不愿多出钱
+				技术障碍
+				人多，维护工作量大
+				走线障碍
+		电信主推200M，一个人最佳带宽5M-10M。故20个点。
+		　有些时候，找中小型企业网络枢纽，往往比选高阶产品甚至是家庭路由还要复杂，不是费事，而是费心思。
+
+　　1、流量控制。路由QoS越智能、策略越全面、分析越精准才能把公司带宽调控好，这是基础；
+　　2、上网行为管控。准确识别上网行为，并进行约束、管理，治理“元凶”，这好比律法；
+　　3、成本。不仅限于购买设备的支出，还要考虑到宽带费用，宽带利用率，这是经营理念；
+　　4、易用性。能一步到位，为什么偏要绕弯路？这个就不解释了。
+Request：200M 光纤 10-20-30人，有线 + 无线。5GWIFI。
+	telcom 200m 200￥/m， 多终端限制?
+	友华通信 光猫，pt921g。华为sa1456c。光衰<28
+		友华PT632  我南京电信200M也配的这个。垃圾，口1千兆，其他口50M，对，你没看错，不是百兆的。
+淘宝上买个贝尔的悦ME，9成新，90元包邮。老板直接设置好发过来，拿来直接上网。简单。
+友华PT632  百度下超密，能知道超密和语音鉴证码，发给老板设置好就行。
+		921感谢！破解后看配置文件是有终端数量限制8台的，如何破解？我修改了/var/romfile.cfg /tmp/ctromfile.cfg都不能长期保存，重启后就恢复原样了
+2017-02-12 03:55:2
+	sa1456c，ubnt er-x，gs108t || M4100, 2950/2960vlan端口隔离。
+		ubnt er-x   rb750gr3
+			pc指定, 192.168.1.xxx
+			user:pass  ubnt:ubnt
+			ubnt中文官网。下载项, 最新固件。U盘拷贝
+			system选项，上传固件。
+			具体型号是UBNT EdgeRouter ER-X，纯有线，5口全千兆，最新固件1.9支持硬件NAT，开启后转发性能可达800-900Mbps，支持多WAN，支持应用扩展，支持VLAN，体积非常小巧，放弱电箱完美。
+		路由，流控，dhcp，交换机, 端口隔离.
+		ros新款rb750gr3和ubnt er-x同款配置
+			性能很强，HTB+PCQ+simple queues mangle 60+，跑百兆cpu使用率不到50%，达到期望了。。
+			ros功能强大，配7621性能很好。nat可以400Mbps+。 店家包装感天动地233，这胶带全包裹，估计可以防水了。 USB虽然是黑色滴，但是是xhci，3.0的。 不过自带的smb读写略感人，接4G网卡倒不错。
+			好东西，电信百兆用了它，立马满速了，另外请大家使用winbox3.4版本，试了其他几个版本都有点小问题
+	标准的 10Mb/point/person，1.25MB
+		600k 60k
+	100M 4-10个人，200M 8-20个人。
+	方案准确预算。
+	一根光纤一组设备。设备可联。
+	有线布网，ubnt edgeRouter x，
+	无线布网
+	2015-12-30 08:51
+买个二手工控机刷软路由，带计量轻轻松松上百，预算和你想的差不多
+	6类模块
+1M Byte=8M bit ，字节，数位。传输 bit，存储 byte。bps, pps, packet
+	网速控制 min max
+	信号与网速的关系
+		dBm   B
+	100Mb switch， 512GB harddisk，100Mb optical fiber。
+	switch背板带宽, 端口隔离
+		网件事 高级---安装--局域网IP设置--地址保留。这个其实就是arp绑定，只是说法不同。
+	merlin, tomato, ddwrt, openwrt, 精准流控。宽带叠加。
+	限速：QOS，pppoe，企业宽带路由器
+		ac66u  200m跑不满。
+		高通qca9558，可200m  > ar9344 > 博通bcm4706 X
+	智能路由器系统，路由器固件
+		开源路由器固件率先支持的是Linksys WRT54G 的GPL代码
+		OpenWRT，DD-WRT, TOMATO, 梅林
+		基于t o m a t o=》a s u s w r t=》m e r l i n
+	刷路由, bios bootloader
+		uboot, breed. 通过按reset开机进breed或者uboot刷机恢复路由 。
+		tomato不死鸟固件
+		器输入192.168.1.1
+
+账号 root
+
+密码 tomato.org.cn
+	所谓的带机量只是一个经验说法而已。
+一般企业路由设备，看转发率PPS（吞吐率），还有一个就ARP表数。
+	测 带机量，稳定性。硬件，带宽，吞吐量，802协议，环境
+	nat模式，路由模式。地址转换，公网通信，代理上网。座机分机外拨。
+	? 硬件nat，光猫后不能全速，千兆交换nat。offload
+	? 网关，路由，无线交换机，工作体现
+	qos, HFQ SFQ PFIFO, 先SFQ 再HFQ
+	IP/24  /22
+	ISP  MTU  (Mmax translate unit)
+		sent pkg to host.
+		pkg <= isp mtu, ttranslate. os spilt pkg self.
+		ethernet:1500, wildband ADSL: 1450-1492,  不断分包组包.
+		ping _| 14XX _f www.jb51.net
+		wildband1438 + 28 = local pc mtu  1446
+		out : 光纤或ISDN接入
+	ac+ap
+erl3
+	ip offload, hd offload, HDNAT offload
+		configure
+set system offload ipv4 pppoe enable
+set system offload ipv4 vlan enable
+set system offload ipv4 forwarding enable
+commit
+save
+exit
+reboot
+		show ubnt offload
+		configure
+set system offload hwnat enable
+commit
+save
+	nat
+	pppoe
+测试
+	多服务器模拟100M光纤带宽接入
+	带宽叠加+精准流控 测维盟IBR-690G千兆智能路由
+	http://g.pconline.com.cn/x/smb/network/pingce/
+	IxChariot   IXIA endpoint，IXIA console
+	ixia endpoint console 6.7 crack
+	路由拨号没光猫快，说明光猫设置有问题（如mtu），删除光猫原有拨号，
+	企业级光猫，500m，poe
+	erx 580m，带机量差。mtk文档, QoS HNAT，可同时开启, 但影响性能
+	光猫拨号85, erx拨号120, 开offload
+	edgerouter pppoe拨号200m must open pppoe offload
+cli
+configure
+set system offload ipv4 pppoe enable
+set system offload hwnat enable (erx)
+commit
+save;exit
+	200m宽带要实现满速, 必须wan2lan速度要达标。
+	erl, 1000m wan2lan
+	e4200 wan2lan 670mbps
+tl-wdr4300 nat 850mbps
+50mbps, 但挂内网, dhcp跨网段传nas >600m
+? 刷ddwrt 跑astrill破壁用
+	offload开了就不能做DPI了，二选一，从产品角度当然是优先DPI，但是对实际就家庭上网来说offload更有意义啊
+〓, koolshare.cn chiphell.com nap6.com
+	路由器 Netgear和Ruckus的忠实拥趸，思科华为有线设备的狂热粉丝 
+		国产货独爱腾达，
+		 带机量，MU-MIMO wave2
+		转发，稳定，带机量
+wirelessRouter
+	100m: r6300v2    r6400 r7000
+	2.4G     5G
+	WGR614, WNR3500L V2, 开源路由，支持第三方固件。r7000
+		BCM47186不是那么玩滴         要挂卡中继、要自动切换信号不如去玩7620，还便宜的多
+		r6300v2吧 meilin最低端了
+	r7000 不要出现像JR6100那样的不稳定。
+	ac68p梅林
+et7555701
+
+android-4e5de72162bebb50
+andr	192.168.198.101	50:CC:F8:AB:CE:C1	20:15:40
+win7	192.168.198.102	20:7C:8F:07:6F:8B	23:58:29
+

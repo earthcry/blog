@@ -1,0 +1,4 @@
+
+
+sshfs ANDROID_IP_ADRESS:/storage/emulated/0 ~/Android -p 2222
+

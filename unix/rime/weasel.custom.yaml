@@ -1,0 +1,8 @@
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.9.30
+  generator: "Weasel::UIStyleSettings"
+  modified_time: "Thu Nov 27 08:00:16 2014"
+  rime_version: 1.1.2
+patch:
+  "style/color_scheme": dark_temple

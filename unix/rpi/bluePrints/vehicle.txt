@@ -1,0 +1,11 @@
+
+
+    vehicle
+
+
+vehicle
+L298n / raspiRobot v2
+power 6v  AAA*4 / 2S LiPo
+sensor
+    sonar HC-SR04  / USB-ProxSonar-EZ
+    compass GY-271 HMC5883L

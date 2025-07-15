@@ -1,0 +1,13 @@
+
+
+
+### oneplus6 downgrade pkg 9.0.1
+http://download.h2os.com/Rollback/fulldowngrade_wipe_17819_181031_0100_user_MP1_release.zip
+
+https://developer.android.google.cn/tools/releases/platform-tools?hl=zh-cn
+
+
+
+twrp.me
+
+magisk21.4

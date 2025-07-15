@@ -1,0 +1,347 @@
+
+shell
+
+10.1.shell
+10.2.shell script exec mode;
+10.3.bash base func;
+10.4.bash var;
+10.5.bash operate char;
+10.6.env var cfg;
+
+10.1.shell:cmd line interpreter;
+    user-- shell --kernel -- hdware
+
+    shell is prgrm language also;
+
+    type of shell:
+    bourne shell : sh,ksh,bash,psh,zsh;
+    c      shell : csh,tcsh;
+    /etc/shells;
+
+10.2.@echo 'hello world!'
+    echo -e \x
+    \\  \;
+    \n  \new line;
+    \r  \entry;
+    \b  \ab\bc ->ac;
+   echo -e "\e[1;31m abcd \e[0m" 
+   30m黑色；31m红色；32m绿色；33m黄色；
+   34m蓝色；35m洋红；36m青色；37m白色；
+
+   vim hello.sh
+*  #!/bin/bash
+   #up line declare this is sh script;
+   echo -e "aaaaaaaaaaaaaa"
+
+*  chmod 755 hello.sh
+   ./hello.sh
+
+*  bash hello.sh    //permission&path
+
+   //enter in linux:    $
+   //enter in windows: ^M$
+   //dos2unix Tetris.sh
+   //yum -y install dos2unix
+
+10.3.shell base function
+10.3.1 history cmd and comm to command;
+10.3.2 cmd alias and shortcut key;
+10.3.3 IO redirect;
+10.3.4 multicmd order exec and pipe char;
+10.3.5 * and other special char;
+
+10.3.1 @history -c|w  //clear|write cmd in cache to .bash_history
+    //1000;/etc/profile;
+    //call history cmd:
+    UP and down key; !n; !!//precmd; !str;
+10.3.2 @alias newname='name'
+    //cmd exec order:
+    /path-->alias-->bashcmd-->$pachcmd;
+    //modify alias in file
+    vim /root/.bashrc
+    unalias newname
+
+    @shortcut key of bash:
+    ctrl+A : cursor to head;
+    ctrl+E : cursor to tail;
+*   ctrl+C : stop currently cmd;
+*   ctrl+L : clear;
+*   ctrl+U : pre to del;
+    ctrl+K : next to del;
+*   ctrl+Y : cp up 2 line content;
+*   ctrl+R : search in history cmds;
+*   ctrl+D : exit;
+    ctrl+Z : stop read to start;
+    ctrl+S : stop read to start print;
+    ctrl+Q : start to print;
+
+10.3.3 @io @redirect @>
+    //default echo to cmd line,now to file|dev;
+    /dev/stdin  0    keyboard
+    /dev/stdout 1    display    cmd > file
+    /dev/stderr 2    display  errcmd 2>> file
+    // > all new; >> apend;
+    ls > abc
+    date >> abc 
+    lss 2>> abc
+
+    cmd > file 2>&1
+    cmd >> file 2>&1
+    cmd &> file
+*   cmd &>> file            //true&false to one file;
+*   cmd>>file1 2>>file2     //true&false to two file;
+
+    ls &>/dev/null
+
+    wc -lwc file // total; line,word,byte; ctrl+d;
+    cmd<file
+*  @wc < install.log
+    wc <<EOF
+    abc
+    def
+    EOF
+
+10.3.4 multicmd exec @order and pipe
+    cmd1;cmd2   //order,
+    cmd1&&cmd2  //1 true then 2 exec;
+    cmd1||cmd2  //only exec one true;
+    ls; cd /user; date
+    date;dd if=/dev/zero of=/root/testfile bs=1k count=100000;date
+    ./configure && make && make install
+    cmd && echo yes || echo no
+
+    ll -a /etc/ |more
+    netstat -an |grep "ESTABLISHED"
+    grep "root" /etc/passwd
+    grep -inv --color=auto 
+    //-i ignore;-n number;-v search back;disp key color;
+    grep -n --color "root" /etc/passwd
+
+10.3.5 @* and other special char
+    ?;*;[];     [a-z];[^0-9]
+    ''      special char in it have not special mean;
+    ""      except   $,`,\ 
+*   ``      = $(); $(syscmd);
+    #       note;
+    $       call var value;$name;
+    \       turn mean; \$ lose special mean;
+
+    echo ls
+*   echo $(ls)
+    echo "$(ls)"
+    echo '$(ls)'
+    echo \$name
+
+10.4.bash var
+10.4.1 custom var
+10.4.2 env var
+10.4.3 position para var
+10.4.4 predefine var
+
+10.4.1 @custom var
+*   bash default var types all is string;
+    name=aaa; // no space side with =;
+    echo $name  //call var value;
+*   set         //look all vars;
+    unset name  //del var;
+
+10.4.2 @env var
+    custom var : in currently shell;
+    env    var : in cur shell and subshells;
+    long   var : writed in file, and in all shells;
+
+*   export name=val     //declare env var;
+*   env                 //look env var;
+    unset
+
+*   []# bash    //entry subshell
+*   pstree      //process tree;shell tree;
+    name=aa
+    export age=18
+    sex=nan
+    export sex
+*   set|env
+    bash
+    set|env
+    
+*   @PATH //pass
+    //linux search path of cmd;
+*   echo $PATH
+*?  PATH="$PATH":/root/sh     //PATH var diejia
+    @PS1:                     //define sys notice var;
+    \d;\h;\t;\T;\A;\u;\w;\W;\#;\$;
+    echo $PS1
+    PS1='[\u@\h \W]\$ '
+    PS1='[\u@\t \W]\$ '
+
+当前日期: 2014/06/21 周六 
+10.4.3 position @param
+    $n : $0,$1~9,${10}
+    $* : all prm a one; prms=string;
+    $@ : all prms;      prms=array;
+    $# : param count;
+
+10.4.4 @perdefine var
+*   $? : last cmd state;true num 0;err number;
+    $$ : currently process PID;
+    $! : cmd & last process PID;
+
+    //keyboard in;
+    read -ptns var //-p tishi;-t second;-n bytes;-s secure;
+    read -t 30 -p "Please input name: " name
+    echo "Name is $name"
+    read -s -t 30 -p "Please input age: " age
+    echo -e "\n"
+    echo "Age is $age"
+    read -n 1 -t 30 -p "Please select gender[M/F]: " gender
+    echo -e "\n"
+    echo "Sex is $gender"
+
+10.5.1 @operate
+
+    a.declare +/- -ixp var      //-i integer;-x env var;-p disp;
+    aa=11
+    bb=22
+    cc=$aa+$bb
+    echo $cc
+    declare -p aa
+    export aa
+    declare -i cc=$aa+$bb
+
+    b.expr/let
+    dd=$(expr $aa + $bb)
+
+    c.$(())/$[]
+    ff=$(($aa+$bb))
+    ee=$[$aa+$bb]
+
+    operate:
+    cc=$[1&&0]  // 0
+    cc=$[0&&1]  // 0
+    cc=$[0||1]  // 1
+    cc=$[1||0]  // 1
+
+10.5.2
+    x=${y-newValue}
+
+    unset y
+    x=${y-new}
+    echo $x
+
+    y=""
+    x=${y-new}
+    echo $x
+
+    y=old
+    x=${y-new}
+    echo $x
+
+10.6. @env var cfg
+10.6.1
+    edit for long
+    source cfg      //no require relogin;
+    . cfg
+    PATH/HISTSIZE/PS1/HOSTNAME
+    echo $PATH
+    PATH="$PATH":/root/sh
+    set
+    /etc/profile
+    /etc/profile.d/*.sh
+    ~/.bash_profile
+    ~/.bashrc
+    /etc/bashrc
+
+
+10.6.2 function
+10.6.3 other cfg and login info
+
+11.1  regexp
+11.2.1charcut-cut
+11.2.2charcut-printf
+11.2.3charcut-awk
+11.2.4charcut-sed
+11.3  charhandle
+11.4  if
+11.5.1flowctrl-if
+11.5.2flowctrl-case
+11.5.3flowctrl-for
+11.5.4flowctrl-while&until
+
+11.1  @regexp base
+    *[]   - filename - ls,find,cp
+    regex - string   - grep,awk,sed 
+
+    *       //pre char   apear 0~n
+        grep "a*"   test_rule.txt
+        grep "aa*"  test_rule.txt
+    .       //any one char except \n
+        grep "s..d" test_rule.txt
+        grep ".*"   test_rule.txt //all
+        grep "^M"   test_rule.txt //line ahead is M;
+        grep "n$"   test_rule.txt //line tail  is n;
+        grep "\.$"   test_rule.txt //. tail
+        grep -n "^$"   test_rule.txt //blank line;
+        grep "s[ao]id"   test_rule.txt //any one
+        grep "^[0-9]"    test_rule.txt //num ahead
+        grep "^[^0-9]"   test_rule.txt //not num ahead
+
+    \{n\} 
+        [0-9]\{4\}          //nnnn 
+        [1][3-8][0-9]\{9\}  //mobile number 
+        grep "a\{3\}" test_rule.txt  //string have aaa 
+    \{n,\} 
+        [0-9]\{2,\}         //>nn 
+    \{n,m\} 
+        [a-z]\{6,8\}        //6~8 lower char
+        grep "sa\{1,3\}" test_rule.txt  //string have sa or saa or 
+
+11.2.1 cut
+    grep - line
+    awk  - column
+    cut  - word
+
+    cut -fd file    //-f ncol;-d ,.
+    cut -f 2,4 studentTable.txt       //name and score column
+    cut -d ":" -f 1,3 /etc/passwd
+    cat /etc/passwd | grep /bin/bash | grep -v root | cut -d ":" -f 1
+    // cut is limit at space;
+
+11.2.2 printf
+    printf 'typemode' content
+    %ns:   
+    %ni:
+    %m.nf:
+    \a: war sound
+    \b: backspace
+    \f: clear
+*   \n: new line
+*   \r: enter
+*   \t: tab
+    \v: tab
+
+        
+11.5.3 for
+    for i in 1 2 3 4 5 6
+        do
+            echo $i
+        done
+        
+    //bat unzip file:
+    cd /lamp
+    ls *.tar.gz>ls.log
+    for i in $(cat ls.log)
+        do
+            tar -zxf $i &>/dev/null
+        done
+    rm -rf /lamp/ls.log
+
+
+
+
+
+
+
+
+
+
+

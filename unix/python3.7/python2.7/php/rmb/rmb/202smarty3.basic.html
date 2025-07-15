@@ -1,0 +1,30 @@
+<{*note*}>
+<{include file="default/header.html" title=foo}>
+<{*pre*}>
+<div id="name">
+<{$content}><br>
+<{$aaa}><br>
+<{$ptime}><br>
+<{myfun()}><br>
+<{myfun2 size="7" coler="red" num="5" content="111`$title`111111`$contacts2["phone"]["ph2"]`11111"}>
+<{$contacts[0]}>.<br>
+<{$contacts[1]}>.<br>
+<{$contacts[2][0]}>.<br>
+<{$contacts[2][1]}>.<br>
+<{$contacts2["fax"]}><br>
+<{$contacts2["phone"]["ph1"]}><br>
+<{$contacts2["phone"]["ph2"]}><br>
+<{$p->name}>.<br>
+<{$p->say()}>.<br>
+<{$p->one()->say()}>.<br>
+
+<{*
+<{$x+$y}>
+<{$foo=strlen($arr)}>
+<{assign var=foo value=3}>
+<{$foo=myfun($*3)}>
+<{$foo[$x+3]}>
+*}>
+
+</div>
+<{include file="default/footer.html"}>

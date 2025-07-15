@@ -1,0 +1,10 @@
+
+
+
+RaspberryPiPythonProgramGuide
+
+
+raspbian install by noobs
+
+lxde
+hardware setup: raspi-config

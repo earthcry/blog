@@ -1,0 +1,93 @@
+
+
+
+
+    Raspberry PI 3B Manual v0.3_s.pdf
+
+
+url: www.raspberrypi.org
+
+hardware:
+    power:'5V 2.5A USB'
+    storage:'TF>8GB'
+    line:''
+    shell:'protect'
+    hot:'fan+iron'
+    display:'HDMI,1080P'
+
+interface:
+    MicroUSB
+    DsiDisplay
+    HDMI
+    CsiCamera
+    AV&3.5mm
+    line
+    USB*4
+    GPIO
+    TF
+
+LED:
+    Red light all
+    green flash
+
+osInstall&bak:
+    Raspbian jesssie
+    
+    win32DiskImager.exe # write os.img to sd & bak
+    SD_CardFormatter.exe # 
+    bootsector.img      # reinstall, not formatte
+    
+sd_card:    
+    FAT32,config.txt
+    EXT3,raspbian
+    SWAP2,
+
+systmeSetup:
+    raspi-config
+
+    Expand Filesystme TF
+    change locale
+        en_US.UTF-8
+        zh_CN.UTF-8
+        zh_CN.GBK
+
+accout:
+    pi:
+
+    root:Raspbian #default disable
+    sudo passwd root
+    sudo passwd --unlock root
+
+soft:
+    zh_font: 
+    input:
+
+
+webserver:
+    apache+ mysql+ php
+    nginx+ php+ sqlite
+
+
+CSI_Camera:
+    pass
+    
+    raspistill -t 2000 -o ->my_file.jpg
+    raspistill -t 5000
+
+config.txt:
+    /boot/config.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,626 @@
+---
+title: Git
+indexing: true
+toc: false
+comments: true
+categories: 
+tags: 
+date: 
+update: 
+---
+@@git0
+cognize is constructe a new struction, a new face.
+
+
+   GIT note      
+
+
+by git-scm.com/book  getting started
+----------------------------------------------------------
+
+also by
+laoxuefeng.com
+ruanyifeng.com
+
+website on github, in a repo --- earthcry.github.io
+pages.github.com
+https://earthcry.github.io
+-88
+
+
+
+###版本控制 branch back
+
+
+
+git 是为了解决什么情景下的什么问题而存在的？ 
+
+
+
+一份文件进行了 多个节次修改，多人分支分工修改，
+想起错过反悔后悔，如何回到某个节点去修改追加？
+即回退到某个历史节点和分枝上。
+
+回退，分工，
+
+是样板，版本控制问题。
+
+
+git is the content tracker.
+Git 是
+在文本修改时间线上 能进能退，
+在文本工作分工合作上 能分能合，
+可以完全把握的，
+同步备份合作
+软件。
+
+回退是基本核心，分工是高级核心。
+
+
+
+### 分布式 distribution 工作原理，分枝分布
+
+所有节点都有完整的源数据，更新后互相推送。
+推送要有地址，所以安装完软件后，要自报家门，把名字和邮箱上传。
+
+
+### install
+sudo apt install git
+
+#### customize git environment 定制git环境
+
+git envrioment(link), system, user, dirfile
+- link user.name/email
+- link editor.vim/xxx
+- link workdir/repo
+
+
+现在您的系统上已经有了Git，您需要做一些事情来定制Git环境。
+Git附带了一个名为Git config的工具，它允许您获取和设置配置变量，这些变量控制Git外观和操作的所有方面。这些变量可以存储在三个不同的位置：
+- system config : /etc/gitconfig
+- user config : ~/.gitconfig or ~/.config/git/config  --global  to all repo
+- repository config : repo/.git/config  --local
+
+gitch level overrides values in the previous level, so values in .git/config trump those in [path]/etc/gitconfig. config
+
+you can view all of your settings and where they are coming from using:
+### #config
+
+$ git config --list --show-origin
+
+#### Login Your Identity
+git config --global user.name "myname"
+git config --global user.email "myname@mail.com"
+--global all repoes in the user
+
+
+#### Your Editor
+git config --global core.editor vim
+
+#### help
+git clone --help
+git clone -h
+man git clone
+
+
+#### #repository create
+
+//create repo
+- git init
+- git clone
+
+
+mkdir gitdata
+cd gitdata
+git init 
+//git only manager && track text file. not banery. pic/video/word not.
+
+// add file
+touch readme.txt
+vim reademe.txt
+first line.
+second line.
+
+//tell git add,commit file and content.
+git add readme.txt
+git commit -m "wrote a readme file"
+
+// edit then add&&commit && status diff
+vim readme.txt
+//two days late,
+git status
+git diff readme.txt  //before commit to see, after, see nothing.
+git add readme.txt
+git status
+git commit -m "add distributed"
+git status
+
+// 工作区#working directory, 暂存区stage, 版本库repository.
+
+workspace --> stage(index) --> repository
+
+workdir---add--> stage ---commit---> repo on branch
+
+repository
+- stage
+- branch
+
+// git manager update/edit not file. add edit not file.
+edited then add,
+edited then add,
+latest then commited,
+not no add, to commit.
+
+// 撤消修改 go #back or fly timeline
+
+git status
+
+at workdir:           git checkou -- readme.txt
+at stage:             git reset HEAD readme.txt
+at branch/localrepo:  git reset --hard commit_id
+
+git log [--pretty=oneline]           //commit history
+git reflog                           //head/cmd history
+
+git reflog                           //refer log
+git reset --hard 32df2sk
+
+
+// 删除文件 del
+git rm test.txt
+git commit -m "remove test.txt"
+//may restore if commited
+git checkout -- test.txt
+
+@@restore @@rm reback
+git restore .
+
+### @@remote repository
+
+AO--O--OB
+    |
+    OC
+clone origin, pull update, push update.
+
+repo ---- remote ----repo
+--(chuanshu ssh jiami)
+
+
+$ ssh-keygen -t rsa -C "youremail@example.com"
+~/.ssh/id_rsa, id_rsa.pub
+id_rsa.pub --> github
+
+
+workdir --> stage --> repo --push--> remote repo
+                      - repoVersion
+                        - files
+                        - branch(master)
+                      - origin(local repo)
+                        - address(git@github.com:earthcry/gittest.git)
+                      origin master(local) --- origin master(remote) 
+
+@@add
+git remote add origin git@github.com:earthcry/gittest.git
+git remote add github https://token@github.com:earthcry/xxx.io.git
+git push -u origin master  
+// -u upstream/tracking reference.link remote repo and branch,arguments-less
+git push origin master //update on master
+
+
+
+…or create a new repository on the command line
+
+echo "# gittest" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:earthcry/gittest.git
+git push -u origin main
+
+
+
+
+#### del remote repository
+git remote -v
+git remote rm origin
+git remote remove origin
+push  推送
+fetch 抓取获取
+
+git remote rename origin self
+
+
+### @@remotes
+git remote add github https://token@github.com:earthcry/xxx.git
+git remote add rpi git@192.168.1.1:/home/git/source.git
+git remote add github git@github.com:earthcry/website.git
+git remote add gitee git@github.com:earthcry/website.git
+
+
+#### @@clone a remote repo
+
+git clone --branch [tags标签] [git地址]
+git clone -b v1.6.8 https://github.com/authorName/repoName.git themes/reponame
+
+create a repo on github. then
+git clone git@github.com:earthcry/gitskills.git
+
+cd gitskills
+ls
+
+### @@branch manager. index
+
+index, tree branch: time-line of different objects.
+time dot is commit id.
+master: main branch, branch pointer
+head: pointer, point --> branch pointer, point current branch
+head--> dev--> dev-branch.
+
+branch: 
+- every edit_commit is dot, all dots come to branches on timeline.
+- commit history track.
+- every people a branch
+- bug issue
+- feature new function
+- team work, pull first, then push.
+- rebase, history good look.
+
+git branch        // list local branches
+git branch -r     // list remote branches
+git branch -a     // list remote branches and local branches
+git branch xxx    // create new branch
+git branch -d xxx // del a branch
+git branch -D xxx // del a branch that not merge         
+
+git branch -d -r xxx       // del local tracking remote branch
+git push origin:xxx        // after del, push to remote.
+
+git branch -m oldbranch newbranch    //rename. first del remote, then push new.
+
+git swtch -c dev       // create and swtch dev branch, -b create.
+=
+git branch dev
+git switch dev
+
+git branch
+ * dev
+   master
+git switch master
+git merge dev             // merge, get other branch newest commit id cp to current branch, two branches have same commit id.
+
+merge conflict
+git merge --no-ff -m "no fast-forward" dev  // not del branch history
+git log --graph --pretty=oneline --abbrev-commit
+
+stash: private store, pause store not compolite work.
+
+git #stash
+
+git stash
+git switch -c issue-101
+...
+git stash pop    // stash deleted
+or
+git stash list
+git stash apply stash@{x}
+git stash drop   // stash del
+
+git cherry-pick dkl83kl   // cp a commit-id from other branch to current branch, example fixed-bug
+
+git #push remote-repo local-branch
+git push origin dev
+git push rpi feature1
+
+git clone git@github.com:xxx/aaa.git 
+//only clone main branch --- master, dev, feature not.
+git switch -c dev origin/dev
+//create a local branch dev which correspond/tracking to remote branch dev
+// dev --> origin/dev
+...
+git push origin dev
+
+//#pull err, not set the tracking remote branch
+git branch --set-upstream-to=origin/dev dev
+
+
+
+
+#### git @pull, git @fetch, git @merge
+
+
+
+                                     -------<---------------<-----pull----- 
+                                    |                  |                   ^
+                                    v                  v                   |
+ ______        _______           _______          _____________         _______
+ |work| -add-> |stage| -commit-> |local| <-merge- |LocalRemote| <-fetch-|remote|
+ ''''''                             |      rebase      ^          clone    ^
+                                    v                  |                   |
+                                     -->---push-->--------------->--------- 
+
+
+
+**git config pull**
+
+git config --global pull.rebase false  # merge
+git config --global pull.rebase true   # rebase
+git config --global pull.ff only       # fast-forward only
+
+
+
+git pull = git fetch + git merge(git rebase)
+
+git branch -r
+
+git fetch
+git pull
+
+git push --set-upstream rpi master
+
+
+
+git fetch rpi master 
+git log -p FETCH HEAD    // -p patch
+continue or exit
+git merge FETCH_HEAD
+
+
+
+git pull rpi master:master(local)
+
+
+
+
+
+### #tags manager
+
+commit: 细节，具体，所有，版本
+tag: 细节，具体，个别，版本。更方便查找调取。
+
+git branch  //list branches
+ * branch-aa
+   branch-bb
+
+git checkout branch-bb
+git tag v1.0     //named newest commit
+git tag          //list
+
+git log --pretty=oneline --abbrev-commit  //find commit id
+dfj32ks
+...
+
+git tag verNumber commitNode
+git tag v0.9 dfj32ks
+git tag -a v0.9 -m 'info' dfj32ks  // -a tagName
+
+git show v0.9                      //cat commit info
+
+git tag -d v0.1                    // del tagName
+
+git push origin v0.9 
+git push origin --tags
+
+git tag -d v0.9
+git push origin :refs/tags/v0.9    // del remote tag
+
+
+
+
+### github/gitee
+github 让分工成为可能，
+
+### custorm git #server
+git status
+https://github.com/github/gitignore
+.gitignore
+# windows
+...
+# python
+*.class
+...
+# not ignore
+!.gitignore
+!.app.class
+
+git config --global alias.last 'log -1' // --global: all repos of user.
+
+### source tree
+
+4. git on #server
+
+install git
+adduser git
+id_rsa.pub authorized_keys
+/srv/sample.git
+cd /srv
+sudo git init --bare sample.git
+sudo chown -R git:git sample.git
+vim /etc/passwd
+git:x:...:/bin/git-shell
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+### protocols
+for work tegether, remote repository, shared repository for all.
+
+git may four protocols to pass resource.
+local protocol, ssh, http, git.
+https is best, smart http.
+
+host @website:
+To 3 dir sync
+- nginx
+- https protocol or http+ssh  for git
+- hoot/post-update
+
+touch
+/srv/source.git
+/srv/testing
+/srv/www
+
+#
+vim post-update
+#!/bin/ash
+REPO: /srv/source.git
+TEST: /srv/testing
+WWW: /srv/www
+#
+git --work-tree=${TEST} clean -fd
+git --work-tree=${TEST} checkout --force
+#
+git --work-tree=${WWW} clean -fd
+git --work-tree=${WWW} checkout --force
+#
+exec git update-server-info
+-----------------------------------------------------
+# disp processes
+ps
+
+### public repository build on server.
+
+@@server @@git server
+
+** client --clone--> server **
+
+git clone --bare my_project my_project.git
+
+scp -r my_project.git user@git.example.com:srv/repo.git
+scp -r -P 8022 freemind.git/* u0_a164@192.168.1.160:/data/data/com.termux/files/home/storage/shared/.posts.git
+
+git clone user@git.example.com:srv/repo.git
+
+** server --clone--> client **
+on server.root
+1. install git
+2. useradd git // to run git service
+3. ssh login, client:~/.ssh/id_rsa.pub >> server:/home/git/.ssh/authorized_keys
+4. create bare repository
+mkdir git/barerepo.git
+cd barerepo.git
+git init --bare --sharted //all user can write in group.
+chmod -R git:git barerepo.git
+
+on client.nu
+5. git clone git@server:/srv/git/barerepo.git
+
+
+over!!!
+this is all enough for several team to work tegether.
+only  sshserver + bareRepo shared
+
+### pubsshAccount of users manager
+
+#### pub ssh account:
+
+server:
+
+sudo adduser git
+su git
+cd 
+mkdir .ssh && chmod 700 .ssh
+touch .ssh/authorized.keys && chmod 600 .ssh/authorized.keys
+
+cat /tmp/id_rsa.John.pub >> ~/.ssh/authorized.keys
+cat /tmp/id_rsa.Tom.pub >> ~/.ssh/authorized.keys
+cat /tmp/id_rsa.Bob.pub >> ~/.ssh/authorized.keys
+
+
+#### new bare repo:
+
+cd /srv/git
+mkdir project.git
+cd project.git
+git init --bare
+
+every new project all need to create a bare repository.
+
+
+#### users link pub repo
+
+First link and push Origin version.
+on John's computer
+cd myproject
+git init
+git add .
+git commit -m 'initial commit'
+git remote add origin git@gitsrv:/srv/git/project.git
+git push origin master
+
+
+others may clone:
+git clone git@gitsrv:/srv/git/project.git
+cd /project
+vim README
+git commit -am 'fix for the README file'
+git push origin master
+
+now all users can pull&&push. over
+--------------------------------------------------
+#### limit permission
+
+and all users have permission rw srv.shell.
+you can modify /etc/passwd git:shell.value
+git-shell
+
+cat /etc/shells
+which git-shell
+sudo -e /etc/shells //add path to git-shell
+
+git-shell more...
+---------------------------------------------------------
+
+### git daemon守护进程
+
+a repo base git-daemon, is no authorized, is open. all can access.
+
+
+### https, smart http
+ssh authorized access,
+git:// no authorized access,
+https can all above.
+via use git-http-backend CGI script,
+
+
+
+### gitweb
+
+web interface of repo 
+gitweb is CGI script.
+
+
+### gitlab
+
+gitlab, a proGitweb.
+
+
+### the third host: github
+
+
+
+4.1/4.6/4.7
+
+hexo themes
+git clone https://github.com/fan-lv/Fan.git themes/Fan
+
+
+### login by token
+@@token
+
+https://token@github.com:earthcry/xxx.git
+
+### Get token
+
+your head --> settings--> developer settings
+
+**save token**
+github tokens:
+Expires on Tue May 17 2022
+dell ...
+
+### login better
+
+git config --global credential.helper 'store --file ~/.git-credentials'
+.git-credentials
+https://user:token@github.com

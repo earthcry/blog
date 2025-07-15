@@ -1,0 +1,82 @@
+
+3.5寸spi触摸显示屏 LCD 液晶 占26针脚 3.5英寸 支持树莓派4B
+
+产品清单：
+
+1、3.5寸触摸显示屏*1
+
+2、触摸笔*1
+
+ 
+
+支持：Raspberry pi 3b+、3B、2B、1B+、1B
+
+ 
+
+特别说明：
+
+1、系统下载：http://www.shumeipai.net/portal.php?mod=topic&topicid=12（该系统安装后，3.5寸可直接使用。基于官方系统 raspbian  Stretch  ，已做好触摸驱动和相关设置。若直接去官网下载系统，需要自行安装与配置驱动，方能使用。）
+
+2、独立触摸驱动及安装方法：http://www.shumeipai.net/resource.php?mod=view&rid=2003
+
+（驱动安装参考教程：视频：http://pan.baidu.com/s/1c2sOc28  文档： http://pan.baidu.com/s/1jGkuRIm ）
+
+ 
+http://www.shumeipai.net/portal.php?mod=topic&topicid=11
+使用说明：
+
+若不使用专用系统，那么通电后只是白屏，表示通电而已。因为其它系统默认HDMI输出视频，而3.5寸显示屏需要的是Raspberry Pi SPI接口（排阵）输出视频，故此直接使用其他系统（比如直接用官方的系统）不会有画面，只是亮背景灯（白屏）。
+
+需要占用Raspberry Pi 26个针脚。
+
+   
+
+产品介绍：
+
+  支持接入Raspberry Pi  3代B+/3B，以及1代B/B+,A+,2b
+
+320×480分辨率，显示更清晰
+
+为Raspberry Pi 提供便捷人机接口，配合移动电源使用，可随时随地进行DIY设计
+
+支持Raspbian系统，让你的系统：
+
+支持视频播放（MP4等多种格式）
+
+支持触摸控制摄像头（17种摄像模式）
+
+支持软键盘（脱离鼠标键盘也能操控系统）
+
+
+
+
+
+资源简介
+
+安装及方法
+步骤1,安装Raspbian或UbuntuMate官方镜像
+下载最新Raspbian、UBUNTU镜像 ：点此下载
+使用SDFormatter格式化Micro SD卡，
+使用Win32DiskImager把官方镜像烧录到Micro SD卡。
+
+步骤2,安装LCD驱动
+方法一：在线安装(树莓派需连接互联网)
+
+用Putty连接登陆树莓派系统到用户命令行(初始用户名:pi 密码:raspberry)
+执行以下命令(复制后在Putty窗口中单击鼠标右键即可粘贴):
+sudo rm -rf LCD-show
+git clone https://github.com/goodtft/LCD-show.git
+chmod -R 755 LCD-show
+cd LCD-show/
+sudo ./LCD35-show
+
+方法二：离线安装
+1.从网站下载或者从光盘中拷贝“LCD-show.tar.gz”驱动到树莓派系统卡的根目录下;
+(推荐步骤1烧录完成后将驱动直接拷贝到Micro SD卡，或使用SFTP等办法远程拷贝)
+2.执行以下操作命令解压安装驱动:
+
+cd /boot
+sudo tar zxvf LCD-show.tar.gz
+cd LCD-show/
+sudo ./LCD35-show
+

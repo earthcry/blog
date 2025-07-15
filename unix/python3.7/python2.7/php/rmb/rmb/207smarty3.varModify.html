@@ -1,0 +1,28 @@
+<{*note*}>
+<{include file="default/header.html" title=foo}>
+<{config_load "test.conf" section="sector2"}>
+<body  text="<{#bodycolor#}>" bgcolor="<{#bodybgcolor#}>">
+
+
+<{$var}><br>
+<{$var|myfun}><br>
+<{$var|myfun:'red'}><br>
+<{$var|myfun:'blue':'7'}><br>
+
+<{substr($var,0,10)}><br>
+<{$var|substr:0:10}><br>
+<{$var|preplace:'/\d/':"#"}><br>
+
+<{$var|substr:0:10|myfun:'green':'7'|preplace:'/[12]/':"@"}><br>
+
+<{$var|capitalize}><br>
+
+<{$nudate|date_format:'%Y-%m-%d %H:%N:%S'}><br>
+<{$smarty.now}><br>
+<{$var1|truncate:20:"..."}><br>
+
+
+
+
+
+<{include file="default/footer.html"}>

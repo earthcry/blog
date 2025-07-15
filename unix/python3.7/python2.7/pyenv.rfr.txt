@@ -1,0 +1,167 @@
+ 
+
+
+其实入门Python并不难，难的是选定自己的学习方向。
+
+简单说下Python可以做什么：
+
+后台开发（Django / Flask / Tornado）
+科学计算（Numpy / Scipy / Matplotlib）
+机器学习（Scikit-Learn）
+神经网络（TensorFlow）
+图像处理（Pillow）
+网络爬虫（Requests / Xpath / Scrapy）
+
+
+
+
+大家注意到普通的对象方法、类方法和静态方法的去别了吗？
+对象方法有self参数，类方法有cls参数，静态方法是不需要这些附加参数的。
+
+
+apt python-pyside
+
+###############################################
+# undstand python dev env
+#############################################
+# CPython,PyPy,Jython,IronPython
+# CPython2.7.x
+
+# Package Find:
+# different of package and module;
+# How Python find module, what path is it by,(module is function and class)
+# ins-module can use,and other module can use bying import.
+# the path python find module or package by:
+~$ import sys
+~$ print sys.path
+# /usr/lib/python2.7/...    look like
+
+# Thrd Package:
+# 1.syspkgm
+# 2.Python Package Index (PyPI)
+# 3.many source server: Launchpad.net, GitHub.com, BitBucket.org...
+# Install:
+# 1.apt-get, yum;
+#*2.pip;
+# 3.source: python setup.py install;
+# 4.compile: exmp,db.adapter,libimg;
+#	1.apt-get binary pkg;
+#	2.pip, before install append pkgs:build-essential,python2.7-dev...
+
+### @pip install
+# PyPI pip install package from;
+apt-get install python-pip
+pip install pip --upgrade           # upgrade version
+
+# Install pkg by pip
+pip install xxx
+pip install xxx --upgrade
+pip uninstall xxx
+pip install xxx==5.0
+# 发行版in PyPI，开发版in 版本控制仓库; store repository fork；
+# install version control repository
+pip install git-core mercurial subversion
+...
+http://www.pythoner.cn/home/blog/python-developement-ecological%20environment/
+
+sudo pip install virtualenv
+mkdir venv
+virtualenv venv --distribute   #create venv, distribute use pip not setuptool
+cd venv
+source bin/activate	       #activate venv
+deactivate		       #out venv
+
+virtualenv venv --no-site-packages	        #not use sys.packages
+
+### @virtualenvwrapper
+# manager tool of venv:create/active/close/del;
+sudo pip install virtualenvwrapper
+
+
+###############################################
+# python dev env
+################################################
+
+# 安装 Python 发布版本，dev包必须安装，很多用pip安装包都需要编译
+sudo apt-get install python2.7 python2.7-dev python3.2 python3.2-dev
+
+# 很多pip安装的包都需要libssl和libevent编译环境
+sudo apt-get install build-essential libssl-dev libevent-dev libjpeg-dev libxml2-dev libxslt-dev
+
+# python-all-dev
+# essential /i'senshl/基本，本质；
+# essential data,essential difference.essential condition,
+# essential cause,essential character,essential attribute.
+
+# pip 是 Python 的包管理工具，建议 Python 的包都用 pip 进行管理。
+# virtualenv是 Python 多版本管理的利器，不同版本的开发调试全靠它了。
+apt-get install python-pip
+pip install pip --upgrade
+pip install virtualenv
+pip install virtualenvwrapper
+
+# 配置个人用 virtualenv
+# 通过它可以方便的创建/激活/管理/销毁虚拟环境，
+# 尽量在 virtualenv 下进行 Python 包的安装
+
+
+# 创建目录用来存放虚拟环境
+mkdir $HOME/.virtualenvs
+
+# 在~/.bashrc中添加： 
+# Python pip and virtualenv config
+if [ `id -u` != '0' ]; then
+  export VIRTUALENV_USE_DISTRIBUTE=1          # Always use pip/distribute
+  export PIP_VIRTUALENV_BASE=$WORKON_HOME
+  export PIP_RESPECT_VIRTUALENV=true          # sure pip install intto venv.
+
+  export WORKON_HOME=$HOME/.virtualenvs       # Where all virtualenvs will be stored
+  source /usr/local/bin/virtualenvwrapper.sh  # open vrp
+fi
+
+# 运行： 
+source ~/.bashrc
+
+# 使用：
+# new/active/close/del
+mkdir my_venv           # 创建目录
+mkvirtualenv my_venv    # 虚拟环境
+workon my_venv          # 激活环境
+deactivate              # 退出环境
+rmvirtualenv my_venv    # 销毁环境
+
+# 管理依赖：
+### @depend manager by pip&virtualenv
+pip freeze -l	#list pkg virsion (-l) in venv.
+pip freeze -l > requirements.txt #pass to virsion control sys.
+pip install -r requirements.txt  #pip can install form txt
+
+#################################################################
+# vim - python
+############################################################
+# 运行python script:
+# exec python script: xxx.py
+~$ python xxx.py
+~$ ./xxx.py
+~$ chmod +x xxx.py
+# #!/usr/bin/env python (script first line)
+
+# ctags/taglist
+# pydiction.vim 代码补全，语法提示；
+# python-fold.vim    代码折叠；
+
+
+
+	python env install
+
+python, pip list,
+plot env: numpy scipy matplotlib
+
+
+
+
+
+
+
+
+              

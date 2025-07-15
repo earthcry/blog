@@ -1,0 +1,154 @@
+
+
+
+        版本控制---分布式---Git
+
+        版本控制 与 备份
+
+版本控制：
+    文件历史管理，
+    场景：
+    一份文件，多个相似版本，由多次修改而来，且仍需对它们不断分工修改；
+    问题：是，怎样清楚从原始版本开始的每次修改；
+    问题模型：
+    *版本分枝展示：
+    abcdef
+        abcdefjk
+        abcdefjo15:18:04 jo smith
+    abdedf
+        abdedfpp
+        abdedss15:18:10 ss rose
+        abdedap
+    abefcd
+        abefcdoo
+    adljl15:18:18 jl jack
+    
+    时间排序显示：
+    15:18:04 01.02
+    15:18:10 02.02
+    15:18:18 04.00
+
+
+    标签显示：
+    jo,ss,jl
+
+    用户显示：
+    rose,jack,simth
+
+    模型属性：版本、日期、标签、用户、说明...
+
+集中式，分布式：
+    原始文件按从完整备份；
+    当前分枝，不同修改，自动同步互相推送；
+
+本地仓库，远程仓库：
+    git, github;
+
+    sudo apt-get install git
+    git config --global user.name 'nudojiang'
+    git config --global user.email 'nudojiang@qq.com'
+
+版本库：
+    repository
+    dir/files, edit, track history, restore...
+
+         <-- checkout     <-- reset HEAD            HEAD      id
+    tree     stage/index      commit/repo  reset--> HEAD^     id
+    handle sort  guo                                HEAD^^    id 
+                                                    HEAD^^^   id
+    git diff                # tree --- index
+    git diff --cached       # index -- repo
+    git diff HEAD           # tree --- repo
+
+Work tree:
+    mkdir gitlearn
+    cd gitlearn
+    git init
+
+    only track manager txt file, not binary
+    working-tree, index, repository
+
+Add File:
+    touch test.txt
+    vi test.txt
+    git add test.txt                          # add content to index
+    git add test2.txt
+    git commit -m 'wrote two test file'       # add changes to repository
+
+Modify/different File:
+    vi test.txt
+    git status                                # show working-tree status
+    git diff test.txt
+    git add test.txt
+    git commit -m 'add distributed'
+    git status
+
+Modify/reset
+    commit == snapshot, so can rollback any commit.
+    git log                     # commit log
+    git log --pretty=oneline
+    git reset --hard HEAD^      # HEAD^, HEDA^^, HEAD^^^, reset current HEAD to x state, HEAD pointer --> commit version
+    git reflog                  # to find id
+    git reset --hard id         # 
+workdir/stage:
+    git add xxx to stage
+    commit to branch
+
+Manager Modify:
+    git mng modify not file.
+
+
+reback modify:
+    worktree/index/repo/remoterepo
+
+del files:
+    git rm xxx
+
+remote repository:
+    ssh-keygen -t rsa -C 'nudojiang@gmail.com'
+    sudo apt-get install xclip
+    xclip -sel clip < ~/.ssh/id_rsa.pub
+    ...
+    ssh -T git@github.com
+    ...
+    git remote add origin git@github.com:nudo/gitlearn.git # link to rmt repo
+    git push -u origtin master                             # link and push
+    git push origin master                                 # push
+
+remote clone:
+    git clone https://github.com/nudo/gitskills.git     # https proto
+    git clone git@github.com:nudo/gitskills.git         # git proto ssh
+
+branch private tmp:
+    git branch dev
+    git checkout dev    # switch to dev from master
+
+    git chechout -b dev # same as up two.
+
+    git bruanch         # list current branch
+
+    vi readme.txt
+    git add readme.txt
+    git commit -m 'add branch dev'
+
+    git checkout master # switch master, nothing modify!
+
+    git merge dev       # hebing dev to master
+    git branch -d dev
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

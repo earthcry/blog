@@ -1,0 +1,698 @@
+---
+title: hexoNote
+date: 2021/12/28 20:45:23
+comments: true
+categories:
+- Linux
+tags:
+- website
+- generator
+- hexo
+---
+
+@@hexo0
+front-matter
+#sticky: 10
+
+<!-- more -->
+
+## static website generators
+
+   xxx.md ---> xxx.html
+
+jekyll hexo octopress wordpress joomla 11ty.dev hugo gatsby vuepress nuxt.js
+docusaurus publii primo
+
+
+## hexo
+hexo.io/en/docs
+
+## install hexo generate steps:
+hexo.io for reference:
+node.js
+git
+hexo
+
+hexo install by...
+nodejs.org for verion
+github.com/nodesource for node.js package
+git-scm.com for git package
+npm install -g hexo-cli
+
+hexo init <folder>
+cd <folder>
+npm install //install origin files
+
+run hexo
+echo 'PATH="$PATH:./node_modules/.bin"' >> ~/.profile
+hexo + command
+
+
+hexo new
+hexo generate
+hexo deploy
+hexo server
+
+## post steps
+Run hexo must prefix nudo
+``` bash
+sudo hexo new test //create test.md with head part,After first generate and deploy, then new
+sudo hexo new secondfile
+sudo vim secondfile.md
+```
+
+
+#### new
+hexo new [layout] <title>
+layout:
+- draft
+- post
+- page
+
+#### scaffold template
+hexo new photo "My Gallery"
+//hexo will app photo template
+
+
+#### simple content
+
+xxxxx
+<!--more-->
+xxxxxxxxxxxx
+
+#### resource link
+image, mp3, mp4
+- http
+- path
+  - _config.yaml
+  - post_asset_folder: true
+  - xxx.md + xxxfolder
+  - ![](./example.jpg)
+
+#### public
+hexo clean
+hexo generate --watch
+
+hexo generate xxx.md to public folder
+hexo server. http://localhost:4000
+
+
+#### source path
+
+相对路径引用的标签插件
+
+通过常规的 markdown 语法和相对路径来引用图片和其它资源可能会导致它们在存档页或者主页上显示不正确。我们可以通过使用 Hexo 提供的标签插件来解决这个问题：
+
+{% asset_path slug %}
+{% asset_img slug [title] %}
+{% asset_link slug [title] %}
+
+比如说：当你打开文章资源文件夹功能后，你把一个 example.jpg 图片放在了你的资源文件夹中，如果通过使用相对路径的常规 markdown 语法 ![](/example.jpg) ，它将 不会 出现在首页上。（但是它会在文章中按你期待的方式工作）
+
+！！！注意： 如果已经开启了文章的资源文件夹功能，当使用 MarkDown 语法引用相对路径下的资源时，只需 ./资源名称，不用在引用路径中添加同名文件夹目录层级。
+
+正确的引用图片方式是使用下列的标签插件而不是 markdown ：
+
+{% asset_img example.jpg This is an example image %}
+
+通过这种方式，图片将会同时出现在文章和主页以及归档页中。
+
+
+#### deploy git
+
+
+
+
+
+
+hexo
+
+
+
+
+Mon.17.July.2019
+
+Local websit --> Remote host
+
+
+ssh -T git@github.com
+
+cd blog
+hexo init
+npm install
+npm install hexo-deployer-git --save
+_config.yml
+deploy:
+  type: git
+  repository: git@github.com:earthcry/earthcry.github.io.git
+  branch: master
+
+git init
+git config --global user.name ""
+git config --global user.email ""
+git remote add github git@github.com:earthcry/earthcry.github.io.git
+
+cp ../pagesbak/CNAME ./source/
+
+hexo clean && hexo d -g
+
+git clone git@github.com:Jamling/hexo-theme-nova.git themes/nova
+vim _config.yml
+theme: nova
+
+cp CNAME source/
+
+hexo clean && hexo d -g
+
+
+
+
+jekyll 你把原文上傳 github， 可以直接生成博客，也可以用在線編輯器處理, 
+hexo 是本地生成 html 再上傳
+@yfwu 所以还是 jekyll 省心啊，以后直接用 git 就可以解决一切了，而 hexo 要求本地环境。。
+
+install git 
+install nodejs
+install npm
+node -v
+npm -v
+
+npm install -g hexo-cli
+hexo -v
+
+hexo init myblog
+cd myblog
+npm install  # Install depend &hexo
+npm install hexo-deployer-git --save
+hexo g
+hexo s
+localhost:4000
+
+hexo server
+hexo generate [--watch]
+hexo deploy
+
+# write
+hexo new "title"
+vim ./source/_posts/newfile
+---
+title: 'blog'
+date: 2019-05-02 21:53:03
+categories: hexo
+tags: hexo,note,blog,github
+tags: [tag1,tag2,tag3] 
+description: seo
+
+---
+
+<!--more-->
+
+hexo new page "my-second-blog"
+hexo new page “categories”
+
+
+# edit _config.yml
+
+deploy:
+  type: git
+  repository: git@github.com:xxx/xxx.github.io.git
+  branch: master
+
+npm install hexo-deployer-git --save
+
+
+hexo clean # Clean cache file db.jason
+hexo generate
+hexo deploy
+
+
+# theme
+cd gitdata/bloghexo/
+git clone https://github.com/GeekaholicLin/hexo-theme-ylion.git themes/ylion
+git clone https://github.com/cofess/hexo-theme-pure.git themes/pure
+git clone https://github.com/objectyan/hexo-theme-hannah.git themes/hannah
+git clone https://github.com/chaooo/hexo-theme-BlueLake.git themes/BlueLake
+git clone https://github.com/ppoffice/hexo-theme-icarus.git themes/icarus
+
+hexo clean 
+_config.yml
+ theme: ylion
+
+hexo g
+hexo d
+
+hexo help 
+
+hexo s -g 
+hexo d -g   # == hexo g -d
+
+
+
+
+@Domain
+
+ Create a file  named CNAME to  github repository,
+ Write the domain name  Into the file CNAME.
+ earthcry.xyz (no http:// or www)
+ and  Copy the file to the local source directory.
+
+ namsilo/domain_manager/manager_DNS_for_this_domain(blueBall)/DNS_Templates/Github/Apply_Template
+ CNAME line/edit/ADDRESS_VALUE/earthcry.github.io
+
+DNS Recorder manager
+哪怕是namecheap和http://name.com，他们的管理界面以2014年的眼光来看都不太好使，
+DNS fresh speed刷新速度也不是很理想。我的做法一般是
+domain outside国外域名就直接把name server(域名服务器)转到 to Home | CloudFlare，
+domain china国内的转到 to DNSPod-免费智能DNS解析服务商。速度快，界面好，免费。
+
+所以选择了www.namesilo.com买域名+腾讯云免费解析DNSPod。
+
+
+
+
+@multi-terminal sync @terminales @clients
+
+快速搭建多终端同步的 github + hexo 静态博客/csdn_lisword
+https://blog.csdn.net/csdn_lisword/article/details/73804982
+
+### principle:
+
+hexo blog work directory is whole, and one sub directory is public.
+hexo only push public directory to github branch master.
+so,
+if multi-terminal sync,
+sync whole directory, as same as
+push hexoblog directory to branch hexo.
+
+### steps:
+
+1.create github repository and page
+
+2.SSH clone to local
+
+3.bak .git 
+  hexo/install/cp .git/setup/push to hexo/hexo g -d/
+
+4.daily push hexo and d master
+
+5.other terminal
+  clone
+  switch hexo
+  del .deploy_git
+  reinstall deploy
+
+### code:
+
+1. git clone git@github.com:earthcry/earthcry.github.io.git
+
+2. git branch
+   git chechout -b hexo
+   git branch
+   ll -a
+   cp -r .git .origingit
+   ll -a
+3. npm install hexo
+   hexo init
+   npm install
+   npm install hexo-deployer-git --save
+   ll -a
+   cp -r .origingit .git
+   #edit _config.yml
+   deploy:
+     type: git
+     repository: git@github.com:earthcry/earthcry.github.io.git
+     branch: master
+
+4. git add .
+   git commit -m "push whole hexo work directory"
+   git push origin hexo
+
+   hexo d -g | hexo g -d
+
+5. other terminal
+   5.1 clone
+   5.2 git checkout -b hexo origin/hexo
+   5.3 ll -a
+       rm -r .deploy_git
+       npm install hexo-deployer-git --save
+
+
+## another
+
+1. install hexo
+2. hexo website
+3. github page
+4. hexo work dir -> github local repo
+5. double branch, one public, one whole.
+     5.1 .gitignore
+     5.2 git init
+     5.3 git remote add github git@github.com:earthcry/earthcry.github.io.git
+     5.4 git checkout -b hexo
+6. push whole
+     6.1 git add .
+     6.2 git commit -m "whole source"
+     6.3 git push github hexo
+7. hexo deploy
+     7.1 npm install hexo-deployer-git --save
+     7.2 _config.yml
+     deploy:
+          type: git
+          repository: git@github.com:earthcry/earthcry.github.io.git
+          branch: master
+      7.3 hexo clean 
+      7.4 hexo d -g
+
+8. another terminal
+     8.1 clone
+     8.2 switch to branch hexo
+     8.3 npm install 
+     8.4 install deployer, del old deployer and new
+9. themes
+     9.1 find theme in github
+     9.2 clone
+     9.3 install renderer...
+     9.4 _config.yml
+     9.5 clean and deploy
+
+
+details
+
+5. .gitignore
+/.deploy_git
+/pubic
+/_config.yml
+
+8.1 clone
+git branch -a  # list branches, after clone, only one branch master, no other
+8.2 git checkout -b hexo origin/hexo
+git checkout -b|-B <new_branch> [<start point>] # if new exist, use B
+
+
+
+Order of remote or local:
+
+.git can build in empty and not empty fold,
+hexo init need empty fold.
+
+
+Hexo-admin 插件，可以在线编辑 hexo g 没问题；不需在本地部署 hexo 环境，
+
+Page  --for menu, about
+如果你想另起一页，那么可以使用
+
+hexo new page about
+hexo new page board
+1
+系统会自动给你在source文件夹下创建一个board文件夹，以及board文件夹中的index.md，这样你访问的board对应的链接就是http://xxx.xxx/board
+
+Draft
+draft是草稿的意思，也就是你如果想写文章，又不希望被看到，那么可以
+
+hexo new draft newpage
+1
+这样会在source/_draft中新建一个newpage.md文件，如果你的草稿文件写的过程中，想要预览一下，那么可以使用
+
+hexo server --draft
+1
+在本地端口中开启服务预览。
+
+如果你的草稿文件写完了，想要发表到post中，
+
+hexo publish draft newpage
+1
+就会自动把newpage.md发送到post中。
+
+
+### local server
+hexo-server
+
+### remote server
+
+这一切是如何发生的？
+
+当执行 hexo deploy 时，Hexo 会将 public 目录中的文件和目录推送至 _config.yml 中指定的远端仓库和分支中，并且完全覆盖该分支下的已有内容。
+
+    For 使用 Git 管理站点目录的用户
+
+    由于 Hexo 的部署默认使用分支 master，所以如果你同时正在使用 Git 管理你的站点目录，你应当注意你的部署分支应当不同于写作分支。
+    一个好的实践是将站点目录和 Pages 分别存放在两个不同的 Git 仓库中，可以有效避免相互覆盖。
+    Hexo 在部署你的站点生成的文件时并不会更新你的站点目录。因此你应该手动提交并推送你的写作分支。
+
+此外，如果您的 Github Pages 需要使用 CNAME 文件自定义域名，请将 CNAME 文件置于 source 目录下，只有这样 hexo deploy 才能将 CNAME 文件一并推送至部署分支。
+
+
+
+
+### hexo #themes
+overdose
+ylion
+
+suka
+
+kratos-rebirth
+bluelake
+
+
+
+
+
+#### download theme
+
+theme suka version 1.4.0
+
+cd themes
+git clone https://github.com/SukkaW/hexo-theme-suka.git suka
+cd suka
+
+update:
+git pull
+
+#### install
+cd themes/suka
+npm i
+cp -i _config.example.ym _config.yml
+not overide by update, _config.yml was in .gitigore
+
+cat ./themes/suka/site_config.yml >> _config.yml
+
+start suka theme:
+vim ./_config.yml
+theme: suka
+
+run suka:
+hexo s --debug
+
+update suka:
+cd ./themes/suka
+cp -i _config.yml _config.old.yml
+git pull
+cp -i _config.example.yml _config.yml
+merge two _config.old.yml to new
+
+
+#### theme configure
+
+HEAD:
+html head
+favicon
+https://realfavicongenerator.net/
+if no, blank.
+
+keywords:
+website keywords, 
+exameple: aa, bb, cc
+
+./_config.yml              # site_config.yml
+# ------------------------------------------------------------------------
+suka_theme:
+  search:
+    enable: true
+    path: search.json
+    field: post # Page | Post | All. Default post
+  prism:
+    enable: false
+    line_number: true
+    theme: default
+
+
+./themes/suka/_config.yml
+# ---------------------------------------------------------------
+# Menu Settings
+# ---------------------------------------------------------------
+# Nav settings
+# Used to choose which
+nav:
+  home:
+    use: true
+  archives:
+    use: true
+  rss:
+    use: false
+  search:
+    use: true
+    link: /search
+  share:
+    use: true
+  pages:
+    TagsCloud:
+      link: /tags/
+    Gallery:
+      link: /gallery/
+    About:
+      link: /about/
+    Friends:
+      link: /links/
+
+
+./themes/suka/_config.yml
+# ---------------------------------------------------------------
+# Plugin Settings
+# ---------------------------------------------------------------
+# Search
+# Available value of "use":
+#     local | google | swiftype
+search:
+  use: local
+  # Swiftype
+  swiftype_key:
+
+
+
+rss:
+hexo-generator-feed
+
+sns_share:
+- weibo
+- qq
+- ...
+
+qrcode:
+output QRcode of current article url  to  menu share.
+plugin is inside.
+index_share true //index page.
+post_share true  //article share
+
+
+article info configure:
+
+share true //enable share menu in article.
+toc enable //table of content. 
+line_number //list number in article.
+
+
+### page 独立页面
+touch && vim ./source/links.md
+---
+title: Links //友链
+date:
+layout: links
+---
+add data:
+mkdir touch vim ./source/_data/links.yml
+
+站点名称:
+    url: https://example.com
+    img: https://example.com/avatar.png
+    text: "这是一个描述"
+
+"Sukka's Blog":
+    url: https://blog.skk.moe
+    img: https://secure.gravatar.com/avatar/979869bac8c7bd23fbd649064eabd48e?s=128
+    text: "苏卡卡的有底洞"
+
+
+touch && vim ./source/tags.md
+---
+title: TagsCloud
+date:
+layout: tags
+---
+
+touch && vim ./source/gallery.md
+---
+title: Gallery //画廊
+date:
+layout: gallery
+---
+add data:
+mkdir touch vim ./source/_data/gallery.yml
+图片名称（唯一）:
+    full: # 完整图片 URL
+    thumb: # 缩略图 URL
+    descr: # 图片简介
+
+住み家:
+    full: https://i.jpg.dog/img/c78866c8fcab8e8edb20a9e37c3378b6.png
+    thumb: https://i.jpg.dog/img/c78866c8fcab8e8edb20a9e37c3378b6.md.png
+    descr: pixiv.net/i/70337807
+晩夏の灯　宵の風:
+    full: https://i.jpg.dog/img/8975f29cdb459b3a8b1b4f0c8fb0a7af.png
+    thumb: https://i.jpg.dog/img/8975f29cdb459b3a8b1b4f0c8fb0a7af.md.png
+    descr: pixiv.net/i/70352475
+
+
+touch && vim ./source/search.md
+---
+title: Search
+date:
+layout: search
+---
+
+
+
+### Plugin inside
+
+search local:
+
+locate to theme_configure:
+vim ./themes/_config.yml
+search:
+  use: local
+
+
+locate to site_configure:
+vim ./_config.yml
+
+suka_theme:
+search:
+  path: search.json # position of generate index file
+  field: post # Page | Post | All
+
+
+
+# kratos theme
+
+-----------------------------------------------------------------------
+## Offical:
+code:
+https://github.com/Candinya/Kratos-Rebirth
+
+intro:
+https://candinya.com/posts/Kratos-Rebirth/
+
+manual:
+https://candinya.com/posts/Kratos-Rebirth-Manual/
+
+
+## intall and startup :
+clone...
+cp theme_config
+install plugin:
+hexo-generator-index-pin-top
+hexo-generator-feed
+
+theme: kratos-rebirth
+
+postAticle.md
+front-matter
+---
+pic: thumpic.jpg  # pic in hexo asset folder of the article.
+---
+
+
+
+
+
+
+
+

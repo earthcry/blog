@@ -1,0 +1,327 @@
+
+
+docker 
+
+
+hub.docker.com
+earthcry.163.com-88
+github.com-88
+
+
+
+## docker syncthing deploy
+syncthing.net
+github.com/syncthing/syncthing
+two ports:
+8384: web ui access
+22000: sync protco port
+//download image
+docker pull linuxserver/syncthing
+//run container, map data dir to local.
+docker run -p 8384:8384 -p 22000:22000 -v /home/nu/syncdir:/var/syncthing linuxserver/syncthing:latest
+//inpect container status
+docker ps -a
+//access
+http://ip:8384
+
+
+//install directory
+apt.syncthing.net
+// add the release PGP keys:
+sudo curl -s -o /usr/share/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg
+
+// add the stable channel to your apt sources:
+echo "deb https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list
+// update and install syncthing:
+sudo apt-get update && sudo apt-get install sycnthing
+
+
+## image path
+/var/lib/docker
+docker pull linuxserver/syncthing
+docer run -it ubuntu bash
+
+自建image---dockerfile
+
+自建仓库docker-registry
+
+
+
+## usage
+
+
+## create image
+ * dockerfile
+ * container commit
+ * scratch
+
+
+### dockerfile
+FROM: bootfs/rootfs/appenginefs/
+bootfs: core
+rootfs: ubuntu,centos,debian
+appEngineFs: node,php,python,
+
+
+
+
+
+
+
+2.在已有image基础上创建一个image
+===============================
+1、编辑Dockfile
+FROM daocloud.io/library/ubuntu
+CMD echo hello world
+
+2、生成image，指定image名称为test
+docker build -t test .
+
+3、执行新image
+docker run test
+
+
+#### 1. FROM scratch
+Docker 提供了两种方法来创建基础镜像，一种是通过引入tar包的形式，另外一种是通过一个空白的镜像来一步一步构建，本文使用的是第二种方法，既FROM scratch
+FROM scratch
+ADD hello /
+CMD ["/hello"]
+Dockerfile 中相关参数
+
+    FROM 指的是依赖的基础镜像，如scratch表示的是空白的，从零开始的。依赖的镜像可以是本地的，也可以是远程库的
+    ADD 指的是添加本地文件到镜像中，如果遇到linux可解压格式文件，会自动解压，这就是为什么整个文件中没有对tar.gz进行显式解压
+    RUN 运行命令，如安装软件的相关命令
+    CMD 设置启动Container时默认执行的命令，这个可以在启动容器时覆盖
+
+
+## install 
+
+curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/intranet | sh
+
+docker -v
+sudo apt install docker.io
+docker -v
+docker --help
+
+到这里，docker已经安装完毕，非常简单，给自己留以备用
+
+step 1: 安装必要的一些系统工具 sudo apt-get update sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+
+step 2: 安装GPG证书 curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+
+Step 3: 写入软件源信息 sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+
+Step 4: 更新并安装Docker-CE sudo apt-get -y update sudo apt-get -y install docker-ce
+
+ 
+
+测试是否成功
+
+sudo docker run hello-world
+sudo docker run -it ubuntu bash
+
+
+## understand
+
+
+一、为什么使用Docker
+Docker一词意为码头工人，而Docker的功能也与集装箱类似。通常一个webapp并不会用到操作系统/虚拟机的全部功能，即操作系统/虚拟机对于一个webapp来说太过笨重。打个比方说，我要从宿舍去食堂，我并不需要一架飞机，只需要一辆自行车就够了，而Docker镜像
+
+就相当于是一辆自行车。你可以把Docker镜像理解为轻量化的虚拟机，当然二者有所不同，但是不在本文的讨论范围。
+
+二、使用Docker的正确姿势
+设想一个如下场景：
+我们需要一个webapp，其功能是用户注册并将注册信息插入到数据库，环境为Ubuntu+Tomcat+Mysql,怎么做？
+不使用Docker的话，我们通常会这样做，以Ubuntu为操作系统，然后安装Tomcat和MySQL，最后把app部署上就可以了。那么使用Docker会怎么做呢，在这个场景下，可以有两种方式：
+1.仍然以Ubuntu为操作系统，然后构建一个安装有MySQL和Tomcat的Docker镜像，并把app部署到其中，最后启动Docker镜像就可以了。看起来好像和不使用Docker基本相同，甚至还要麻烦一些，是这样吗？别着急，继续往下看。
+2.第二种方式则体现了Docker的"每个容器只做一件事情"的思想，我们构建两个镜像，一个仅安装Tomcat并部署我们的app，另一个仅安装MySQL，然后启动这两个镜像，得到两个容器，再利用Docker的容器互联技术将二者连接(Docker的容器是通过http连接的)。
+
+三、Docker带来了哪些好处
+看完上面的例子，你可能仍然不会觉得Docker有什么好处，其实真正使用了Docker之后，你会觉得简直爱不释手。粗略来说，Docker好处有:
+1.保证了线上线下环境的一致性
+我们在线下的开发环境使用Docker构建好weaapp的镜像后，可以直接在线上使用一个镜像，保证了线上线下环境的一致性，再也不会有在线下开发环境中运行正常，而部署到线上各种错误了。
+2.极大的简化了webapp的部署流程
+在不使用Docker时，我们部署app时，要先搭建好app运行所需环境，这个过程做过的人都知道多么枯燥繁琐，一不小心还出错。而有了Docker，我们只需要直接构建一个我们webapp的镜像然后将其运行即可，无论在多少台服务器中部署，都是如此。再比如，使用Docker之前要搭建一个WordPress对于新手来说是有些困难的，而有了Docker，只需要从DockerHub上pull一个WordPress镜像并启动就可以了，非常非常方便。
+3.实现了沙盒机制
+
+，提高了安全性
+由于webapp运行在容器中，与操作系统隔离开了，从而使操作系统基本不可能受到破坏，另外如果webapp因为攻击而瘫痪，并不需要重启服务器，直接重启容器或者再启动一个镜像就可以了。
+4.实现了模块化，提高了复用性
+在二中使用Docker的第二种方式就可以看出，我们将数据库和Tomcat运行在不同的容器中，从某种角度来说，这也降低了模块之间的耦合性，便于拓展。比如我们要把MySQL替换为oracle，只需要再构建一个oracle镜像并启动与Tomcat连接即可，非常方便。对于我们构建的镜像，在其他app中直接拿来用就可以了，不必重复劳动。
+5.实现了虚拟化，提高硬件利用率
+有了Docker，我们可以在一台服务器上运行很多webapp，充分利用闲置资源。这时候，服务器的操作系统就类似于货轮，而一个个Docker容器就相当于货轮上的一个个集装箱。现在大热的云服务市场，不少就用了Docker。举个例子来说，现在我们有一台操作系统为Ubuntu14.04的服务器，我们构建不同版本的ubuntu镜像并启动，并且为不同的用户分配不同的容器。这样，用一台服务器
+可以虚拟出n个运行着不同操作系统的虚拟服务器，而对于用户来说，这些是透明的––用户则认为自己拥有一台完整的服务器。据我推测，阿里云的服务器就是这么干的。这充分利用了闲置的硬件资源。
+
+我这里挂一漏万，Docker的好处远远不止这些。譬如使用Docker镜像实现磁盘快照
+
+功能，在不同场景下有Docker不同的使用姿势，至于更多奇技淫巧，则需要在使用过程在去发掘。
+
+啰嗦了这么一大堆，接下来回答题主的问题。实际上很多问题前文都已经解答了。
+
+Docker的容器是以镜像来创建的，镜像是不是一个类似操作系统的环境?
+是的，你可以将Docker理解为一个轻量化的虚拟机，至于我们经常说的什么Tomcat镜像、MySQL镜像之类的，只是这个轻量化的虚拟机中安装了相应的软件。镜像的名字也就说明了镜像的功能。
+
+是不是到正式环境上还要安装Docker，然后把应用部署在其中？
+是的，构建Docker镜像、运行Docker容器
+
+，都需要安装Docker，但这是一劳永逸的，因为我们使用的是安装了各种各样功能软件的Docker镜像和Docker容器。
+
+如果是这样，那和我创建一个和生产环境一样的虚拟机来部署应用有什么区别？
+首先这个问题可以用自行车和飞机的例子解答。其次安装Docker后，我们可以从DockerHub上获取各种各样的操作系统镜像，这个操作很简单，只需要pull相应的镜像到本地然后运行即可，而安装不同版本的虚拟机有多麻烦？另外DockerHub上有各种各样的优秀镜像，我们直接拿来使用就可以了，不需要自己搭建，应用的部署就像搭积木一样简单。
+
+
+
+
+
+
+docker可以使用docker build工具链将应用和所有依赖整个安装到镜像中，部署的时候直接启动容器就是一个正确运行的服务了。docker build使用Dockerfile，Dockerfile是一个文本文件，相当于一个脚本，可以在CI系统中自动执行，做持续集成、持续部署很容易，build、test成功后直接替换线上的镜像就行。从原理上来说，docker并不是一个完全独立的虚拟化环境，而是一个有独立namespace的进程，所以启动开销就跟直接在物理机上启动服务差不多，但是保证了环境隔离。
+
+作者：灵剑
+
+
+我从不推荐开发者在web开发过程中使用容器，如果你真的用过docker，你会知道启动web容器也是要花时间的，即使是1秒钟也是时间啊。加上web开发的项目何止是一个组件构成的，通常这个时候尝试docker compose搭建一套开发环境倒是可以试验一把。但是，试想你写了一行代码，这个时候需要实时编译并呈现出来如何做到呢？难道需要手工restart一遍docker compose?它并不能热加载奥？所以，别吹牛了。在开发环境，docker一点用都没有。请尽量用docker来构建测试环境比较合适。自动化测试方面尤其方便。=====================================更新时间：2019-10-2 1:00当前Kubernetes环境发展成熟，在web开发中确实可以完全依赖容器基础环境来打造完全云化的开发流程。https://okteto.com 可以参考。使用K8S加上本地syncthing同步文件工具来做快速web开发，非常快速的手。请参考。编辑于 2019-10-02 01:00
+
+
+
+
+
+https://www.cnblogs.com/wanlei/p/10757524.html
+
+ Docker介绍及使用
+什么是容器？#
+
+容器就是在隔离的环境运行的一个进程，如果进程停止，容器就会销毁。隔离的环境拥有自己的系统文件，ip地址，主机名等，kvm虚拟机，linux，系统文件
+
+程序：代码，命令
+进程：正在运行的程序
+
+docker的主要目标是"Build,Ship and Run any App,Angwhere",构建，运输，处处运行
+部署服务，环境问题
+
+一次构建，处处运行
+
+docker是一种软件的打包技术
+
+构建：做一个docker镜像
+运输：docker pull
+运行：启动一个容器
+每一个容器，他都有自己的系统文件rootfs.
+
+kvm解决了硬件和操作系统之间的依赖
+kvm独立的虚拟磁盘，xml配置文件
+
+docker解决了软件和操作系统环境之间的依赖，能够让独立服务或应用程序在不同的环境中，得到相同的运行结果。
+docker镜像有自己的文件系统。
+
+docker容器是一种轻量级、可移植、自包含的软件打包技术，使应用程序可以在几乎任何地方以相同的方式运行。开发人员在自己笔记本上创建并测试好的容器，无需任何修改就能够在生产系统的虚拟机、物理服务器或公有云主机上运行。
+docker的主要组成部分#
+
+docker是传统的CS架构分为docker client和docker server,像Mysql一样
+docker主要组件有：镜像、容器、仓库, 网络，存储
+
+模型moxing
+
+近义词 模子
+反义词 实物
+
+模板  mú bǎn 
+近义词 样板
+
+module mode 
+
+Docker 入门教程
+
+作者： 阮一峰
+
+日期： 2018年2月 9日
+
+http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html
+
+
+
+### test docker install success:
+docker info
+/var/lib/docker/
+
+### docker need sudo permisson, not input sudo, add user to Docker group:
+sudo usermod -aG docker $USER
+
+### docker server-client, start service:
+sudo serivce docker start
+sudo systemctl start docker
+
+### image && container
+docker image search 
+docker image pull
+docker image ls 
+docker image rm imagename
+docker image build
+docker container run hello-world
+docker container ls --all
+docker container stop/kill containID
+docker container rm containID
+docker container run
+docker container start
+docker container logs
+docker container exec
+docker container cp
+
+### dockerfile
+
+mkdir testapp
+touch ./testapp/.dockerignore
+.git
+node_modules
+npm-debug.log
+
+touch ./testapp/dockerfile
+FROM node:8.4
+COPY . /testapp
+WORKDIR /testapp
+RUN npm install --registry=https://registry.npm.taobao.org
+EXPOSE 3000
+
+
+### create image 
+docker image build -t koa-demo .
+docker image build -t koa-demo:0.0.1 .
+docker image ls
+
+### generate container
+docker container run -p 8000:3000 -it koa-demo /bin/bash
+docker container run -p 8000:3000 -it koa-demo:0.0.1 /bin/bash
+docker container start xxxid
+ctrl+c
+ctrl+d/exit
+docker container ls -all
+docker container stop xxxid
+docker container kill xxxid
+docker container rm xxxid
+docker container run --rm -p 8000:3000 -it koa-demo /bin/bash
+
+
+### cmd
+dockerfile:
+...
+...
+...
+EXPOSE 3000
+CMD node demo/01.js
+
+
+### docker container logs
+if no -it
+docker container logs xxxid
+
+### docker container exec
+if no -it, the cmd into container.
+docker container exec -it xxxid /bin/bash
+
+
+### docker container cp
+docker container cp xxxid:/path/to/file .
+
+
+
+
+

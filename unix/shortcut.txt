@@ -1,0 +1,69 @@
+
+shortcut key
+
+@windows
+    alt+tab : win1 switch to win2;
+
+@terminal
+    open terminal:
+    ctrl+alt+t
+    ctrl+shift+t open tabpage
+    ctrl+shift+w close tabpage
+    ctrl+pageup  switch tabpage
+    ctrl+pagedown
+    alt+1,2,3...9,0
+    F11 fullscreen, 
+
+
+@chrome
+    new tab    :    ctr_t,
+    close tab  :    ctr_w,
+    switch tab :    ctr_tab,
+    address    :    alt_d,
+@firefox
+ctr+b bookmark
+ctr+r reload
+ctr+[
+ctr+]
+
+@gvim
+    gt      :  switch;
+    :tabe   :
+    :tabnew :
+    set showtabline=2
+
+@shell,@bash
+    ctrl+A : cursor to head;
+    ctrl+E : cursor to tail;
+*   ctrl+C : stop currently cmd;
+*   ctrl+L : clear;
+*   ctrl+U : pre to del;
+    ctrl+K : next to del;
+*   ctrl+Y : cp up 2 line content;
+*   ctrl+R : search in history cmds;
+*   ctrl+D : exit;
+    ctrl+Z : stop read to start;
+    ctrl+S : stop read to start print;
+    ctrl+Q : start to print;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

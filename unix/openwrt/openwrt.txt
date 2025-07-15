@@ -1,0 +1,623 @@
+
+
+#        data remember manager system
+
+----------------------------------
+
+/etc/init.d/xxx stop
+reboot -f
+
+
+## structure map
+
+     
+
+
+     .md         .html        .md
+      pc ==<-->== RPI --<-->-- mobile
+
+
+
+      == http syncthing ssh git 
+      -- http syncthing
+
+      git,httpd,syncthing             
+      openwrt
+      rpi
+       
+      markor,quickpic,douyin,syncthing,nextcloud
+      android
+      mobile
+   
+      markdown-website
+      vim,vlc,hexo,git,syncthing,nextcloud
+      ubuntu
+      del
+   
+
+
+
+
+
+
+## Raspberry Pi 3B 
+openwrt.org
+
+
+## Directory
+1. openwrt.org for rpi3b.img
+2. mkfs sd card
+3. Etcher burn image to sd card
+4. Gparted resize sd parts: boot, rootfs.6g, data
+5. Plug out usbwlan.edup8058.rtl8192cu
+6. Wire rpi to pc, access 192.168.1.1
+7. Wlan to internet, then timezone and reboot
+8. Plug in usbwlan and reboot.update && install usbwlan driver 8192cu.
+9. Set switch usbwlan internet,then enable, wlan to nat, reboot
+10. wlan nat, clientes mac filter, 9dBm
+11. Passwd, weblogin,369, reboot
+12. Mount data part, reboot, checkout
+13. diskgenius backup parts: 2wlanmount
+14. add user,ssh
+15. opkg install normal apps:tree vim git nginx syncthing
+16. set server: git, uhttpd, snyncthing
+17. auto boot services
+18. diskgenius backup parts: services
+19. git server
+20. nginx server
+21. syncthing service
+22. ssh
+
+## detail
+
+### mkfs
+fdisk -l
+df -h
+umount -l /dev/sdbx
+ls /sbin/mkfs.*           // disp formatable type, ext2,3,4,fat.
+mkfs -t vfat -I /dev/sdb  //-I override old part
+
+### image etcher  --- burn images to sd card & make bootable usb
+How to Flash/burn an OS Image with Etcher on Ubuntu
+$ lscpu
+https://www.balena.io/etcher/
+unzip ~/Downloads/balena-etcher-electron-1.5.47-linux-x64.zip
+$ ./balenaEtcher-1.5.47-x64.AppImage
+
+before boot
+gparted resize part to boot,rootfs,data
+
+
+### wlan internet
+set wlan access point-->client, enable, scan wifi, 
+timezone:asia/shanghai, 
+update, reboot
+
+### 2wlan set
+disable wlan wifi, remove
+usbwlan -->client, ssid edup, enable,
+wlan-->access point, ssid 369, 9dBm,
+reboot
+
+### passwd
+admin router passwd jiahe
+369 wpa-psk passwd
+all device add, mac-filter
+
+### usbwlan internet
+
+reboot
+out wireless
+wifi link
+usbwlan scan wifi
+
+
+#### #mount disk part #fstab
+
+boot /home to data disk.
+
+search fstab on openwrt.org
+opkg update && opkg install block-mount
+block detect > /etc/config/fstab
+serivce fstab enable
+
+mkdir /home
+vim /etc/config/fstab  
+.../home...   0 -> 1
+
+df -Th
+$uci show
+
+--------------------------------
+fdisk -l
+df -h
+mkdir /home
+mount /dev/sda2 /home
+blkid /dev/sda2 > blkid.txt
+vim /etc/fstab
+在文档末尾添加裹在磁盘的信息。
+格式为：
+
+[UUID=************] [挂载磁盘分区]  [挂载磁盘格式]  0  2
+UUID=88069947069936E2 /mnt/data ext4 defaults  0  2
+
+第一个数字：0表示开机不检查磁盘，1表示开机检查磁盘；
+第二个数字：0表示交换分区，1代表启动分区（Linux），2表示普通分区
+
+### #usb mount #hotplug
+#### auto mount usbhd
+
+ openwrt的自动挂载功能
+
+openwrt使用hotplug管理自动挂载，官网WIKI有介绍：http://wiki.openwrt.org/doc/techref/hotplug
+
+当有USB等插拔事件发生时，hotplug会执行**/etc/hotplug.d/ **目录下相应的脚本。只要写好自动挂载脚本就好了。
+
+推荐小熊论坛上蓝山的脚本：[原创] 银河系最(chui)强(niu)的OpenWrt自动挂载脚本，完美兼容中文，兼容USB/SATA设备，支持EXT2/3/4 FAT32 NTFS exFAT等FS ■■ v0.5.6 重大更新■■
+
+下载后将30-block_mount丢入/etc/hotplug.d/block/目录即可，加上运行权限。
+
+scp 30-block_mount username@hostname:/etc/hotplug.d/block/
+ssh username@hostname
+chmod 755 /etc/hotplug.d/block/30-block_mount
+
+
+
+
+
+#### terminal display save to text
+1. script -f output.txt
+2. ifconfig > ifconfig.txt
+
+
+#### add user
+opkg install shadow-useradd,shadow-common,shadow-su,shadow-groupadd,shadow-mod
+useradd nu
+passwd nu
+vim /etc/passwd
+
+...:nu:/home/nu:/bin/ash
+mkdir /home/nu
+
+opkg install sudo 
+
+
+### #ssh auto login
+
+dropbear == openssh
+
+1. ssh login by id_rsai && id_rsa.pub not type passwd
+
+client:~/.ssh/id_rsa,
+server:~/.ssh/authorized_keys  <-- id_rsa.pub
+
+A为本地主机(即用于控制其他主机的机器) ;
+B为远程主机(即被控制的机器Server), 假如ip为192.168.60.110;
+A和B的系统都是Linux
+
+在A上运行命令:
+# ssh-keygen -t rsa (连续三次回车,即在本地生成了公钥和私钥,不设置密码)
+# ssh root@192.168.60.110 "mkdir .ssh" (需要输入密码)
+# scp ~/.ssh/id_rsa.pub root@192.168.60.110:/root/.ssh/ (需要输入密码)
+
+在B上的命令:
+# touch /root/.ssh/authorized_keys (如果已经存在这个文件, 跳过这条)
+# cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys (将id_rsa.pub的内容追加到authorized_keys 中)
+chmod 700 .ssh
+chmod 600 .ssh/authorized_keys
+
+
+
+回到A机器:
+# ssh root@192.168.60.110 (不需要密码, 登录成功)
+touch .ssh/config
+vim config
+Host rpi.root
+  HostName 192.168.1.1
+  Port 22
+  User root
+  IdentityFile ./id_rsa
+
+$ ssh rpi.root
+
+
+#### rename key
+client:
+ssh-keygen -t rsa -f id_rsa_192.168.1.1 -C "test-key" 
+//entry 3 times no passwd
+//generate filename is id_rsa_192.168.1.1 and id_rsa_192.168.1.1.pub
+
+ls ~/.ssh
+id_rsa id_rsa.pub known_hosts
+
+#### ssh simple or auto login
+
+hostAlias=account@ip
+
+1. alias by .bashrc
+alias rpi=root@192.168.1.1
+alias github=git@github.com
+alias sshSrv1='ssh -i ~/.ssh/id_rsa_ip1 root@ip1'
+alias scpSrv1='ssh -i ~/.ssh/id_rsa_ip1 /xxx root@ip1:/xxx'
+// -i which key
+$ssh rpi
+$sshrootip1
+$sshroot192.168.1.1
+
+
+2. alias by ~/.bash_profile
+
+$ cat ~/.bash_profile | grep 101
+alias to-101='ssh huqiu@192.168.154.101'
+
+$ to-101
+
+无法登录一般的原因
+
+    客户端的私钥和公钥文件位置必须位于 ~/.ssh 下。
+    确保双方 ~/.ssh 目录，父目录，公钥私钥，authorized_keys 文件的权限对当前用户至少要有执行权限，对其他用户最多只能有执行权限。
+    注意git登录，要求对公钥和私钥以及config文件，其他用户不能有任何权限。
+    服务器端 ~/.ssh/authorized_keys 文件名确保没错 :).
+
+ssh-copy-id
+
+3. by config
+man ssh_config
+touch && vim ~/.ssh/config
+Host rpi.root
+  HostName 192.168.1.1
+  Port 22
+  User root
+  IdentityFile ./id_rsa
+Host rpi.git
+  HostName 192.168.1.1
+  Port 22
+  User git
+  IdentityFile ./id_rsa
+
+Host github.com
+  HostName github.com
+  Port 22
+  User git
+  IdentityFile ./id_rsa
+
+cat id_rsa.pub >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+rm id_rsa.pub  
+
+server: vim /etc/ssh/sshd_config
+
+PubkeyAuthentication yes
+PasswordAuthentication no
+
+sshd restart
+
+
+ .ssh/config 常用配置
+
+不用每次都 -i 指定密钥，且避免连接自动断开
+
+ControlMaster auto
+ControlPath ~/.ssh/connection-%r@%h:%p
+ControlPersist 4h
+ServerAliveInterval 6
+ServerAliveCountMax 20
+Compression yes
+
+Host github.com
+ HostName github.com
+ User git
+ IdentityFile ~/.ssh/github
+
+Host rpi.git
+ Hostname 192.168.1.1
+ User git
+ IdentityFile ~/.ssh/id_rsa
+
+Host rpi.nu
+ Hostname 192.168.1.1
+ User nu
+ IdentityFile ~/.ssh/id_rsa
+
+Host rpi.root
+ Hostname 192.168.1.1
+ User root
+ IdentityFile ~/.ssh/id_rsa
+
+
+
+
+scp file.txt hangj:~/
+scp hangj:~/file.txt ./
+
+简单，高效，省心，关键还防秃~~~
+管理多个 github 的 deploy key
+
+在 GitHub 仓库设置好 webhooks，当有新的 push 时，自动发一个 POST 到我的 web 服务器
+然后 web 服务器调用一个 shell 脚本自动 pull 最新代码，并重启服务
+
+服务器上只需要 pull 代码，所以没必要专门给它配置一个 robot 用户，这个时候可以用 deploy key，给这个 key 设置好 pull 的权限
+
+把 key 文件保存好，然后在 ~/.ssh/config 文件加上
+
+Host myproject1
+ HostName github.com                                                            
+  User git 
+   IdentityFile ~/.ssh/github_deploy_myproject1
+
+然后到你的仓库目录下(hangj 是我的用户名)
+
+$ git remote set-url origin git@myproject1:hangj/myrepo.git
+$ git remote -v
+
+命令行里的 myproject1 就是 ~/.ssh/config 里的 Host, hangj 是我的用户名
+
+指定 Host，是为了方便管理多个仓库，每个仓库用自己的 deploy key，不会乱
+
+
+### diskgenius backup part
+winpe boot
+diskgenius5.0 backup
+
+
+### client <--protocol--> server
+ 
+client.git <---ssh,git,http---> server.git
+
+
+### #ssh #server
+touch ~/.ssh/authorized_keys
+cat ~/id_rsa.pub >> ~/.ssh/authorized_keys
+
+
+### #git #server
+
+adduser git
+no passwd
+no shell, git-shell
+sudo chown -R git:git /home/git
+git init --bare --shared source.git
+/home/git/source.git/hooks/post-update
+/home/git/pages
+
+post-update:
+#!/bin/ash
+SOURCE=/home/git/source.git
+WWW=/home/git/pages
+git --work-tree=${SOURCE} clean -fd
+git --work-tree=${WWW} checkout --force
+exec git update-server-info
+
+
+#### nginx
+config:
+/etc/config/nginx
+/etc/nginx/
+
+start
+/etc/init.d/nginx
+
+设置开机自启
+    vi /etc/rc.local
+    增加一行 /usr/sbin/nginx
+    增加一行 /usr/local/nginx/sbin/nginx
+
+### #uhttpd #http #webserver
+
+192.168.1.1 nu.com
+/etc/config/dhcp
+config dnsmasq
+        list addnhosts '/etc/myhosts'
+
+
+
+/etc/init.d/uhttpd start/restart/stop/enable
+/etc/config/uhttpd   80 -> 88
+
+add ...vhost2
+config uhttpd 'web1'
+    list listen_http '0.0.0.0:81'
+    option home '/home/git/www'
+    option cgi_prefix '/cgi-bin'
+
+openwrt php uhttpd 支持多端口多工作目录
+
+需要uhttpd支持多端口监听，直接再配置文件复制端口配置，然后改端口以及工作目录即可
+
+php.ini 将 doc_root 设置为空。默认指向www，怎么配置都是调用www，而且要新的目录存那个文件，不然就 No input file specified
+
+
+### #lighttpd  多站点目录
+opkg update
+opkg install lighttpd lighttpd-mod-cgi
+
+-----------------------------------------------
+Lighttpd虚拟主机和多域名的配置
+
+lighttpd是个轻巧的web服务器组件，在linux系统上较为流行，功能能满足一般网站的需求（虚拟主机，伪静态，防盗链等），而跑起来负载却低于apache。
+
+一般网站地址的形式为www.xxx.com和xxx.com，之前我一直是采用两个$HTTP["host"]的方式来绑定这两个域名到目录，今天查了下资料，发现不需要这么麻烦。用一个$HTTP["host"]配置就可以绑定多个域名到目录。
+
+1、配置多个虚拟主机
+
+打开Lighttpd安装目录下的etc/lighttpd.conf文件，在最后添加如下段：
+$HTTP["host"] == "www.chnfree.com" {
+server.document-root = "网站路径"
+}
+如果需要多个虚拟主机，则将上面的段复制设置多个即可。
+
+2、多域名指向同一个目录
+有时候我们需要将同一个应用配置多个域名，这时我们就可以采用下面的段来进行配置：
+$HTTP["host"] =~ "^(www\.chnfree\.com|chnfree\.com)$"{
+server.document-root = "网站路径"
+}
+注意这个与单个域名配置不同的是：前者使用的是==，而后者使用的是=~这样，这样我们就完成了一个应用多个域名的配置了，然后重启lightpd即可。这条设置将www.chnfree.com以及chnfree.com都指向一个目录。
+
+3、多个域名跳转到同一个域名，可带路径
+$HTTP["host"] =~ "^(chnfree\.com)$" {
+url.redirect = ( "^/(.*)" => "http://www.chnfree.com/$1" )
+}
+
+——————————————————————————————————————————————————————————————————
+@lighttpd @website
+mkdir www
+mkdir www2
+vim /etc/lighttpd/lighttpd.conf
+
+add top
+
+
+server.modules = (
+)
+
+$SERVER["socket"] == "0.0.0.0:81" {
+server.document-root = "/home/git/data2022"
+}
+
+server.document-root        = "/home/git/www"
+server.upload-dirs          = ( "/tmp" )
+server.port                 = 80
+
+
+
+### #syncthing
+vim ~/.config/syncthing/config.xml 
+127.0.0.1 --> 0.0.0.0
+
+设置开机自启
+vim /etc/rc.local
+add
+source /etc/profile                    #user env var, load first
+su git -c "/usr/bin/syncthing"
+
+chmod +x /etc/rc.d/rc.local
+
+or sysctl
+
+https://blog.csdn.net/sD7O95O/article/details/108353430
+
+别为直接运行脚本 start-direct.sh、后台运行脚本 start-background.sh、服务文件 syncthing.service、安装服务脚本 InstallService.sh
+start-direct.sh
+#!/bin/ash
+su nu -c "exec /usr/bin/syncthing"
+start-background.sh
+#! /bin/sh
+cd /media/dlgcy/syncthing
+nohup ./start-direct.sh &
+
+servic file: syncthing.service
+[Unit]
+Description=Syncthing Service
+After=network.target
+ 
+ 
+[Service]
+User=root
+Type=forking
+ExecStartPre=/bin/sleep 10
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+ExecStart=/media/dlgcy/syncthing/start-background.sh
+Restart=always
+RestartSec=30
+StartLimitInterval=20
+StandardOutput=/media/dlgcy/syncthing/log
+ 
+ 
+[Install]
+WantedBy=multi-user.target
+
+installService.sh
+chmod +x ./start-direct.sh
+chmod +x ./start-background.sh
+touch ./log
+cp ./syncthing.service /usr/lib/systemd/system/syncthing.service
+ 
+ 
+systemctl daemon-reload
+systemctl enable syncthing
+systemctl start syncthing
+systemctl status syncthing
+this two scrips put to syncthing install dir
+
+
+
+
+
+or supervisor
+
+配置完共享文件夹和远程设备，再将文件夹与设备绑定即可自动同步。
+ 
+
+下面为supervisor自启动配置，supervisor安装请看《【Docker初探】第一节：Docker+Alpine+Openssh+Supervisor部署Linux基础环境》：
+
+[program:syncthing]
+# syncthing 为程序的名称
+# 需要执行的命令
+command=/root/syncthing-linux-amd64-v1.2.2/syncthing -no-browser -home="/root/.config/syncthing"
+# 命令执行的目录
+directory=/root/
+# 环境变量
+environment = STNORESTART="1", HOME="/root/"
+# 用户
+user=root
+stopsignal=INT
+# 是否自启动
+autostart=true
+# 是否自动重启
+autorestart=true
+# 自动重启时间间隔（s）
+startsecs=3
+# 错误日志文件
+stderr_logfile=/var/log/syncthing.err.log
+# 输出日志文件
+stdout_logfile=/var/log/syncthing.out.log
+
+
+### hexo
+
+source.git <--- git manager
+pages.git  <--- hexo push
+
+### #time ###
+
+date -R
+--------------------
+vim /etc/crontabs/root
+1 * * * * ntpd -n -d -p ntp.aliyun.com
+# m h d m w cmd
+
+#ntp.ntsc.ac.cn
+------------------------------
+vim /etc/rc.local
+add
+/etc/init.d/ntpwifi.sh
+
+vim /etc/init.d/ntpwifi.sh
+#date -R
+
+uci set wireless.radio1.disabled=0
+uci commit wireless
+wifi
+
+ntpd -nq -p ntp.aliyun.com
+
+
+uci set wireless.radio1.disabled=1
+uci commit wireless
+wifi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

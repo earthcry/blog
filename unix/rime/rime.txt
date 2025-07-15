@@ -1,0 +1,381 @@
+
+rime
+
+rime.im
+https://github.com/rime/home/wiki/UserGuide
+https://github.com/rime/home/wiki/RimeWithIBus
+https://github.com/rime/ibus-rime
+https://www.cnblogs.com/BlackStorm/p/Install-IBUS-RIME-Input-Method-On-Ubuntu-16-04-LTS.html
+
+
+
+
+@ibus-rime
+
+### install ibus-rime: ubuntu-16.04.4
+# providing libyaml-cpp0.5, librime, rime-data, ibus-rime
+# or sudo add-apt-repository ppa:lotem/rime
+
+sudo apt update
+sudo apt install ibus-rime              #ibus-rime-1.0
+#sudo apt install librime-data-wubi      # not default to install   /usr/share/rime-data/*
+#sudo apt install librime-data-zyenpheng librime-data-triungkox3p #古
+#sudo apt install librime-data-ipa_xsampa #国际音标
+
+log out注销；然后进入ibus文字输入设定中将rime加入到活动列表。
+systemSettings/language support/keyboard input method system -->ibus
+systmeSettings/text entry/input sources to use --->add chinese(rime)(ibus)
+super+space    切换输入法
+ctrl+`  --> setup
+
+#ibus-rime-1.2
+#C++11, gcc>=4.8
+gcc -v
+
+## wubi2008 @wubi2008
+cp Nutstore/unix/rime/wubi2008/* ~/.config/ibus/rime
+vim ~/.config/ibus/rime/default.yaml
+schema_list:
+  - schema: wubi86
+  - schema: wubi_pinyin
+  - schema: luna_pinyin
+保存，然后重新部署rime，再按ctrl+`或者F4，就可以切换方案选择rime输入引擎,，就可以使用五笔输入法了。
+
+@wubi add
+加载新输入方案如五笔，从/usr/share/rime-data里：
+ln -s /usr/share/rime-data/wubi86.schema.yaml ~/.config/ibus/rime/wubi86.scheme.yaml
+然后修改rime的设置文件，在schema_list配置信息下添加wubi86配置信息即可：
+vim ~/.config/ibus/rime/default.yaml
+schema_list:
+  - schema: wubi86
+  - schema: wubi_pinyin
+  - schema: luna_pinyin
+保存，然后重新部署rime，再按ctrl+`或者F4，就可以切换方案选择rime输入引擎,，就可以使用五笔输入法了。
+
+
+
+
+## 明月拼音luna_pinyin
+
+我们可以做一些微调设置，可以创建一个文件来对默认的 default.yaml 打补丁：
+vim ~/.config/ibus/rime/default.custom.yaml
+patch:
+  schema_list:
+    - schema: luna_pinyin
+    - schema: cangjie5
+    - schema: luna_pinyin_fluency
+    - schema: luna_pinyin_simp
+    - schema: jyutping
+  "menu/page_size": 6
+这里我更换了可用的输入方案，并将候选词数改为 6 个。
+
+@guangbiao
+WPS 等 qt 程序下输入法不跟随光标，需要安装 qtconfig-qt4 以及 ibus-qt4 包，在 qtconfig 的 interface 里面设置 input style 为 Over the spot ，保存退出再运行基于 qt 的程序即可看到输入法跟随光标。
+
+目前（基于我简陋的自定义设置）发现的问题：
+
+    [ ] 基于 qt 的程序下即使设置了跟随光标，也会保留一个预显示框；
+    [ ] 联想能力还是不足，但记忆功能好一点；
+    [-] 没有网址模式，输入网址时不太方便；
+    看了默认配置，主键区的 . 可以触发 url 模式，小键盘暂时不能。
+    [ ] 没有设置小键盘的输入功能，默认效果是回车会换到下一行，并接受选词；
+    [ ] 没有设置选词键位，默认效果是 Arrow Up / Arrow Down 、 PageUp / PageDown 、 , / . 选词；
+    [x] 没有设置默认英文输入，切换中文输入的功能（应该是ibus的设置）；
+    ibus 跟 fcitx 一样，都可以在系统里设置输入法，新增一个 Chinese (Rime) 就好了。我之前是只有一个 Chinese ，然后在终端 ibus engine rime 设置的输入法，所以格外别扭。
+    [x] 没有设置默认英文模式。如果可以给 Rime 设置默认英文模式的话，只保留一个 Entry 就好了；
+    给选词方案加一个 patch 就好了，比如在我的 luna_pinyin_simp.custom.yaml 中：
+
+patch:
+  "switches/@0/reset": 1
+
+效果是把 switches 项下的第一个设置也就是 ascii_mode 默认打开。
+
+    [ ] 输入状态是全局的，不能对不同窗口保留不同的中英文状态。
+
+
+@dict
+#dict
+系统词典：xxx.dict.yaml --deploy--> xxx.table.bin;
+用户词典：xxx.userdb.kct;
+#词库导入设置
+RIME的词典由两部分组成。
+1.系统文本词库（xxx.dict.yaml结尾），通过「重新部署/deploy」生成的固态词典（一般以xxx.table.bin结尾）。这部份词库因为在输入过程是固定不変的，所以存在用大量的词量，也不允许用户来直接删除。
+另一部分就是记录我们用户输入习惯的用户词典（一般以xxx.userdb.kct）结尾。这部份词库的词量，正常情况下是由用户输入的时候随时生成的；其词量可以动态调整，数量理论上来说不会特别多，也允许用户自行删除（shift+delete）。
+2.导入词库之前需进行繁简转换
+
+五、RIME个人词库配置同步（针对文件installation.yaml，文件夹sync）
+RIME本身不可以实现云同步，但我们可以借助第三方云端实现此功能。我本人使用的坚果云网盘，类似的像是百度，115均可。
+第一步打开用户文件夹中的installation.yaml文件，修改sync_dir指向位置（这个位置将是RIME的词典与配置存储的地方）
+另外也可修改installation_id为自己喜欢的名称（为字母下划线数字，也可以不修改，我的是修改为了lin）
+...
+佛振曰：
+* 新增：固态词典可引用多份码表文件 
+
+深蓝词库转换；精确的简繁体转换TextPro OpenCC；牛人语录；
+深蓝的强処在於能够将各頪输入法的二进制词库还原成文本码表的形式；
+
+词库管理：
+【中州韵】和【鼠须管】暂无图形工具，可取得 librime 编译产出的工具程序 
+
+@dictManager
+#close rime for free
+cd ~/.config/ibus/rime
+#bin/rime_dict_manager [--list]
+rime_dict_manager -l
+
+shift+delete
+通过命令行方式实现以下功能。 
+执行 rime_dict_manager 之前需要关闭正在使用的输入法，释放以独占方式打开的词典文件。 
+请，将工作目录设为「Rime 用户文件夹」。
+在此执行 rime_dict_manager 查看所支持的参数及命令格式；加上参数 --list 查看用户词典列表。
+
+Rime 所要求的 UTF-8 (no BOM) 编码： 
+:se fenc=utf8 nobomb ff=unix
+
+同步备份：
+default: \sync\UUID
+custom:
+installation.yaml
+sync_dir: 'D:\Dropbox\RimeSync'
+usb:
+sync_dir: '/Volumes/USBDRIVE/RimeSync'
+默认地，每套 Rime 会随机生成一个 UUID 作为标识。不同 installation ID 可区分来自不同机器/系统的用户词典。 
+
+
+    编码转换
+
+window GBK(gb2312)
+linux  UTF-8
+
+vim diaplay encoding:
+:set fileencoding
+
+~/.vimrc:
+set encoding=utf-8 fileencodings=ucs-bom,utf-8,cp936
+
+文件编码转换
+1.在Vim中直接进行转换文件编码,比如将一个文件转换成utf-8格式
+:set fileencoding=utf-8
+
+2. iconv 转换，iconv的命令格式如下：
+iconv -f encoding -t encoding inputfile
+比如将一个UTF-8 编码的文件转换成GBK编码
+iconv -f GBK -t UTF-8 file1 -o file2
+
+
+
+
+
+@datafile 
+Rime 中的數據文件分佈及作用
+除程序文件以外，Rime 還包括多種數據文件。 這些數據文件存在於以下位置：
+
+共享資料夾
+
+【中州韻】 /usr/share/rime-data/
+【小狼毫】 "安裝目錄\data"
+【鼠鬚管】 "/Library/Input Methods/Squirrel.app/Contents/SharedSupport/"
+用戶資料夾
+
+【中州韻】 ~/.config/ibus/rime/ （0.9.1 以下版本爲 ~/.ibus/rime/）
+【小狼毫】 "%APPDATA%\Rime"
+【鼠鬚管】 ~/Library/Rime/
+
+用戶資料夾則包含爲用戶準備的內容，如：
+
+〔全局設定〕 default.yaml
+〔發行版設定〕 weasel.yaml
+〔預設輸入方案副本〕 <方案標識>.schema.yaml
+※〔安裝信息〕 installation.yaml
+※〔用戶狀態信息〕 user.yaml
+編譯輸入方案所產出的二進制文件：
+
+〔Rime 棱鏡〕 <方案標識>.prism.bin
+〔Rime 固態詞典〕 <詞典名>.table.bin
+〔Rime 反查詞典〕 <詞典名>.reverse.bin
+記錄用戶寫作習慣的文件：
+
+※〔用戶詞典〕 <詞典名>.userdb.kct
+※〔用戶詞典快照〕 <詞典名>.userdb.txt、<詞典名>.userdb.kct.snapshot 見於同步文件夾
+以及用戶自己設定的：
+
+※〔用戶對全局設定的定製信息〕 default.custom.yaml
+※〔用戶對預設輸入方案的定製信息〕 <方案標識>.custom.yaml
+※〔用戶自製輸入方案〕及配套的詞典源文件
+註：以上標有 ※ 號的文件，包含用戶資料，您在清理文件時要注意備份！
+
+
+@custom 
+方案定義
+一套輸入方案，通常包含「方案定義」和「詞典」文件。
+
+方案定義，命名爲 <方案標識>.schema.yaml，是一份包含輸入方案配置信息的 YAML 文檔。
+
+關閉用戶詞典和字頻調整
+以【五笔86】爲例：
+
+# wubi86.custom.yaml
+patch:
+  translator/enable_user_dict: false
+
+
+@rime-data
+
+2.1 朙月拼音（预装）
+sudo make install librime-data-luna-pinyin
+2.2 双拼
+sudo apt-get install librime-data-double-pinyin
+2.3 宫保拼音
+sudo apt-get install librime-data-combo-pinyin
+2.4 速记打字法
+sudo apt-get install librime-data-stenotype
+2.5 注音、地球拼音
+sudo apt-get install librime-data-terra-pinyin librime-data-bopomofo
+2.6 仓颉五代（预装）
+sudo apt-get install librime-data-cangjie5
+2.7 速成五代
+sudo apt-get install librime-data-quick5
+2.8 五笔86、袖珍简化字拼音、五笔画
+sudo apt-get install librime-data-wubi librime-data-pinyin-simp
+2.9 IPA (X-SAMPA)
+sudo apt-get install librime-data-ipa-xsampa
+2.10 上海吴语
+sudo apt-get install librime-data-wugniu
+2.11 粤拼
+sudo apt-get install librime-data-jyutping
+2.12 中古汉语拼音
+sudo apt-get install librime-data-zyenpheng librime-data-triungkox3p
+2.13 快速仓颉
+sudo apt-get install librime-data-scj6
+2.14 笔顺五码
+sudo apt-get install librime-data-stroke6
+
+
+
+
+
+
+@fcitx
+###ubuntu-14.04################################################3
+fcitx-im.org
+language support:chinese(simp)pinyin(trad)rime
+add-apt-repository ppa:fcitx-team/nightly #add source
+apt-get update
+apt-cache search fcitx
+apt-get install fcitx			#flexible IM framework
+#config fcitx
+GUI config
+sudo im-config
+#sudo im-config -s fcitx
+reboot
+apt-cache search fcitx
+apt-get install fcitx-rime		#rime engine
+fcitx -r
+
+#apt-get install fcitx-table-wubi	# f framework table
+
+copy file of wubi2008
+reploy:
+rm -rf ~/.config/fcitx/default.yaml
+fcitx -r
+it will auto create table.
+
+import userdict:
+# ~/.config/fcitx/rime
+# close rime
+rime_dict_manager -r wubi2008.userdb.txt
+
+
+#config:
+~/.config/fcitx/rime
+/use/share/rime-data
+
+#wubi2008 @wubi2008
+custom wubi2008:
+default.custom.yaml
+wubi2008.schema.yaml
+wubi2008.dict.yaml
+reploy:
+rm -rf ~/.config/fcitx/default.yaml
+restart im
+
+sync userdict:
+# ~/.config/fcitx/rime
+# installation.yaml
+#	id: nudoubuntu
+#	sync_dir: /home/xxx
+rime_dict_manager -s
+
+
+添词、删词、调序；
+添词：1.每个字都拼出，再按space; 2.entry 4 char, and select by number;
+调序：select number;
+删词：select, shift+delete
+微信
+
+script_translator 支持自动造词
+rime输入法怎么自造词
+方法：修改配置文件，实现智能自动造词
+rime支持根据用户输入习惯进行自动造词。比如我要打“多线程”这个词，可是没有qxtk这个编码。那么我使用单字多打一次或几次“多”、“线”、“程”，rime就会给你自动造词。
+如果是修改默认配置文件，只要将上面那句话translator/enable_user_dict: true加在patch下就行了 。
+
+对于自造词,第一次输入的时候用辅助码选字,第二次直接输入双拼码就...
+
+解决自动造词时词序固定问题
+translator:
+dictionary: yourdict.extended#导入你自己的词库
+disable_user_dict_for_patterns:#一简和二简禁止自动调频
+- "^z.*$"
+- "^.$"
+- "^..$"
+
+
+上下选择光标，然后按shift+delete
+###ubuntu-14.04###############################################3
+
+
+
+###ubuntu-12.04
+fqrouter:
+https://code.google.com/p/rimeime/
+Ubuntu PPA:
+launchpad.net/ubuntu/+ppas
+
+### install fcitx:
+# this repo provides libkyotocabinet, libgoogle-glog for Ubuntu 12.04;
+# these packages are officially supported since Ubuntu 12.10.
+sudo add-apt-repository ppa:fcitx-team/nightly
+sudo add-apt-repository ppa:fcitx-team/dailybuild-fcitx-master
+sudo apt-get update
+sudo apt-get install fcitx-rime
+
+# http://wiki.ubuntu.org.cn/fcitx
+# setup in english environment:
+
+>sudo apt-get install fcitx-pinyin im-switch
+>im-switch -s fcitx -z all_ALL
+
+# edit /etc/X11/xinit/xinput.d/fcitx
+xim=fcitx
+xim_program=/usr/bin/fcitx
+xim_arg=''
+gtk_im_module=fcitx
+qt4_im_module=fcitx
+depends='fcitx'
+
+# not appear fcitx in GTK program at sometime, so
+# modify: gtk.immodules, immodules.cache
+# /usr/lib/gtk-3.0/3.0.0/immodules.cache
+# 如果immodules.cache文件没有，Ubuntu用户可以用生成
+# sudo gtk-query-immodules-3.0 >/usr/lib/gtk-3.0/3.0.0/immodules.cache 
+#将：
+#"fcitx" "Fcitx (Free Chinese Input Toy of X)" "fcitx" "/usr/share/locale" "ja:ko:zh:*" 
+#更改为：
+#"fcitx" "Fcitx (Free Chinese Input Toy of X)" "fcitx" "/usr/share/locale" "en:ja:ko:zh:*" 
+
+###ubuntu-12.04
+
+
+
+
+

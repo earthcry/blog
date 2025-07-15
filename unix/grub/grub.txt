@@ -1,0 +1,483 @@
+
+
+
+
+
+
+
+
+@grub @menu @boot @config
+not/boot/grub/grub.cfg
+/etc/grub.d/custom
+update-grub
+
+
+
+
+
+
+
+_@multboot _@grub _@mbr
+http://blog.sina.com.cn/s/blog_8020e4110101cc0r.html
+1.livecd
+2.sudo fdisk -l
+3.sudo -i
+4.mount /dev/sda6 /mnt
+5.mount /dev/sda7 /mnt/boot
+6.grub-install --root-directory=/mnt/ /dev/sda
+7.reboot
+8.update-grub
+9.grub-install /dev/sda
+
+_@path grub2 in ubuntu:
+/boot/grub/grub.cfg	//menu.lst;only look and not edit;
+/etc/grub.d/		//custom menu; grub scripts to create grub.cfg;
+/etc/default/grub	//custom menu;
+
+
+_@ubuntu install _@menu _@installubuntu
+
+ Windows下安装ubuntu，
+1. bootice  grldr
+2. grub2
+3. easybcd
+
+/etc/grub.d/40_custom
+
+menuentry 'SystemRescueCD' {
+    loopback loop (hd0,9)/iso/sysrescue.iso
+    set root='(loop)'
+    linux (loop)/isolinux/rescue64 docache isoloop=/iso/sysrescue.iso
+    initrd (loop)/isolinux/initram.igz
+}
+
+
+menuentry 'Ubuntu 12.04 LiveCD' {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos8)'
+    loopback loop /iso/ubuntu.iso
+    linux (loop)/casper/vmlinuz.efi boot=casper iso-scan/filename=/iso/ubuntu.iso
+    initrd (loop)/casper/initrd.lz
+}
+
+sudu  fd -l
+umount -l /isodevice
+/ubuntu-16.04.3-desktop-amd64.iso
+  set root=(loop)
+  initrd /casper/initrd.lz
+  
+menuentry "WinPE.iso" --class windows {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos9'
+    linux16 /iso/memdisk iso raw
+    initrd16 /iso/win7pe.iso 
+}
+
+~$ update-grub2
+
+
+# grub2的分区编号。是123456，not 012345，而且扩展分区算一个区。
+
+
+
+
+编辑你U盘GRUB2的配置文件（一般是U盘/grub2/grub.cfg），在启动项那个区域添加以下几行。
+
+menuentry 'Boot Windows 8 PE ISO'{
+
+        set root='(hd0,msdos1)'
+
+        echo 'Loading Memdisk...'
+
+        insmod memdisk
+
+       linux16 /boot/memdisk iso raw
+
+        echo 'Loading ISO...'
+
+      initrd16 /boot/Win8PE.iso
+
+}
+
+  顺利的话，可以正常引导进入PE。
+
+menuentry 'CDlinux'{
+
+        set root='(hd0,msdos1)'
+
+        echo 'Loading Memdisk...'
+
+        insmod memdisk
+
+       linux16 /boot/memdisk iso raw
+
+        echo 'Loading ISO...'
+
+      initrd16 /boot/CDlinux.iso
+
+}
+
+menuentry 'Ubuntu 12.04 server'{
+
+        set root='(hd0,msdos1)'
+
+        echo 'Loading Memdisk...'
+
+        insmod memdisk
+
+       linux16 /boot/memdisk iso raw
+
+        echo 'Loading ISO...'
+
+      initrd16 /boot/ubuntu-12.04-server-amd64.iso
+
+}
+
+
+
+multos boot menu:
+hidden
+win/unix
+pe/cdlinux
+
+_@boot computer
+power->ROM/BIOS->First storage->hd/MBR->part/DPT->part/os
+
+MBR:
+512B        /1B=8:1010101010101010;4B,2^32
+1-446   : call machine code of os
+447-510 : partition table
+511-512 : mbr label(0x55,0xAA)//y boot | n boot
+partition table:
+64B=16+16+16+16 //4 main parts
+16=1 + 2~4 + 5 + 6~8 + 9~12 + 13~16
+1   : 0x80 is active part,so control to this.
+2~4 : part first sector phisc addr
+5   : main part type
+6~8 : part last sector phisc addr
+9~12: part first sector logic addr
+1316: main part sectors numbers
+
+DPT:
+main parts:VBR volume boot record;for os;
+extended part:parttable in EBR in 1sector;
+              pt -> logicPart1&logicPart2;
+              pt1 in logicPart1;
+              pt2 in logicPart2;
+              pt2-> lP3&lP4;
+              pt4-> lP5&lP6;
+              pt6-> lP7&lP7;
+boot loader:grub
+over
+
+bios is for diffrt os;
+for uefi, it is different story.
+http://www.dalei.org/linux-unix-boot-process
+
+cpu default to exec ramaddr:offffh:ooooh cmd;bios;
+bios->POST->cp mbr to ramdr:o7cooh;
+grub/lilo cp self to ramddr:o6cooh;search active part;cp 1sector to 07cooh;
+loader kernel;
+
+source---编译器-->exec prgrm---加载器-->os--->as进程-->
+//exec prgrm/cpu machine codes;
+cpu--->数字电路逻辑电路/加法电路译码电路;
+内存寄存器-->时序电路/加电记忆；
+数字电路研究0101高低电平之间的转换和输入输出规律；
+数字电路-->模拟电路，二极管，三极管；
+大量三极管-->数字电路-->寄存器-->二进制数；
+模拟电路研究大量电子加压后的宏观运动规律；
+体现到数字电路上就是01的高低电平；
+BIOS-MBR,UEFI-GPT
+From Power UP to Bash Prompt
+linux内核设计的艺术
+
+
+_@grub of centos:
+_@UEFI
+
+UEFI     - BIOS
+GUID/GPT - MBR      2T
+os -> guid -> uefi -> firmware -> rom ->hardware
+BIOS/MBR --2T--> UEFI/GPT
+
+_@winly
+grub1->grub4dos
+grub2->burg4dos->winly
+
+_@grub2
+
+dev name in grub2:
+(fd0)            //all fdisk;
+(hd0,1)          //first hd and first part;
+(hd0,5)/boot/vmlinuz          //first hd and first logic part;
+
+install/boot grub2:
+mbr or dpt
+
+on boot menu:
+e         : to edit;
+enter     : new line;
+ctrl+x    : edited boot
+ctrl+c    : cmd line
+esc       : quit
+tab       : look cmd
+
+grub>set root=(hd0,1)
+grub>chainloader +1
+grub>boot
+
+grub>set root=(hd1,5)
+grub>linux /boot/vmlinuz-xxx-xxx root=/dev/sdb5
+grub>initrd /boot/initrd.img-xxx-xxx    //tab to look;
+grub>boot
+
+  set root='hd0,msdos8'
+  search --set -f /ubuntu-16.04.3-desktop-amd64.iso
+  loopback loop /ubuntu-16.04.3-desktop-amd64.iso
+  set root=(loop)
+  linux /casper/vmlinuz.efi boot=casper iso-scan/filename=/ubuntu-16.04.3-desktop-amd64.iso
+  initrd /casper/initrd.lz
+  boot
+
+
+_@grub2 cmd:
+1.help
+help search
+2.set
+3.default
+    0.os1;  1.os2;
+4.root
+    boot part
+5.insmod/rmmod
+    add/del modules
+    insmod jpeg
+    insmod ntfs
+    rmmod  png
+6.drivemap
+7.ls
+    ls devs
+    ls -l       // more; label,uuid;
+    ls /        // root part/files
+    ls (hd1,1)
+8.search
+    search -f /nfldr        //return partnumber have ntldr;
+    search -l LINUX         //search label=LINUX part;
+    search --set -f /ntldr  //set root have ntldr;more lose;
+9.loopback
+    construct backdev(huifang) 
+
+    loopback lo0 (hd1,1)/abc.iso    //abc.img in abc.iso
+    linux (lo0)/memdisk
+    initrd (lo0)/abc.img
+
+    looback -d lo0      //del lo0
+10.pager
+    display in pages;
+    set pager=1     //stop at 1 page,space to continue
+    set pager=0     //no pages;
+11.linux
+    usage linuxcmd replace kernelcmd in grub
+12.chainloader
+    call a booter;
+    chainloader (hd0,1)+1
+13.grub2 mount fdimg
+    menuentry "maxdos.img" {
+        linux16 /memdisk
+        initrd16 /maxdos.img
+    }
+
+    menuentry "win7pe.iso" {
+        linux16 /memdisk
+        initrd16 /win7pe.iso
+    }
+14.grub2 mount ubuntu-desktop.iso to livecd
+
+    // ram > iso   
+    menuentry "Ubuntu 10.01 LiveCD" {
+        search -f -s /ubuntu.iso
+        loopback loop /ubuntu.iso
+        linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/ubuntu.iso
+        initrd (loop)/casper/initrd.lz
+    }
+
+    // ram < iso   
+    menuentry "Ubuntu 10.01 LiveCD" {
+        search -f -s /ubuntu.iso
+        linux /vmlinuz boot=casper iso-scan/filename=/ubuntu..iso
+        initrd /initrd.lz
+    }
+
+menuentry "启动ubuntu-10.10 LiveCD模式"  --class ubuntu {
+        insmod ntfs
+        set root='(hd0,2)'
+        loopback loop (hd0,2)/ubuntu.iso
+        linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/ubuntu.iso locale=zh_CN.UTF-8 splash
+        initrd (loop)/casper/initrd.lz
+}
+
+menuentry "无线破解bt6系统" --class windows {
+        set root='(hd0,1)'
+        linux16 /burg/memdisk iso raw
+        initrd16 /TYPE/bt6.iso
+}
+
+menuentry "启动移动硬盘系统" --class windows --class os {
+        insmod part_msdos
+        insmod ntfs
+        set root='(hd0,msdos1)'
+        chainloader +1
+}
+
+grub.iso menu:  dirtree:/boot/grub/grub.cfg;/boot/grub2/*.mod
+set root="(cd)"
+    menuentry "maxdos.img" {
+        linux16 /boot/memdisk
+        initrd16 /maxdos.img
+    }
+
+    menuentry "win7pe.iso" {
+        linux16 /boot/memdisk
+        initrd16 /win7pe.iso
+    }
+
+set timeout=-1
+
+grub part hidden:
+parttool (hd0,1) hidden -
+parttool (hd0,2) hidden +
+set root=(hd0,1)
+chainloader +1
+parttool $(root) boot+
+boot
+
+
+
+1、UEFI 
+先将你的win8pe的EFI启动文件bootmgr.efi或者你原来的efi\boot\bootx64.efi改名字为win8pe.efi放在winly文件夹
+menuentry "【3】启动UEFI主板的windows8PE系统（如果有）" --class windows --class os {
+search --no-floppy --file --set=root /winly/win8pe.efi
+chainloader /winly/win8pe.efi
+}
+2、bios主板启动
+menuentry "【3】启动bios主板的windows8pe系统（如果有）" --class windows --class os {
+set root=(hdx,y)指定它
+ntldr (hd0,1)/x /bootmgr
+}
+fukystone 发表于 2013-5-22 19:08 
+麻烦就在这里了，客观环境限制，移动硬盘有时候是hd0，有时候是hd1，这个得看主板了。
+那么怎么写菜单来 ...
+
+兄弟，这就是使用的智慧了。
+比如说，你将在移动盘的根目录放一个唯一的标识文件，比如123命名的空白文档。
+menuentry "【6】启动指定的盘的windows" --class windows --class os {
+search --no-floppy --file --set=root /123
+ntldr /bootmgr
+}
+
+
+grub2 cfg:
+
+
+
+
+
+grub2 working:
+update-grub -> read grub -> exec scripts ->touch grub.cfg
+
+grub-install /dev/sda
+
+
++++++++++++++++++++++++++++++++++++
+_@grub2info1
+1.grub before
+2.加载器的作用
+3.安装grub
+4.引导过程
+5.编写配置文件
+6.主题文件格式
+7.网络引导
+8.通过串行线使用grub
+9.使用电源键
+10.grub镜像文件
+11.文件系统语法和语义
+12.grub交互界面
+13.grub环境变量
+14.命令列表
+15.权限管理
+16.grub2可加载的对象
+17.开机检查
+18.grub的错误信息
+19.调用grub2-install
+20.grub2-mkconfig
+21.grub2-mkpasswd-pbkdf2
+22.grub2-mkrescue
+23.grub2-mkimage
+24.附录
+
+1.0 Test env
+	virtual box
+	memdisk
+	iso dir
+	grub.iso
+	box iso
+
+
+
+
+
++++++++++++++++++++++++++++++++++++
+grub2下手工添加win7启东项
+vi /etc/grub2.config，
+把下面的这个写到40_custom里
+
+menuentry "Microsoft Windows 7" {
+set root=(hd0,1)
+
+drivemap -s (hd0) $root 
+
+chainloader +1
+}
+
+
+$sudo gedit /boot/grub/grub.cfg
+在类似 ### BEGIN /etc/grub.d/10_linux ###下面添加如下语句：
+menuentry 'Windows 8 (on /dev/sda1)'{
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ntfs
+        set root='(hd0,msdos0)'
+        search --no-floppy --fs-uuid --set=root 98EE2AD5EE2AAC06
+        chainloader +1
+}
+
+_@uuid
+（1）
+[thx_@(none) ~]$ sudo blkid /dev/sda1 
+/dev/sda1: LABEL="win8" UUID="98EE2AD5EE2AAC06" TYPE="ntfs" 
+（2）
+[thx_@(none) ~]$ ls -l /dev/disk/by-uuid/ | grep sda1
+lrwxrwxrwx 1 root root 10  6月 26 19:01 98EE2AD5EE2AAC06 -> ../../sda1
+
+_@fix grub2	//install grub on win
+
+_@grub rescue:
+grub=mbr + /boot/grub
+grub rescue>ls
+grub rescue>ls (hd0,x)/boot/grub | ls (hd0,x)/grub  //many *.mod;*.lst;*.img;grub.cfg;
+grub rescue>set root=(hd0,7)
+grub rescue>set prefix=(hd0,7)/grub
+grub rescue>insmod /grub/normal.mod
+grub rescue>normal
+grub rescue>reboot
+>sudo update-grub
+>sudo grub-install /dev/sda
+// if no /grub,then find out vmlinuz and then;
+sudo mount /dev/sda10 /mnt
+sudo grub-install --boot-directory=/mnt/dev/sda
+reboot
+
+_______________________________________________________________________________

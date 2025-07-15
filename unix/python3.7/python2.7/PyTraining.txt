@@ -1,0 +1,61 @@
+作为国内领先的在线教育品牌，如鹏网推出“Python+爬虫+人工智能”课程，让你足不出户利用下班/课余时间就可以学会Python技术，赶上这波“程序员造富浪潮”。
+Python课程体系
+
+Python培训 第一部分：Python语言
+
+        Python基础：Python语言基础；字符串、时间和日历；异常、文件操作；面向对象；
+        Python进阶编程：网络编程；多线程；XML处理；常用算法；设计模式；
+
+Python培训 第二部分：数据库开发
+
+        基础语句（Select、Delete、Insert、Update）、Where、聚合函数、排序与分组、联合查询、外键约束、子查询；Python+MySQL编程；
+
+Python培训 第三部分：Web前端
+
+        Html、CSS：Html标签；Html5；CSS；CSS3；
+        JavaScript：JavaScript语言；BOM编程；DOM编程；案例；
+        jQuery：选择器；节点操作；事件；隐式迭代和链式编程；动态特效；
+        vue.js：MVVM模式；vue.js常用指令；表单处理；组件；自定义指令；路由；
+        BootStrap：网格系统；组件；导航；缩略图；图片；
+        Web前端项目案例：开发京东PC端首页；开发京东移动端首页；
+
+Python培训 第四部分：Python Web开发
+
+        Web基础：web基础；Http协议；Python自定义Web服务器；
+        Ajax：JSON；Ajax基础；Ajax的开发实例；Ajax跨域和网络安全；
+        框架：Flask框架；Django框架；
+
+Python培训 第五部分：Python Web项目
+
+            亿金二手车 查看项目介绍
+        悦桔拉拉电商 查看项目介绍
+
+Python培训 第六部分：Linux
+
+        Linux基础：Linux安装配置；常规命令；Shell编程；
+        Linux管理：：系统管理；用户管理；磁盘管理；软件包管理；进程管理；网络配置管理；
+        应用服务管理：：FTP服务器；SSH服务器；MySQL服务器；Web服务器；Nginx服务器；
+
+Python培训 第七部分：NoSQL
+
+        MongoDB：MongoDB的优缺点、MongoDB的增删改查、Python操作MongoDB、MongoDB应用案例分析；
+        Redis：Redis的优缺点；Redis常用数据类型（String、List、Set、Sorted Set）、Python操作Redis、Redis应用案例分析；
+
+        Memcached：Memcached配置；Memcached应用案例分析；
+
+Python培训 第八部分：数据可视化
+
+        生成数据：matplotlib；折线图；随机漫步；随机数据模拟；
+        下载数据：CSV文件格式；制作世界人口地图；
+        API：使用Web API；使用Python可视化数据；Hacker News API；
+
+Python培训 第九部分：爬虫技术
+
+        爬虫基础：爬虫原理；urllib、urllib2、requests模块；BeautifulSoup、re、json模块；
+        爬虫高级：反爬虫策略；反-“反爬虫”；爬虫框架(PySpider、Scrapy)；Selenium+PhantomJS；
+        爬虫项目案例：爬取百度贴吧图片；抓取淘宝照片；模拟登录淘宝并获取所有订单；抓取新浪爱问；利用Selenium抓取淘宝旺旺；爬取租房网站数据；
+
+Python培训 第十部分：人工智能
+
+        人工智能基础：人工智能、机器学习和深度学习；
+        人工智能框架：TensorFlow；TensorFlow图片识别；验证码识别；TensorFlow 的可视化；

@@ -1,0 +1,59 @@
+
+
+ox  4 en-cn
+ox  8
+lm  5
+lmp 3
+mw  11
+
+
+Usage:
+7. 一些快捷键：
+Alt+S 发音
+Ctrl + F 像浏览器一样查找内容
+Alt+上 上一个词典
+Alt+下 下一个词典
+Alt+右 前进
+Alt+左 后退
+
+8 一些小方便，在主界面中，直接输入就可以开始查询，无须将焦点移到输入栏；在主界面中，双击任何一个词直接开始查询而无论你是否定义修饰键（此功能可在首选项中关闭）；还有不少，比如近似词提示，未知短语自动拆分等等自己慢慢发现吧。
+
+
+
+
+
+
+
+
+
+
+goldendict
+dsl, bgl,
+
+dict.youdao
+完整收录《柯林斯英汉双解大词典》《21世纪大英汉词典》《新汉英大辞典》《现代汉语大词典》等多部专业权威词典，词库大而全，查词快又准。
+
+Longman Dictionary of Contemporary English
+朗文当代高级英语辞典(英英.英汉双解)(第五版)
+
+babylon 字典, 有中英和英中字典可以下载，直接得到bgl文件，在goldendict 中配置路径即可。
+
+Lingvo 字典安装：下载得到 Longman, oxford, Marriam Webster 字典，dsl 文件goldendict可以直接读取， lsd文件goldendict 无法读取可以不下或者删除。主要的问题在于声音和图像文件的设置。网上可以搜到详细的过程，不过有点太罗嗦了。总结一下很简单：
+• 一般下载到的是分离的image 和 sound .rar的文件包，使用命令将它们解压：unrar e your.rar
+• 使用命令把image和sound添加进zip文件：zip zip文件名 image或sound文件名。zip文件的文件名是 dsl_file_name.files.zip，dsl_file_name 是你的dsl文件名，包含dsl后缀。image和sound可以分别添加，zip 命令就是追加。这里尽量不要ls或者使用tab键，因为文件数量巨大。
+• 配置goldendict中的目录
+• 最后删除解压出的image和sound文件。这里可能出现文件数目太多报错，分成几部分删除就可以了。
+
+另外一个问题（linux下），goldendict默认使用mplayer 发出声音，但是对于长的句子无法读全，有两个解决办法，一，卸载当前mplayer，安装mplayer2；二，改成自带的phonon，但网上有人说phonon容易崩溃，毕竟是qt架构下。
+
+字典安装很多也不是全都有用，以下是我激活的字典按顺序排列：
+Babylon 英中
+longman En-En
+Babylon 中英
+
+dict-en:: search:goldendict langman dsl
+(Trad=成果, Pinyin=cheng2 guo3) result, sequel, consequent, achievement, gain, profit
+同义词---dict guide
+单词本/历史---export
+
+

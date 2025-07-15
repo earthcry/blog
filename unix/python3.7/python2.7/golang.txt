@@ -1,0 +1,70 @@
+
+程序的编译与解释有什么区别？
+
+作者：pansz
+链接：https://www.zhihu.com/question/21486706/answer/18642540
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+对 C 语言或者其他编译型语言来说，编译生成了目标文件，而这个目标文件是针对特定的 CPU 体系的，为 ARM 生成的目标文件，不能被用于 MIPS 的 CPU。这段代码在编译过程中就已经被翻译成了目标 CPU 指令，所以，如果这个程序需要在另外一种 CPU 上面运行，这个代码就必须重新编译。对于各种非编译型语言（例如python/java）来说，同样也可能存在某种编译过程，但他们编译生成的通常是一种『平台无关』的中间代码，这种代码一般不是针对特定的 CPU 平台，他们是在运行过程中才被翻译成目标 CPU 指令的，因而，在 ARM CPU 上能执行，换到 MIPS 也能执行，换到 X86 也能执行，不需要重新对源代码进行编译。至于为什么会有虚拟机的存在？这个答案也很简单了，因为那些非编译型语言生成的并不是目标平台的代码，而是某种中间代码。而能够运行这种中间代码的机器并不广泛存在，所以我们在每个不同的平台中用软件模拟出这个假想平台的虚拟机，这个虚拟机执行这种中间代码，而虚拟机负责把代码转换成最终的目标平台上的指令。--简单总结：1，编译型语言在编译过程中生成目标平台的指令，解释型语言在运行过程中才生成目标平台的指令。2，虚拟机的任务是在运行过程中将中间代码翻译成目标平台的指令。编辑于 2013-08-30
+
+@install golang
+
+1.download go1.9.1.linux-amd64.tar.gz
+2.sudo tar -zxvf go*.tar.gz -C /usr/local
+3.sudo vim /etc/profile
+    or vim ./bashrc
+
+    export GOROOT=/usr/local/go     # install dir
+    export GOBIN=$GOROOT/bin        # tools
+    export PATH=$PATH:$GOBIN
+    export GOPATH=$HOME/goproj      # workdir
+4.source /etc/profile               # not reboot work
+5.go version / go env               # test
+6.goporj
+    cd ~/goproj
+    mkdir bin src pkg
+之后构建go项目放在src下面， 生成的安装包会自动放在bin下，生成过程中的中间文件会放在pkg下面。
+
+
+go run hello.go
+go build -o hi.out
+go build -ldflags "-s -w" -o hi.out
+
+7.Golang交叉编译
+cd /usr/local/go/src/
+sudo GOOS=windows GOARCH=amd64 ./make.bash
+sudo GOOS=android GOARCH=arm ./make.bash
+
+err: $HOME/go1.4
+download go1.4.3.linux-amd64.tar.gz
+sudo tar -zxvf ./Down/go*.tar.gz -C $HOME/go1.4
+
+GOOS=linux GOARCH=amd64 go build main.go
+GOOS=linux GOARCH=amd64 go build -o newName_linux.bin  main.go
+GOOS=android GOARCH=arm go build -o newName_android.apk  main.go
+
+
+安装配置LiteIDE
+
+    可以从Golang中国这里下载，然后将其解压到某个目录，这里我是解压到了/usr/local/目录，然后在该目录下，就可以看到liteide目录了
+    然后执行命令gksudo gedit /usr/share/applications/liteide.desktop，如果没安装gksu，首先根据提示安装即可
+
+    然后讲下面的内容写到新建的liteide.desktop文件中：
+
+        [Desktop Entry]
+        Name=liteIDE
+        Encoding=UTF-8
+        Type=Application
+        Exec=/usr/local/liteide/bin/liteide
+        Terminal=false
+        Icon=/usr/local/liteide/share/liteide/welcome/images/liteide400.png
+        Comment=Integrated Development Environment
+        StartupNotify=true
+        Categories=Development;IDE;
+        Name[en]=liteIDE
+
+    然后我们就可以搜索到LiteIDE了，将其固定到桌面，打开之后在选项中修改LiteEnv的linux64以及linux64-local这两个文件，将其中的GOROOT修改为/usr/local/go
+    这样就完成了LiteIDE的安装配置了
+
+

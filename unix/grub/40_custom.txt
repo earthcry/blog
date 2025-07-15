@@ -1,0 +1,31 @@
+#!/bin/sh
+#/etc/grub.d/40_custom.txt
+exec tail -n +3 $0
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+# /etc/grub.d/
+# update-grub2
+# systemrescuecd-x86_64.iso
+set timeout=1
+menuentry 'SystemRescueCD' {
+    loopback loop (hd0,5)/winpe/systemrescuecd-x86-4.5.1.iso
+    set root='(loop)'
+    linux (loop)/isolinux/rescue64 docache isoloop=/winpe/systemrescuecd-x86-4.5.1.iso
+    initrd (loop)/isolinux/initram.igz
+}
+menuentry 'Ubuntu 16.04 LiveCD' {
+    loopback loop (hd0,6)/ubuntu-16.04.7-desktop-amd64.iso
+    set root='(loop)'
+    linux /casper/vmlinuz boot=casper iso-scan/filename=/ubuntu-16.04.7-desktop-amd64.iso
+    initrd /casper/initrd
+}
+menuentry "WinPE.iso" --class windows {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos5'
+    linux16 /winpe/memdisk6.03 iso raw
+    initrd16 /winpe/win7pe.iso                                  
+}
+
+# grub2的分区编号。是123456，not 012345，而且扩展分区算一个区。

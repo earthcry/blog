@@ -1,0 +1,437 @@
+
+
+ socket
+
+
+我学完python基础后，第一件事就是学习python socket编程，
+这让我想起了以前学习unix socket的编程的经历，很类似的，不过
+python类库丰富啊，有很多包装好的socket类库，例如 asyncore, asynchat, socketserver，basehttpserver, zeromq
+
+发现 @红薯  老大 真给力啊   改天把你 发过的帖子 都给 你抓下来 
+
+twisted
+协程coroutine
+python network programming.pdf
+http://blog.csdn.net/taiyang1987912/article/details/44656181
+
+TCP/IP，ICMP/IP，UDP/IP . 
+socket type: stream,datagram和raw。
+
+
+
+python之socket编程
+http://www.cnblogs.com/aylin/p/5572104.html
+python socket编程详细介绍
+http://yangrong.blog.51cto.com/6945369/1339593
+
+    python的socket通信实例
+
+    2014-08-24 11:25:47      0个评论    来源：北雨南萍 
+https://www.2cto.com/kf/201408/328150.html
+
+ 一、socket简介
+1. 套接字
+套接字是为特定网络协议(例如TCP/IP，ICMP/IP，UDP/IP等)套件对上的网络应用程序提供者提供当前可移植标准的对象。
+它们允许程序接受并进行连接，如发送和接受数据。为了建立通信通道，网络通信的每个端点拥有一个套接字对象极为重要。
+套接字为BSD UNIX系统核心的一部分，而且他们也被许多其他类似UNIX的操作系统包括Linux所采纳。
+许多非BSD UNIX系统（如ms-dos，windows，os/2，mac os及大部分主机环境）都以库形式提供对套接字的支持。
+
+三种最流行的套接字类型是:stream,datagram和raw。
+stream和datagram套接字可以直接与TCP协议进行接口，
+raw套接字则接口到IP协议。但套接字并不限于TCP/IP。
+
+2、套接字模块
+套接字模块是一个非常简单的基于对象的接口，它提供对低层BSD套接字样式网络的访问。
+使用该模块可以实现客户机和服务器套接字。
+要在python 中建立具有TCP和流套接字的简单服务器，需要使用socket模块。
+利用该模块包含的函数和类定义，可生成通过网络通信的程序。
+3. 一般来说，建立服务器连接需要六个步骤。
+第1步: 创建socket对象。调用socket构造函数。
+
+socket=socket.socket(familly,type)
+family:
+    AF_UNIX (Unix域，用于同一台机器上的进程间通讯)
+    AF_INET（对于IPV4协议的TCP和 UDP），
+type:
+    SOCK_STREAM（流套接字）或者  TCP
+    SOCK_DGRAM（数据报文套接字） UDP
+    SOCK_RAW（raw套接字）。
+
+第2步: 是将socket绑定（指派）到指定地址上，
+
+socket.bind(address)
+socket.bind((host,port))
+
+address必须是一个双元素元组,((host,port)),主机名或者ip地址+端口号。
+如果端口号正在被使用或者保留，或者主机名或ip地址错误，则引发socke.error异常。
+
+第3步: 绑定后，必须准备好套接字，以便接受连接请求。
+
+socket.listen(backlog)
+
+backlog指定了最多连接数，至少为1，接到连接请求后，这些请求必须排队，如果队列已满，则拒绝请求。
+
+第4步: 服务器套接字通过socket的accept方法等待客户请求一个连接：
+
+connection,address=socket.accept()
+
+调用accept方法时，socket会进入'waiting'（或阻塞）状态。客户请求连接时，方法建立连接并返回服务器。
+accept方法返回一个含有俩个元素的元组，形如(connection,address)。
+第一个元素（connection）是新的socket对象，服务器通过它与客户通信；
+第二个元素（address）是客户的internet地址。
+
+第5步: 处理阶段，
+服务器和客户通过send和recv方法通信（传输数据）。
+服务器调用send，并采用字符串形式向客户发送信息。send方法返回已发送的字符个数。
+服务器使用recv方法从客户接受信息。调用recv时，必须指定一个整数来控制本次调用所接受的最大数据量。
+recv方法在接受数据时会进入'blocket'状态，最后返回一个字符串，用它来表示收到的数据。
+如果发送的量超过recv所允许，数据会被截断。
+多余的数据将缓冲于接受端。以后调用recv时，多余的数据会从缓冲区删除。
+
+recv(bufsize[,flag])
+
+第6步: 传输结束，
+服务器调用socket的close方法以关闭连接。
+4. 建立一个简单客户连接则需要4个步骤。
+第1步，创建一个socket以连接服务器 socket=socket.socket(family,type)
+第2步，使用socket的connect方法连接服务器 socket.connect((host,port))
+第3步，客户和服务器通过send和recv方法通信。
+第4步，结束后，客户通过调用socket的close方法来关闭连接。
+5. python 编写server的步骤：
+第一步是创建socket对象。调用socket构造函数。如：
+socket = socket.socket( family, type )
+第二步是将socket绑定到指定地址。这是通过socket对象的bind方法来实现的：
+socket.bind( address )
+第三步是使用socket套接字的listen方法接收连接请求。
+socket.listen( backlog )
+第四步是服务器套接字通过socket的accept方法等待客户请求一个连接。
+connection, address = socket.accept()
+第一个元素connection是新的socket对象，服务器必须通过它与客户通信；
+第二个元素 address是客户的Internet地址。
+第五步是处理阶段，服务器和客户端通过send和recv方法通信(传输 数据)。
+传输结束，服务器调用socket的close方法关闭连接。
+6.python编写client的步骤：
+创建一个socket以连接服务器：
+socket = socket.socket( family, type )
+socket.connect( (host,port) )
+host代表服务器主机名或IP，port代表服务器进程所绑定的端口号。
+
+如连接成功，客户就可通过套接字与服务器通信，如果连接失败，会引发socket.error异常。
+处理阶段，客户和服务器将通过send方法和recv方法通信。
+传输结束，客户通过调用socket的close方法关闭连接。
+二、socket通信的简单的例子
+1. TCP server端代码
+#!/usr/bin/env python
+#
+# -*- coding:utf-8 -*-
+#
+
+from socket import *
+from time import ctime
+
+HOST = ''
+PORT = 21567
+BUFSIZE=1024
+ADDR=(HOST, PORT)
+
+tcpSrvSock=socket(AF_INET, SOCK_STREAM)
+tcpSrvSock.bind(ADDR)
+tcpSrvSock.listen(5)
+
+while True:
+    print 'waiting for connection ...'
+    tcpCliSock,addr = tcpSrvSock.accept()
+    print '... connected from:', addr
+
+while True:
+    data=tcpCliSock.recv(BUFSIZE)
+    if not data:
+    break
+    tcpCliSock.send('[%s] %s'%(ctime(), data))
+    print [ctime()],':',data
+
+tcpCliSock.close()
+tcpSrvSock.close()
+
+2. TCP client端代码
+#!/usr/bin/env python
+#
+# -*- coding:utf-8 -*-
+#
+
+from socket import *
+
+HOST='localhost'
+PORT=21567
+BUFSIZE=1024
+ADDR=(HOST, PORT)
+
+tcpCliSock=socket(AF_INET, SOCK_STREAM)
+tcpCliSock.connect(ADDR)
+
+while True:
+data = raw_input('>')
+if not data:
+break
+tcpCliSock.send(data)
+data=tcpCliSock.recv(BUFSIZE)
+if not data:
+break
+print data
+
+tcpCliSock.close()
+三、使用SocketServer模块实现TCP和UDP通信
+SocketServer模块简化了网络服务器的开发。
+它提供了四个基本的服务器类:
+TCPServer : 用于TCP协议，它提供客户端与服务端之间连续的数据流通信；
+UDPServer : 用于UDP协议，它的数据封装包是无序的，且有可能会在传输中丢失；
+UnixStreamServer和UnixDatagramServer: 它们不经常用；
+
+这四个类处理同步请求，即只有当当前请求处理完成后，才能开始处理下一个请求。
+如果每个请求的处理需要很长时间才能完成，这种方式就不是很适合。
+因为它要求大量的计算，或因为它返回了大量的数据导致客户端处理很慢。
+解决办法是创建一个独立的进程或线程来处理每个请求，
+使用 ForkingMixIn和ThreadingMixIn mix-in类能实现异步方式；
+
+创建一个服务器有以下几个步骤，
+首先，创建一个BaseRequestHandler类的子类，并重写handle()方法，这个方法将处理输入的请求。
+然后，必须实例一个服务器类，并定义它的服务器地址和请求处理类；
+最后，调用这个服务器对象的request()或 serve_forever() 方法来处理一个或多个请求。
+
+当继承了ThreadingMixIn来线程化处理连接行为时，需要明确定义你的线程在遇到异常关闭的处理行为。
+ThreadingMixIn类定义了一个属性 daemon_threads, 它用来指示服务器是否要等线程线束。
+如果你希望线程行为自动处理，你需要显示设置这个标志。
+它的默认值是 False,意思是在由ThreadingMinIn创建的线程未退出前，主线程不会退出。
+1. TCP通信
+Server端
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+
+import SocketServer
+
+class MyTCPHandler(SocketServer.BaseRequestHandler):
+"""
+The RequestHandler class for our server.
+It is instantiated once per connection to the server, and must
+override the handle() method to implement communication to the
+client.
+"""
+
+def handle(self):
+# self.request is the TCP socket connected to the client
+self.data = self.request.recv(1024).strip()
+print "{} wrote:".format(self.client_address[0])
+print self.data
+# just send back the same data, but upper-cased
+self.request.sendall(self.data.upper())
+
+if __name__ == "__main__":
+HOST, PORT = "localhost", 21577
+# Create the server, binding to localhost on port 21577
+SocketServer.TCPServer.allow_reuse_address = True
+server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
+print " .... waiting for connection"
+
+# Activate the server; this will keep running until you
+# interrupt the program with Ctrl-C
+server.serve_forever()
+
+Client端
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+
+from socket import *
+
+HOST = 'localhost'
+PORT = 21577
+BUFSIZE=1024
+ADDR = (HOST, PORT)
+
+while True:
+tcpCliSock=socket(AF_INET, SOCK_STREAM)
+tcpCliSock.connect(ADDR)
+data=raw_input('>')
+if not data:
+break
+tcpCliSock.send('%s\r\n' % data)
+data=tcpCliSock.recv(BUFSIZE)
+if not data:
+break
+print data.strip()
+tcpCliSock.close()
+
+运行示例：
+Server
+$ python TCPServer.py
+127.0.0.1 wrote:
+hello world with TCP
+127.0.0.1 wrote:
+python is nice
+
+CLIENT:
+$ python TCPClient.py hello world with TCP
+Sent: hello world with TCP
+Received: HELLO WORLD WITH TCP
+$ python TCPClient.py python is nice
+Sent: python is nice
+Received: PYTHON IS NICE
+2. UDP通信
+SERVER端
+import SocketServer
+
+class MyUDPHandler(SocketServer.BaseRequestHandler):
+"""
+This class works similar to the TCP handler class, except that
+self.request consists of a pair of data and client socket, and since
+there is no connection the client address must be given explicitly
+when sending data back via sendto().
+"""
+
+def handle(self):
+data = self.request[0].strip()
+socket = self.request[1]
+print "{} wrote:".format(self.client_address[0])
+print data
+socket.sendto(data.upper(), self.client_address)
+
+if __name__ == "__main__":
+HOST, PORT = "localhost", 9999
+server = SocketServer.UDPServer((HOST, PORT), MyUDPHandler)
+server.serve_forever()
+
+CLIENT端：
+import socket
+import sys
+
+HOST, PORT = "localhost", 9999
+data = " ".join(sys.argv[1:])
+
+# SOCK_DGRAM is the socket type to use for UDP sockets
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+# As you can see, there is no connect() call; UDP has no connections.
+# Instead, data is directly sent to the recipient via sendto().
+sock.sendto(data + "\n", (HOST, PORT))
+received = sock.recv(1024)
+
+print "Sent: {}".format(data)
+print "Received: {}".format(received)
+四、 使用SocketServer处理多连接
+上面的例子一次只能连接一个客户机并出力它的请求，
+如果要处理多连接问题，那么有三种主要的方法能实现这个目的：
+分叉(forking)、
+线程(threading)以及
+异步I/O(asynchronous I/O)。
+
+通过对SocketServer服务器使用混入类(mix-in class)，派生进程和线程很容易处理。
+即使要自己实现它们，这些方法也很容易使用。
+它们确实有缺点：
+分叉占据资源，并且如果有太多的客户端时分叉不能很好分叉
+（尽管如此，对于合理数量的客户端，分叉在现代的UNIX或者Linux系统中是很高效的，如果有一个多CPU系统，那系统效率会更高）；
+线程处理能导致同步问题。
+
+使用SocketServer框架创建分叉或者线程服务器非常简单：
+1. 分叉SocketServer服务器：
+#!/usr/bin/env python
+
+from SocketServer import (TCPServer as TCP,
+StreamRequestHandler as SRH,
+ForkingMixIn as FMI)
+from time import ctime
+
+HOST = ''
+PORT = 12346
+ADDR = (HOST, PORT)
+
+class Server(FMI, TCP):
+pass
+
+class MyRequestHandler(SRH):
+def handle(self):
+print '...connected from:', self.client_address
+self.wfile.write('[%s] %s' % (ctime(), self.rfile.readline()))
+
+tcpServ = Server(ADDR, MyRequestHandler)
+print 'waiting for connection...'
+tcpServ.serve_forever()
+2. 多线程SocketServer服务器：
+#!/usr/bin/env python
+
+from SocketServer import (TCPServer as TCP,
+StreamRequestHandler as SRH,
+ThreadingMixIn as TMI)
+from time import ctime
+
+HOST = ''
+PORT = 12346
+ADDR = (HOST, PORT)
+
+class Server(TMI, TCP):
+pass
+
+class MyRequestHandler(SRH):
+def handle(self):
+print '...connected from:', self.client_address
+self.wfile.write('[%s] %s' % (ctime(), self.rfile.readline()))
+
+tcpServ = Server(ADDR, MyRequestHandler)
+print 'waiting for connection...'
+tcpServ.serve_forever()
+3. 异步的SocketServer服务器
+import socket
+import threading
+import SocketServer
+
+class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
+
+def handle(self):
+data = self.request.recv(1024)
+cur_thread = threading.current_thread()
+response = "{}: {}".format(cur_thread.name, data)
+self.request.sendall(response)
+
+class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+pass
+
+def client(ip, port, message):
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.connect((ip, port))
+try:
+sock.sendall(message)
+response = sock.recv(1024)
+print "Received: {}".format(response)
+finally:
+sock.close()
+
+if __name__ == "__main__":
+# Port 0 means to select an arbitrary unused port
+HOST, PORT = "localhost", 0
+
+server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
+ip, port = server.server_address
+
+# Start a thread with the server -- that thread will then start one
+# more thread for each request
+server_thread = threading.Thread(target=server.serve_forever)
+# Exit the server thread when the main thread terminates
+server_thread.daemon = True
+server_thread.start()
+print "Server loop running in thread:", server_thread.name
+
+client(ip, port, "Hello World 1")
+client(ip, port, "Hello World 2")
+client(ip, port, "Hello World 3")
+server.shutdown()
+
+输出示例:
+$ python ThreadedTCPServer.py
+Server loop running in thread: Thread-1
+Received: Thread-2: Hello World 1
+Received: Thread-3: Hello World 2
+Received: Thread-4: Hello World 3 
+
+
+
+

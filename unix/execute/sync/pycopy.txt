@@ -1,0 +1,226 @@
+
+
+Python拷贝/删除文件夹
+标签： 递归脚本pythonaccess
+2014-05-09 00:22 5036人阅读
+
+1.copy dirtree
+from shutil import copytree, ignore_patterns  
+copytree(source, destination, ignore=ignore_patterns('*.pyc', 'tmp*'))  
+
+
+def copytree(src, dst, symlinks=False, ignore=None):  
+    names = os.listdir(src)  
+    if ignore is not None:  
+        ignored_names = ignore(src, names)  
+    else:  
+        ignored_names = set()  
+  
+    os.makedirs(dst)  
+    errors = []  
+    for name in names:  
+        if name in ignored_names:  
+            continue  
+        srcname = os.path.join(src, name)  
+        dstname = os.path.join(dst, name)  
+        try:  
+            if symlinks and os.path.islink(srcname):  
+                linkto = os.readlink(srcname)  
+                os.symlink(linkto, dstname)  
+            elif os.path.isdir(srcname):  
+                copytree(srcname, dstname, symlinks, ignore)  
+            else:  
+                copy2(srcname, dstname)  
+            # XXX What about devices, sockets etc.?  
+        except (IOError, os.error) as why:  
+            errors.append((srcname, dstname, str(why)))  
+        # catch the Error from the recursive copytree so that we can  
+        # continue with other files  
+        except Error as err:  
+            errors.extend(err.args[0])  
+    try:  
+        copystat(src, dst)  
+    except WindowsError:  
+        # can't copy file access times on Windows  
+        pass  
+    except OSError as why:  
+        errors.extend((src, dst, str(why)))  
+    if errors:  
+        raise Error(errors)  
+
+
+
+
+
+2. del dirtree
+
+#! /usr/bash/python  
+# encoding:utf-8  
+  
+import os  
+import os.path  
+import stat  
+import shutil  
+  
+class DelDir:  
+    ''''' 删除指定根目录下特定文件夹 '''  
+    def __init__(self, root, dirname):  
+        self.root = root  
+        self.dirname = dirname  
+  
+    def run(self):  
+        for r, dirs, files in os.walk(self.root):  
+            if self.dirname in dirs:  
+                srcDir = os.path.join(r, self.dirname)  
+                #更改权限（win7会出现权限问题）  
+                os.chmod(srcDir, stat.S_IREAD | stat.S_IWRITE)  
+                result = shutil.rmtree(srcDir, False, self.__handler)  
+                print  "%s" %(srcDir)  
+  
+    def __handler(self, function, path, excinfo):  
+        ''''' 删除出错处理 '''  
+        #更改权限（win7会出现权限问题）  
+        os.chmod(path, stat.S_IREAD | stat.S_IWRITE)  
+        function(path)  
+        print "[Handler] ==> Path:%s  \n\tHandler the Error: %s" %(path, excinfo)  
+  
+if __name__ == '__main__':  
+    rootdir = r"E:\workspace\minioffice\mini-core\src\main\webapp" # 需要处理的文件夹  
+    rootdir = unicode(rootdir, "utf8")  
+    dirname = ".svn" # 删除的文件夹  
+    c = DelDir(rootdir, dirname)  
+    c.run()  
+
+
+
+
+
+
+Python实现文件夹递归拷贝
+
+ 
+目标：
+1.多层文件夹嵌套，在要备份的文件夹中嵌套多个文件夹
+2.增量备份，因为文件较多，且之前已有部分备份，所以只需对新增的文件进行备份，提升效率
+ 
+Python安装：
+1.下载安装包，http://www.python.org/getit/，可以选择Python2或3，2的兼容性更好
+2.添加Python安装目录如D:\Program\Python到环境变量Path中
+ 
+编写脚本：
+Python中自身有文件夹拷贝的API，但有诸多限制，不能满足需求，所以自己实现
+要点有两个：
+1.递归拷贝，因为有多层嵌套文件夹，所以用递归实现
+2.错误处理，要考虑文件夹不存在的情况
+ 
+脚本如下：
+###########################################################################
+# -*- coding: GBK -*-
+# 文件自动备份脚本
+# 作者：阿凡提
+import os
+import shutil
+# 设置待备份的源文件夹及存放备份文件的目标文件夹
+srcDir = "f:\\src"
+dstDir = "f:\\dst"
+# 目录递归拷贝函数
+def dir_copyTree(src, dst):
+    names = os.listdir(src)
+    # 目标文件夹不存在，则新建
+    if not os.path.exists(dst):
+        os.mkdir(dst)
+    # 遍历源文件夹中的文件与文件夹
+    for name in names:
+        srcname = os.path.join(src, name)
+        dstname = os.path.join(dst, name)
+        try:
+            # 是文件夹则递归调用本拷贝函数，否则直接拷贝文件
+            if os.path.isdir(srcname):                
+                dir_copyTree(srcname, dstname)
+            else:
+                if (not os.path.exists(dstname)
+                    or ((os.path.exists(dstname))
+                        and (os.path.getsize(dstname) != os.path.getsize(srcname)))):
+                    print dstname
+                    shutil.copy2(srcname, dst)
+        except:
+            error.traceback();
+            raise
+# 备份函数
+def dir_backup():
+    global srcDir
+    global dstDir
+    print "源文件夹" + srcDir
+    print "目标文件夹" + dstDir
+    print "本次拷贝文件："
+    dir_copyTree(srcDir, dstDir)
+    # 将此句注释则会一闪而过，方便自动备份
+    raw_input ("备份完成")
+# 执行备份函数
+dir_backup()
+###########################################################################
+ 
+结合Windows的任务计划程序定时运行此脚本，即可实现自动备份的目的。
+
+python 文件夹复制加强版
+
+shutil模块主要用于文件夹的操作。其中copytree用来对文件夹进行复制，但是比较遗憾的是，如果目标文件已经存在的话，该函数就会报错抛异常了，非常地不给力。求人不如求已，看到帮助文档中有此方法的源码，就修改了一下，使其默认可以支持文件和文件夹的覆盖。
+
+
+
+import os  
+import os.path  
+import shutil  
+def copytree(src, dst, symlinks=False):  
+    names = os.listdir(src)  
+    if not os.path.isdir(dst):  
+        os.makedirs(dst)  
+          
+    errors = []  
+    for name in names:  
+        srcname = os.path.join(src, name)  
+        dstname = os.path.join(dst, name)  
+        try:  
+            if symlinks and os.path.islink(srcname):  
+                linkto = os.readlink(srcname)  
+                os.symlink(linkto, dstname)  
+            elif os.path.isdir(srcname):  
+                copytree(srcname, dstname, symlinks)  
+            else:  
+                if os.path.isdir(dstname):  
+                    os.rmdir(dstname)  
+                elif os.path.isfile(dstname):  
+                    os.remove(dstname)  
+                shutil.copy2(srcname, dstname)  
+            # XXX What about devices, sockets etc.?  
+        except (IOError, os.error) as why:  
+            errors.append((srcname, dstname, str(why)))  
+        # catch the Error from the recursive copytree so that we can  
+        # continue with other files  
+        except OSError as err:  
+            errors.extend(err.args[0])  
+    try:  
+        copystat(src, dst)  
+    except WindowsError:  
+        # can't copy file access times on Windows  
+        pass  
+    except OSError as why:  
+        errors.extend((src, dst, str(why)))  
+    if errors:  
+        raise Error(errors)  
+if __name__ == '__main__':  
+    copytree('E:/book', 'E:/newbook')  
+
+
+
+
+
+
+
+
+
+
+
+
+
+

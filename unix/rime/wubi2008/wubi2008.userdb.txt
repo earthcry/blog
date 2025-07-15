@@ -1,0 +1,61 @@
+# Rime user dictionary
+@@/db_name	wubi2008.userdb.kct
+@@/db_type	userdb
+@@/rime_version	1.0
+@@/tick	33
+@@/user_id	nudoubuntu
+aqtj 	获得	c=0 d=0 t=33
+bi 	孙数	c=-1 d=0 t=33
+bib 	函	c=2 d=1.73906 t=33
+biov 	函数	c=-1 d=0.927743 t=33
+blgq 	阵列	c=0 d=0 t=33
+dgtd 	感知	c=0 d=0 t=33
+dj 	百	c=1 d=0.937067 t=33
+dmh 	布	c=1 d=1 t=4
+ffuf 	封装	c=0 d=0 t=33
+fqxe 	元组	c=0 d=0 t=33
+fttw 	运算符	c=0 d=0 t=33
+ggtt 	五笔	c=1 d=1 t=33
+gqge 	列表	c=0 d=0 t=33
+hptd 	睿智	c=0 d=0 t=33
+iddc 	源码	c=0 d=0 t=33
+lft 	署	c=1 d=1 t=5
+ltyu 	图谱	c=0 d=0 t=33
+lwbm 	输出	c=1 d=0.97531 t=33
+mfwf 	赋值	c=0 d=0 t=33
+mmgj 	删	c=1 d=0.932394 t=33
+mwlf 	内置	c=0 d=0 t=33
+o 	为	c=1 d=0.980199 t=33
+oac 	度	c=1 d=0.941765 t=33
+osif 	魔法	c=0 d=0 t=33
+ov 	数	c=2 d=1.74778 t=33
+pbwd 	字段	c=0 d=0 t=33
+ptkk 	字符串	c=0 d=0 t=33
+qvwf 	键值	c=0 d=0 t=33
+rhoc 	排序	c=0 d=0 t=33
+rnrr 	气魄	c=0 d=0 t=33
+rvug 	执着	c=0 d=0 t=33
+rwwa 	迭代	c=0 d=0 t=33
+t 	和	c=1 d=0.99005 t=33
+tdbl 	矩阵	c=0 d=0 t=33
+tgj 	重	c=1 d=1 t=1
+tgsq 	重构	c=0 d=0 t=33
+twpb 	繁体字	c=1 d=0.985112 t=33
+uaxn 	新世纪	c=1 d=0.995012 t=33
+uqpb 	关键字	c=0 d=0 t=33
+usr 	新	c=1 d=1 t=2
+uxjv 	递归	c=0 d=0 t=33
+wvfn 	分块	c=0 d=0 t=33
+wvth 	分片	c=0 d=0 t=33
+xwoa 	维度	c=0 d=0 t=33
+yfov 	计数	c=0 d=0 t=33
+ynde 	遍历	c=0 d=0 t=33
+ywwy 	交集	c=0 d=0 t=33
+encbiov 	函数	c=-1 d=0.918512 t=33
+encdjoa 	百度	c=1 d=0.970446 t=33
+encdmlf 	布署	c=1 d=1 t=9
+enclbo 	输出为	c=0 d=0.0980199 t=33
+enclbyt 	输出为	c=0 d=0.0980199 t=33
+encotwp 	为繁体字	c=0 d=0.0985112 t=33
+enctgus 	重新	c=0 d=0.1 t=2
+encytwp 	为繁体字	c=0 d=0.0985112 t=33

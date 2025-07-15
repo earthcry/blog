@@ -1,0 +1,33 @@
+
+### bootableusb: ventoy
+
+### ddcmd burn image to sd card:
+dd if=/home/xxx/Downloads/openwrt.img of=/dev/\
+sdb, not sdb1, not sda!!!
+disk/by-id/yourusbdevie(so you don't overwrite a system disk or something)
+
+
+for example on my system cards in my sdcard reader will show up as
+
+/dev/disk/by-id/usb-Generic_Storage_Device_00000000000006-0\:0
+(with existing partitions having -part1 and -part2 appended)
+
+blkid uuid
+
+
+
+
+### etcher  --- burn images to sd card & make bootable usb
+sudo mkfs -t vfat /dev/sdb1
+How to Flash/burn an OS Image with Etcher on Ubuntu
+$ lscpu
+https://www.balena.io/etcher/
+unzip ~/Downloads/balena-etcher-electron-1.5.47-linux-x64.zip
+$ ./balenaEtcher-1.5.47-x64.AppImage
+
+gparted resize part
+
+### win, physicwrite, winimage32,imageiso
+
+
+

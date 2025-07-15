@@ -1,0 +1,76 @@
+
+
+
+windows time utc
+Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
+
+
+ubuntu time sys
+imedatectl set-local-rtc 1 –adjust-system-clock 
+
+
+
+
+
+
+在互联网行业的生存方式。
+
+大数据时代的意义不仅是数据的分析和显示，
+而是数据的综合运算结果所得出的对用户真正有价值的建议和评价。
+
+
+IPS     Internet Protocol Suite
+
+
+application layer       http,ftp
+transport layer         TCP传送文本
+network layer               IP，分配地址、传送二进制数据
+link layer              定义01分组方式，以太网ethernet、ADSL,
+physical layer          光缆、网线、电波,传送0,1电信号；
+
+互联联网架构的核心是文本对话。
+
+link layer:
+trnpt data in subnet;
+ethernet:
+a group 0101sigal-->a data pkg-->a frame帧-->head+data
+head:sender,receiver,type;sendmac,receivemac;mac address;
+arp:broadcasting
+datapkg,macaddress,broadcasting-->link layer;
+hub is broadcastin and 
+switch can remember and cache port address;and pass to target;
+macaddress only between eth and switch;os only know ip;
+arptable;
+
+network layer:
+subnet to subnet;router;
+netaddress;(in same subnet)?broadcasting | router;
+ip&subnetmask;gateway;
+ipaddress,which ip in same subnet;
+gateway by iproutertabe direction to outsubnet ip;
+ipRouterTable is list of direction cfg;
+subnet1/pc1-->pkg--subnet2/pc4(mac,ip)
+in same subnet:pc4/mac,pc4/ip;
+no same subnet:gateway/mac,pc4/ip;
+
+transport layer:
+sport;UDP/TCP
+
+计算机网络-自顶向下方法；
+黑客与画家；
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

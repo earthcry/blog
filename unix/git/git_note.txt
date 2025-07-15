@@ -1,0 +1,494 @@
+
+
+
+
+    GIT
+
+
+From liaoxuefeng.com
+
+
+
+
+git
+version repository=版本库=仓库=repository=a directory with .git dir in it
+
+txt, html, code.
+not word.doc, utf-8
+windows/Notepad++/default UTF-8 without BOM
+
+git init newdir or cd dir and init 
+git add one or more
+git commit -m "tags"
+git status # if file edit
+git diff   # if edited, can see difference.
+git log --pretty=oneline # commit history
+git reset --hard HEAD^   # (HEAD~4)  
+git reset --hard 1094a   # commit id(version id)
+git reflog               # cmd history
+
+
+working directory
+repository
+    stage
+    master
+
+工作区 -> 暂存区 -> 分支规划 版本区 == 地道空间 == 分支空间
+workDir -> stage -> master == branch spaces == design branch spaces
+no add no commit
+
+git 管理的是修改，不是文件。
+git manager modify not file.
+git by .git dir in the work dir to track and manager modify.
+
+git checkout --file   # unwork丢弃工作区的修改。
+git reset HEAD file   # unstage
+git reset --hard id   # back version 版本退回
+
+git rm file
+git commit -m "del file"
+git checkout --deled.txt  # back misDel 找回误删的文件
+
+
+Remote repository
+ssh key
+git remote add origin git@github.com:earthcry/earthcry.github.io.git
+git remote add local_remote_repo_name git@server_name:path/remote_repo_name.git
+git push -u origin master # -u link master_local to master_remote
+# push master_local to master_remote
+# master == ...commits timeline == branch spaces
+git clone
+git remote -v
+git remote show remote_name(origin)
+git remote rename aa bb   # aa->bb  bb/master
+git remote rm xxx
+git push <远程主机名> <本地分支名>:<远程分支名> 
+git push origin master:master
+git push origin master              # no remote branch, same name usual.
+git push origin :master ==          # no local branch
+git push origin --delete master
+git push -u origin master           # -u setup default host. only git push.
+git push --all origin
+git push --force origin
+
+
+
+
+branch == commit + commit + commit ... # commit == 地道空间
+master    --> publish
+dev       --> work
+feature   --> new function
+issue     --> bug
+xxx       --> personal
+
+HEAD pointer
+branch pointer, master pointer, dev pointer.
+Branch pointer  Directing Commits timeline,
+
+And  Head pointer directing branch pointer.
+HEAD -->  Branch -->  Commits or  Last  Commit.
+
+
+git checkout -b dev
+git branch dev         # create branch dev
+git checkout dev       # switch branch dev
+
+git branch         # list branches
+git merge dev      # merge the branch to current branch
+git branch -d dev  # del branch
+
+fix conflicts 
+git log --graph --pretty=oneline --abbrev-commit
+
+git merge --no-ff -m "merge with no-ff" dev
+merge mode: fast forward, but no info about branch.
+if no-ff, git create a new commit merging, then now have branch info in branch history.
+
+Bug
+git stash                  # saved working directory.
+git checkout master        # create branch from master.
+git checkout -b issue-101  # create bug branch.
+fix bug
+git checkout master        # back master for merge
+git merge --no-ff -m "tag" issue-101
+git checkout dev           # back to work
+git stash list
+
+git stash apply            # only reback not del
+git stash drop             # del cache
+
+git stash pop              # reback and del cache
+
+git stash apply stash@{n}  # reback from caches, can stash many.
+
+
+
+Feature
+git branch -D feature-xxx  # force to del branch.
+
+work together:
+?
+push local branch to remote same branch 
+or 
+push remote branch from current branch
+
+
+
+Rebase
+rebase操作可以把本地未push的分叉提交历史整理成直线；
+rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
+git rebase
+git push origin master
+
+
+
+Tags
+Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（跟分支很像对不对？但是分支可以移动，标签不能移动）
+tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。
+
+tag is sign on current branch and last commit.
+git tag v1.0  # sign tag
+git tag       # list tag
+git log --pretty=oneline --abbrev-commit
+git tag v0.9 f53c633
+git show tagName
+git tag -a v0.1 -m "version 0.1 released" commit_id
+git tag -d v0.1   # del tag
+git push origin v1.0
+git push origin --tags
+# del remote tag, del local first.
+git tag -d v0.9
+git push origin :refs/tags/v0.9
+
+
+
+git remote rm origin
+git push gitee master
+git push github master
+
+
+custom git
+.gitignore
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+# My configurations:
+db.ini
+deploy_key_rsa
+
+git add -f App.class
+git check-ignore -v App.class
+
+git config --global alias.cmt commit
+git cmt -m "xxxx"
+git --global -->current user, if no --> current repository
+.git/config   --> current repo
+.gitconfig    --> current user
+
+
+
+
+Create git server
+
+ubuntu/debian
+sudo apt install git 
+sudo adduser git
+
+第三步，创建证书登录：
+authorized login:
+collect all users id_rsa.pub content --> /home/git/.ssh/authorized_keys, one user one line. 
+
+第四步，初始化Git仓库：
+
+先选定一个目录作为Git仓库，假定是/srv/sample.git，在/srv目录下输入命令：
+
+$ sudo git init --bare sample.git
+Git就会创建一个裸仓库，裸仓库没有工作区，因为服务器上的Git仓库纯粹是为了共享，所以不让用户直接登录到服务器上去改工作区，并且服务器上的Git仓库通常都以.git结尾。然后，把owner改为git：
+
+$ sudo chown -R git:git sample.git
+第五步，禁用shell登录：
+
+出于安全考虑，第二步创建的git用户不允许登录shell，这可以通过编辑/etc/passwd文件完成。找到类似下面的一行：
+
+git:x:1001:1001:,,,:/home/git:/bin/bash
+改为：
+
+git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell
+这样，git用户可以正常通过ssh使用git，但无法登录shell，因为我们为git用户指定的git-shell每次一登录就自动退出。
+
+第六步，克隆远程仓库：
+
+现在，可以通过git clone命令克隆远程仓库了，在各自的电脑上运行：
+
+$ git clone git@server:/srv/sample.git
+Cloning into 'sample'...
+warning: You appear to have cloned an empty repository.
+剩下的推送就简单了。
+
+管理公钥
+如果团队很小，把每个人的公钥收集起来放到服务器的/home/git/.ssh/authorized_keys文件里就是可行的。如果团队有几百号人，就没法这么玩了，这时，可以用Gitosis来管理公钥。
+
+这里我们不介绍怎么玩Gitosis了，几百号人的团队基本都在500强了，相信找个高水平的Linux管理员问题不大。
+
+管理权限
+有很多不但视源代码如生命，而且视员工为窃贼的公司，会在版本控制系统里设置一套完善的权限控制，每个人是否有读写权限会精确到每个分支甚至每个目录下。因为Git是为Linux源代码托管而开发的，所以Git也继承了开源社区的精神，不支持权限控制。不过，因为Git支持钩子（hook），所以，可以在服务器端编写一系列脚本来控制提交等操作，达到权限控制的目的。Gitolite就是这个工具。
+
+这里我们也不介绍Gitolite了，不要把有限的生命浪费到权限斗争中。
+
+
+要方便管理公钥，用Gitosis；
+
+要像SVN那样变态地控制权限，用Gitolite。
+
+
+
+
+
+
+
+
+git is a soft of managering many updates of txt.
+updates/versions/saves/history/modify/revolution/grow
+repository/versions lib/
+track history, track manager.
+local repository, git管理一个仓库的文件历史。
+github repository and other local repostories, git&github 管理多个同一内容的仓库，以便实现多人协作，共同来完成同一个大型工作。
+
+ Branch,  Time and space.
+
+local branch
+draw a dot once commit, after commites, dotes to a line, history line.
+
+xiezuo branch
+every one a branch.
+
+@branch
+git checkout -b dev # create & switch to dev branch.
+git branch          # disp branch
+git checkout master # switch to master
+git merge dev       # merge dev to current branch.
+git branch -a       # disp all branch
+git branch -d dev   # del branch dev
+git push origin --delete xxxbranch    # del remote branch
+
+@conflict of merge (chongtu)
+git chechout -b feature1
+# modify and commit
+# switch to master
+# modify same position and commit
+# then merge feature1 to master
+git merge feature1
+
+test conflict both
+
+
+
+
+
+steps:
+
+env: ubuntu/git
+
+1.Create github repository
+
+11.reg
+12.repo
+Initialize with readme
+
+
+2.Create local repository
+
+21 instll git
+22 ssh key
+23 git config with email
+24 add remote repository
+
+3.pull & push
+
+31 clone
+31 mkdir
+32 git init
+33 touch test.md
+34 add words to test.md
+35 git add test.md
+36 git commit -m 'add test.md & add words'
+37 git pull 
+38 git push origin master
+
+4.del remote repository file
+
+5.realize
+
+21 sudo git version
+21 sudo apt instll git 
+21 sudo ppa
+
+22 ssh key
+ssh -T git@github.com # check if connect
+
+cd ~/.ssh         # check if ssh key exit
+ls
+mkdir key_backup
+cp id_rsa* key_backup
+rm is_rsa*
+
+ssh-keygen -t rsa -C "xxx@xxx.com"  # reg github email
+copy content id_rsa.pub -> github.com/settings/ssh keys/add ssh key/
+ssh -T git@github.com # check if connect
+
+23 @git setup
+git config --global user.name "earthcry"
+git config --global user.email "mlinks@163.com"
+
+
+24 @git remote repo Relate local repo and remote repo 
+git remote add origin git@github.com:yourName/yourRepo.git
+# git remote add repoName githubRepo
+# add remote repository
+git remote -v
+# fetch + merge == pull 
+
+
+31 clone
+
+url:
+git clone https://github.com/earthcry/earthcry.github.io.git
+
+ssh:
+git clone git@github.com:earthcry/earthcry.github.io.git
+
+ssh username@url/ip
+
+
+31
+git pull origin master --allow-unrelated-histories
+# pull first and then push second.
+
+32
+git push origin master:master
+# git push remoteHostName localBranch:remoteBranch
+# git remote rm origin
+
+# 如果需要添加文件夹，有一点需要注意：该文件夹不能为空！否则不能成功添加
+
+
+41 
+# Can not del remote file directly, only by local terminal.
+
+
+42 del remote dir and not local
+git rm --cached -r useless
+git commit -m "remove directory from remote repository"
+git push
+
+
+43 del all remote and local
+
+git rm test.txt
+git rm -r testdir
+git commit -m "Delete some file"
+git push origin xxx
+
+git rm --cached file_path
+git commit -m 'delete remote somefile'
+git push
+
+@RemoteRepositories
+一个本地库可以既关联GitHub，又关联码云！
+使用多个远程库时，要注意git给远程库起的默认名称是origin，如果有多个远程库，我们需要用不同的名称来标识不同的远程库。仍然以learngit本地库为例，先删除已关联的名为origin的远程库：
+
+git remote rm origin
+
+然后，先关联GitHub的远程库：
+
+git remote add github git@github.com:xxx/LearnGit.git
+
+注意，远程库的名称叫github，不叫origin了。
+接着，再关联码云的远程库：
+
+git remote add gitee git@gitee.com:xxx/LearnGit.git
+
+同样注意，远程库的名称叫gitee，不叫origin。
+现在，我们用git remote -v查看远程库信息，可以看到两个远程库：
+
+gitee   git@gitee.com:xxx/LearnGit.git (fetch)
+gitee   git@gitee.com:xxx/LearnGit.git (push)
+github  git@github.com:xxx/LearnGit.git (fetch)
+github  git@github.com:xxx/LearnGit.git (push)
+如果要推送到GitHub，使用命令：
+git push github master
+如果要推送到码云，使用命令：
+git push gitee master
+这样一来，本地库就可以同时与多个远程库互相同步
+
+
+
+
+在使用github时，可以直接克隆远程仓库作为自己的库，克隆下来的文件夹本身就是一个仓库。
+在提交东西时，需要用到的命令有：
+
+1、git clone ssh地址或htpl地址 #克隆远程仓库的内容，推荐使用ssh地址
+2、git add ./要提交的文件或文件夹； #.的作用是提交文件夹里所有的东西，后面是提交想提交的东西。这一步的意思是将本地的文件保存到暂存区，下一步提交到本地仓库。
+3、git commit -m '对提交的描述（作为标识）'  #将暂存区的东西提交到本地库
+4、git push '远程仓库名' '分支名' # 默认仓库名为origin，默认分支为主分支master
+5、git status命令  #用来查看本地库的状态，有没有文件未提交
+6、git log  # 查看所有的提交记录
+首次提交时会提示用户名和邮箱未定义，然后提示你按格式输入自己的名字和邮箱，需要自定义名称和邮箱。
+还有就是怎样把自己的本地文件夹提交到远程仓库：
+1、进入本地文件夹，用 git init命令将本地文件夹定义成一个仓库。
+2、为本地仓库添加一个远程仓库，使用git remote add '远程仓库名'  '远程仓库地址'，这里还是推荐使用ssh地址。
+3、在添加了远程仓库之后，需要注意的是，如果本地文件夹里没有远程仓库里的文件，在推送的时候就会报错。此时，如果远程库是新建的仓库，可以使用命令
+git push origin +master 将远程仓库上的东西强行覆盖，把自己的文件推上去。（不推荐使用）。
+
+三、git常用命令：
+
+1、git clone 仓库地址  //克隆仓库代码到本地
+
+2、git diff  //查看本地代码与远程代码有哪些不同
+
+3、git pull //从远程拿到最新版本代码（提交代码时，忌讳直接提交。每次提交代码之前，一定要保证本地的代码是最新的，即先执行git pull）
+
+4、git branch //查看本地代码属于仓库的哪个分支
+
+5、git branch -a //查看仓库都有哪些分支
+
+6、git checkout 分支名 //切换分支（注：不建议使用，最好给一个分支单独建立一个文件夹）
+
+7、git clone -b 分支名 仓库地址 //克隆指定分支的仓库代码到本地
+
+8、git push -u origin 分支名（分支名通常为master）
+
+
+
+git fetch origin # 取得远程更新（到origin/master），但还没有合并
+git merge origin/master # 把更新的内容（origin/master）合并到本地分支（master）
+git pull origin master # 相当于fetch和merge的合并，但分步操作更保险
+
+
+
+2019.4.11
+EarthCry
+
+
+链接：https://www.jianshu.com/p/9a1a1c97e0be
+
+版本管理-图解Git的分支管理原理，深度分析fetch和pull区别
+https://blog.csdn.net/daigualu/article/details/64506716
+
+
+
+原文：https://blog.csdn.net/young951023/article/details/79200208 
+
+
+https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013752340242354807e192f02a44359908df8a5643103a000
+

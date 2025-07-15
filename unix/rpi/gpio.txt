@@ -1,0 +1,400 @@
+
+gpio 硬件编程
+
+通过 GPIO 来控制硬件
+
+电子元件和专业名称
+面包板
+由于最上一行和最下一行往往都是相通的，所以这两行往往用于连接电路的电源线和地线，而元器件之间的连接往往采用中的各列。中间部分每五列栅格为一组，这一组五个栅格是导通的，在最中间的位置有一条凹槽，用于隔断左右两部分。
+面包板
+本质上，面包板就是几根导线，上面开了许多可以连到导线的孔。
+极和-极是两根垂直的导线，标着1、5、10这些数字的行，每一行都是一根水平的导线。导线与导线之间互不连接，另外，面包板的左右两半也是互不连接的。
+然后，在树莓派上新建一个实验目录，并安装控制 GPIO 的 Node.js 模块rpio。
+
+
+LED - Light Emitting Diode发光二极
+
+GPIO
+GPIO（General Purpose I/O Ports）意思为通用输入/输出端口，通俗地说，就是一些引脚，可以通过它们输出高低电平或者通过它们读入引脚的状态-是高电平或是低电平。GPIO是个比较重要的概念，用户可以通过GPIO口和硬件进行数据交互(如UART)，控制硬件工作(如LED、蜂鸣器等),读取硬件的工作状态信号（如中断信号）等。GPIO口的使用非常广泛，掌握了GPIO，差不多相当于掌握了操作硬件的能力。
+绿色图标，可以输入也可以输出。输出高电压就是3.3伏，输出低电压就是0伏。
+
+
+一、树莓派shang常用开源工程简介
+
+    树莓派内核中已经编译自带了gpio的驱动，我们常通过一些第三方写好的库函数来完成具体的操作，比较常见的操作库函数有：
+
+1、python GPIO
+
+    【开发语言】——python
+
+    【简单介绍】——树莓派官方资料中推荐且容易上手。python GPIO是一个小型的python库，可以帮助用户完成raspberry相关IO口操作，但是python GPIO库还没有支持SPI、I2C或者1-wire等总线接口。
+
+    【官方网站】—— https://code.google.com/p/raspberry-gpio-python/
+
+
+2、wiringPi
+
+    【开发语言】——C语言
+
+    【简单介绍】——wiringPi适合那些具有C语言基础，在接触树莓派之前已经接触过单片机或者嵌入式开发的人群。wiringPi的API函数和arduino非常相似，这也使得它广受欢迎。作者给出了大量的说明和示例代码，这些示例代码也包括UART设备，I2C设备和SPI设备等。
+
+    【官方网站】—— http://wiringpi.com/
+
+
+3、BCM2835 C Library
+
+    【开发语言】——C语言
+
+    【简单介绍】BCM2835 C Library可以理解为使用C语言实现的相关底层驱动，BCM2835 C Library的驱动库包括GPIO、SPI和UART等，可以通过学习BCM2835 C Library熟悉BCM2835相关的寄存器操作。如果有机会开发树莓派上的linux驱动，或自主开发python或PHP扩展驱动，可以从BCM2835 C Library找到不少的“灵感”。
+
+    【官方网站】—— http://www.airspayce.com/mikem/bcm2835/
+
+
+二、树莓派GPIO编号方式
+
+1、功能物理引脚：
+
+从左到右，从上到下：左边基数，右边偶数：1-40
+
+2、BCM:
+编号侧重CPU寄存器，根据BCM2835的GPIO寄存器编号。
+
+3、wpi：
+
+  编号侧重实现逻辑，把扩展GPIO端口从0开始编号，这种编号方便编程。正如图3 WiringPi一栏。
+
+但实际的用途是一致的 这里只学习一种编号规则，也就是物理位置编号，这样更容易进行物理连接。
+
+三、python GPIO
+
+1、先安装python-dev，输入以下指令。
+
+  sudo apt-get install python-dev
+
+
+2、安装RPi.GPIO，依次输入以下指令。
+
+1)下载：$ wget http://raspberry-gpio-python.googlecode.com/files/RPi.GPIO-0.5.3a.tar.gz
+
+2)解压缩：$ tar xvzf RPi.GPIO-0.5.3a.tar.gz
+3)进入解压之后的目录 ：$ cd RPi.GPIO-0.5.3a
+4)启动安装 ：$ sudo python setup.py install
+
+3、例子：
+
+# -*- coding: utf-8 -*-    
+import RPi.GPIO as GPIO    
+import time    
+# BOARD编号方式，基于插座引脚编号    
+GPIO.setmode(GPIO.BOARD)    
+# 输出模式    
+GPIO.setup(11, GPIO.OUT)    
+ 
+while True:    
+    GPIO.output(11, GPIO.HIGH)    
+    time.sleep(1)    
+    GPIO.output(11, GPIO.LOW)    
+    time.sleep(1)   
+
+四、python GPIO
+1、说明：
+    WiringPi是应用于树莓派平台的GPIO控制库函数，WiringPi遵守GUN Lv3。wiringPi使用C或者C++开发并且可以被其他语言包转，例如python、ruby或者PHP等。
+    wiringPi包括一套gpio控制命令，使用gpio命令可以控制树莓派GPIO管脚。用户可以利用gpio命令通过shell脚本控制或查询GPIO管脚。wiringPi是可以扩展的，可以利用wiringPi的内部模块扩展模拟量输入芯片，可以使用MCP23x17/MCP23x08（I2C 或者SPI）扩展GPIO接口。另外可通过树莓派上的串口和Atmega（例如arduino等）扩展更多的GPIO功能。另外，用户可以自己编写扩展模块并把自定义的扩展模块集成到wiringPi中。WiringPi支持模拟量的读取和设置功能，不过在树莓派上并没有模拟量设备。但是使用WiringPi中的软件模块却可以轻松地应用AD或DA芯片。
+
+2.wiringPi安装
+
+1)方案A——使用GIT工具
+通过GIT获得wiringPi的源代码
+git clone git://git.drogon.net/wiringPi
+cd wiringPi
+./build
+build脚本会帮助你编译和安装wiringPi
+
+2)方案B——直接下载
+我们可以在https://git.drogon.net/?p=wiringPi;a=summary网站上直接下载最新版本编译使用
+tar xfz wiringPi-xx.tar.gz
+cd wiringPi-xx
+./build
+
+3、测试：
+wiringPi包括一套gpio命令，使用gpio命令可以控制树莓派上的各种接口，通过以下指令可以测试wiringPi是否安装成功。
+$gpio -v
+$gpio readall
+即可出现上面的io图
+
+4、例子：
+[cpp] view plain copy
+
+    #include <wiringPi.h>    
+    int main(void)    
+    {    
+      wiringPiSetup() ;    
+      pinMode (0, OUTPUT) ;    
+      for(;;)     
+      {    
+        digitalWrite(0, HIGH) ; delay (500) ;    
+        digitalWrite(0,  LOW) ; delay (500) ;    
+      }    
+    }   
+
+
+5、编译运行：
+在树莓派上:
+gcc -Wall -o test test.c -lwiringPi
+sudo ./test
+
+在虚拟机中：
+am-linux-gcc -Wall -o test test.c -lwiringPi
+sudo ./test
+
+6、注意事项：
+1）IO的编号方式略有不同，采用wiring编码方式。
+2）-lwiringPi表示动态加载wiringPi共享库。
+
+五、BCM2835 C Library
+
+1、下载:               $ wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.35.tar.gz
+2、解压缩:             $tar xvzf bcm2835-1.35.tar.gz
+3、进入压缩之后的目录:$cd bcm2835-1.35
+4、 配置:              $./configure
+5、从源代码生成安装包:$make
+6、执行检查:           $sudo make check
+7、安装 bcm2835库:    $sudo make install
+
+8、例子
+[cpp] view plain copy
+
+    #include <bcm2835.h>    
+        
+    // P1插座第11脚    
+    #define PIN RPI_GPIO_P1_11    
+        
+    int main(int argc, char **argv)    
+    {    
+      if (!bcm2835_init())    
+      return 1;    
+        
+      // 输出方式    
+      bcm2835_gpio_fsel(PIN, BCM2835_GPIO_FSEL_OUTP);    
+        
+      while (1)    
+      {    
+        bcm2835_gpio_write(PIN, HIGH);    
+        bcm2835_delay(100);    
+            
+        bcm2835_gpio_write(PIN, LOW);    
+        bcm2835_delay(100);    
+      }    
+      bcm2835_close();    
+      return 0;    
+    }   
+
+
+9、注意事项：
+1）IO的编号方式略有不同，采用wiring编码方式。
+2）-lwiringPi表示动态加载wiringPi共享库。
+
+六、文章参考以下链接
+http://elinux.org/RPi_Low-level_peripherals
+http://blog.csdn.net/xukai871105/article/details/23115627
+
+
+
+
+1，安装Python GPIO
+sudo apt-get install python-rpi.gpio
+sudo apt-get install python3-rpi.gpio
+
+sudo pip install rpi.gpio
+
+2，安装wiringPi
+git clone git://git.drogon.net/wiringPi
+cd wiringPi
+./build
+3，安装BCM2835 C Library
+wget [url=http://www.airspayce.com/mikem/bcm2835/bcm2835-1.42.tar.gz]http://www.airspayce.com/mikem/bcm2835/bcm2835-1.42.tar.gz[/url]
+tar xvzf bcm2835-1.42.tar.gz
+cd bcm2835-1.42
+./configure
+make
+sudo make check
+sudo make install
+安装完成后可以通过如下命令查看GPIO引脚编号和定义
+gpio readall
+
+Raspberry Pi 修订版本和 RPi.GPIO 版本
+
+检测 Raspberry Pi 主板的修订版本：
+1
+	
+GPIO.RPI_REVISION
+
+检测 RPi.GPIO 的版本：
+1
+	
+GPIO.VERSION
+
+
+rpio
+这是一个 JavaScript node.js语言操作 GPIO 的库，方法名和参数和 python GPIO 非常接近。
+图片使用 Fritzing 绘制，更多示例图片请到。
+
+ python 来控制 GPIO，最便捷的办法就是使用一
+RPi.GPIO
+
+@impot
+import RPi.GPIO as GPIO
+引入之后，就可以使用 GPIO 模块的函数了。如果你想检查模块是否引入成功，也可以这样写：
+try: import RPi.GPIO as GPIOexcept RuntimeError: print("引入错误")
+
+@mode  of number
+针脚编号
+在 RPi.GPIO 中，同时支持树莓派上的两种 GPIO 引脚编号。
+第一种编号是BOARD编号
+第二种编号是BCM规则
+GPIO.setmode(GPIO.BOARD) # orGPIO.setmode(GPIO.BCM)
+下面代码将返回被设置的编号规则
+mode = GPIO.getmode()
+
+
+
+@io of channel 引脚设置 io
+# 将引脚设置为输入模式GPIO.setup(channel, GPIO.IN)
+# 将引脚设置为输出模式GPIO.setup(channel, GPIO.OUT)
+# 为输出的引脚设置默认值GPIO.setup(channel, GPIO.OUT, initial=GPIO.HIGH)
+如果RPi.GRIO
+检测到一个引脚已经被设置成了非默认值，那么你将看到一个警告信息。你可以通过下列代码禁用警告：
+GPIO.setwarnings(False)
+释放
+一般来说，程序到达最后都需要释放资源，这个好习惯可以避免偶然损坏树莓派。释放脚本中使用的引脚：
+GPIO.cleanup()
+注意，GPIO.cleanup()只会释放掉脚本中使用的GPIO引脚，并会清除设置的引脚编号规则。
+
+@state of channel设置引脚的输出状态
+输出
+要想点亮一个 LED 灯或者驱动某个设备，都需要给它们电流和电压，这个步骤也很简单，
+设置引脚的输出状态就可以了，代码如下：
+GPIO.output(channel, state)
+状态可以设置为
+0 / GPIO.LOW / False / 
+1 / GPIO.HIGH / True。
+如果编码规则为，GPIO.BOARD，那么channel就是对应引脚的数字。
+如果想一次性设置多个引脚，可使用下面的代码：
+chan_list = [11,12]
+GPIO.output(chan_list, GPIO.LOW)
+GPIO.output(chan_list, (GPIO.HIGH, GPIO.LOW))
+你还可以使用Input()函数读取一个输出引脚的状态并将其作为输出值，例如：
+GPIO.output(12, not GPIO.input(12))
+
+读取
+读取引脚的输入状态，获取引脚输入状态如下代码：
+GPIO.input(channel)
+低电平返回
+0 / GPIO.LOW / False
+，高电平返回
+1 / GPIO.HIGH / True
+
+如果输入引脚处于悬空状态，引脚的值将是漂动的。换句话说，读取到的值是未知的，因为它并没有被连接到任何的信号上，直到按下一个按钮或开关。由于干扰的影响，输入的值可能会反复的变化。 使用如下代码可以解决问题：
+GPIO.setup(channel, GPIO.IN, pull_up_down=GPIO.PUD_UP) 
+# or
+GPIO.setup(channel, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+需要注意的是，上面的读取代码只是获取当前一瞬间的引脚输入信号。
+如果需要实时监控引脚的状态变化，可以有两种办法。最简单原始的方式是每隔一段时间检查输入的信号值，这种方式被称为  轮询  。如果你的程序读取的时机错误，则很可能会丢失输入信号。轮询是在循环中执行的，这种方式比较占用处理器资源。另一种响应GPIO输入的方式是使用  中断（边缘检测），这里的边缘是指信号从高到低的变换（下降沿）或从低到高的变换（上升沿）。
+
+轮询方式
+while GPIO.input(channel) == GPIO.LOW:
+边缘检测
+边缘是指信号状态的改变，从低到高（上升沿）或从高到低（下降沿）。通常情况下，我们更关心于输入状态的该边而不是输入信号的值。这种状态的该边被称为事件。 先介绍两个函数：
+wait_for_edge() 函数 wait_for_edge()被用于阻止程序的继续执行，直到检测到一个边沿。也就是说，上文中等待按钮按下的实例可以改写为：
+channel = GPIO.wait_for_edge(channel, GPIO_RISING, timeout=5000)
+if channel is None: 
+  print('Timeout occurred')
+else: 
+  print('Edge detected on channel', channel)
+add_event_detect() 函数 该函数对一个引脚进行监听，一旦引脚输入状态发生了改变，调用event_detected()函数会返回true，如下代码：
+GPIO.add_event_detect(channel, GPIO.RISING)
+ # add rising edge detection on a channeldo_something()
+# 下面的代码放在一个线程循环执行。if GPIO.event_detected(channel): print('Button pressed')
+上面的代码需要自己新建一个线程去循环检测event_detected()的值，还算是比较麻烦的。
+不过可采用另一种办法轻松检测状态，这种方式是直接传入一个回调函数：
+def my_callback(channel): 
+  print('This is a edge event callback function!')        print('Edge detected on channel %s'%channel) print('This is run in a different thread to your main program')GPIO.add_event_detect(channel, GPIO.RISING, callback=my_callback)
+如果你想设置多个回调函数，可以这样：
+def my_callback_one(channel): print('Callback one')def my_callback_two(channel): print('Callback two')GPIO.add_event_detect(channel, GPIO.RISING)GPIO.add_event_callback(channel, my_callback_one)GPIO.add_event_callback(channel, my_callback_two)
+注意：回调触发时，并不会同时执行回调函数，而是根据设置的顺序调用它们。
+好了，上面说明了一大堆函数库的用法，那么现在就应该来个简单的实验了
+#!/usr/bin/env python
+# encoding: utf-8
+# 导入模块RPI.GPIO，命名为别名为GPIOimport RPi.GPIO as GPIO
+# 导入time模块
+import time
+# 声明 GPIO 使用物理编号方式，也就是11号口就是物理编号11号口
+GPIO.setmode(GPIO.BOARD)
+# 声明11号口是用于输出模式
+GPIO.setup(11, GPIO.OUT)
+# 设置11号口为高电压，也就是11号口变为3.3伏
+# 这行代码执行之后，11号口变为高电压，
+# 那么根据电路原理，led灯就会亮起来
+GPIO.output(11, GPIO.HIGH)
+# 程序休眠3秒钟，程序休眠期间，led灯会一直亮着
+time.sleep(3)
+# 设置11号口为低电压，也就是11号口变为0伏，和GND一样# 这行代码执行之后，11号口变为低电压，那么根据电路原理，led灯就会熄灭
+GPIO.output(11, GPIO.LOW)
+# 将所有的GPIO口状态恢复为初始化，一般代码结束都执行此代码，这是一个好习惯
+GPIO.cleanup()
+保存文件为
+led.py
+，并运行之，看看 LED 灯是否亮3秒后熄灭。
+sudo python led.py
+
+
+
+使用 RPi.GPIO 模块的输出（Output）功能
+admin2016年9月28日 0 Comments	
+
+1、首先对 RPi.GPIO 进行设置（根据这里的描述）
+1
+2
+3
+	
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(12, GPIO.OUT)
+
+2、设置某个输出针脚状态为高电平：
+1
+2
+3
+4
+5
+	
+GPIO.output(12, GPIO.HIGH)
+ # 或者
+GPIO.output(12, 1)
+ # 或者
+GPIO.output(12, True)
+
+3、设置某个输出针脚状态为低电平：
+1
+2
+3
+4
+5
+	
+GPIO.output(12, GPIO.LOW)
+ # 或者
+GPIO.output(12, 0)
+ # 或者
+GPIO.output(12, False)
+
+4、程序结束后进行清理
+1
+	
+GPIO.cleanup()
+
+注意，您可以读取使用 input() 函数设置的输出通道的当前状态。例如对输出进行切换：
+1
+	
+GPIO.output(12, not GPIO.input(12))
+
+

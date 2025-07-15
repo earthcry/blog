@@ -1,0 +1,8 @@
+distribution_code_name: "ibus-rime"
+distribution_name: Rime
+distribution_version: 1.0
+install_time: "Thu Nov 27 07:13:28 2014"
+installation_id: "nudoubuntu"
+#installation_id: "d3fc5bf5-b0df-4d72-9f2f-46a5e62e4f96"
+rime_version: 1.0
+sync_dir: '/home/nu/KuaiPan/rime'

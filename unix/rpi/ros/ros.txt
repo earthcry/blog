@@ -1,0 +1,765 @@
+
+
+ros
+
+ros box turtle, ros c turtle, diamondback, 
+electric、fuerte、groovy、hydro, indigo, jade, kinetic, lunar <distro>。 
+
+
+ros.base:
+GDB --test c programe
+make/makefile -- compile/gcc c/c++ fengzhuang 
+c program language
+dataStructure 数据结构是数据存储的方式，算法则是处理数据的方法，
+linux/vim/git/python
+
+
+structure:
+
+
+
+                --subscriber
+                --publisher
+pkg -- node --msg
+	    --srv
+                --server
+                --client
+
+
+
+
+
+
+xxx.msg/xxx.srv
+publisher/subscriber
+server/client
+
+
+1.1.1 ubuntu install of ROS Kinetic
+
+1.Configure your Ubuntu repositories to allow "restricted," "universe," and "multiverse." You can follow the Ubuntu guide for instructions on doing this. 
+
+2.setup your sources.list
+Setup your computer to accept software from packages.ros.org. 
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
+
+$(lsb_release -sc) = xenial
+$DISTRIB_CODENAME
+or:
+
+sudo sh -c '. /etc/lsb-release && echo "deb http://mirrors.ustc.edu.cn/ros/ubuntu/ xenial main" > /etc/apt/sources.list.d/ros-latest.list'
+
+3.set up your key
+
+sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+
+4.更新
+sudo apt-get update
+
+5.installation
+sudo apt-get install ros-kinetic-desktop-full
+
+individual package e.g.:
+sudo apt-get install ros-kinetic-slam-gmapping
+sudo apt-cache search ros-kinetic
+
+6.initialize rosdep
+sudo rosdep init
+rosdep update
+
+7.environment setup
+echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+#source 作用:在当前bash环境下读取并执行FileName中的命令。
+or:
+source /opt/ros/kinetic/setup.bash
+
+
+8.dependencies for building packages
+sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential
+
+9.remove
+sudo apt-get remove ros-kinetic-*
+
+10.managing environment like ROS_ROOT ROS_PACKAGE_PATH
+printenv | grep ROS
+or:
+export | grep ROS    # no -> 7.
+
+source /opt/ros/kinetic/setup.bash
+
+$11.create workspace
+catkin_ws: |rosbuild_ws
+
+$source /opt/ros/kinetic/setup.bash
+$mkdir -p ~/catkin_ws/src
+$cd ~/catkin_ws
+$catkin_make
+
+$source devel/setup.bash  # for $path src pkg, devel --develop
+$echo $ROS_PACKAGE_PATH
+/home/nu/catkin_ws/src:/opt/ros/kinetic/share
+
+1.1.2 navigating ros filesystem
+
+apt-get install ros-<distro>-ros-tutorials
+
+package/package.xml |manifest.xml
+stack/packages||stack.xml
+
+
+$ROS_PACKAGE_PATH:
+rospack.pkg
+	rospack  find  [pkg_name]    # back path
+	rosstack find  [tack_name]
+
+rosbash.pkg
+	roscd
+	rosls
+
+
+1.1.3 create ros package
+
+catkin mode:  |rosbuild mode
+
+
+package structure:
+
+ws_space/
+	src/
+	   CMakeLists.txt
+	   package_1
+	   ...
+	   package_n
+	  	CMakeLists.txt
+		package.xml
+
+$cd ~/catkin_ws/src/
+$catkin_create_pkg beginner_tutorials std_msgs rospy roscpp
+#catkin_create_pkg <pkg_name> [depend1] [] []
+
+$rospack depends1 beginner_tutorials
+$rospack depends beginner_tutorials
+
+custom:
+package.xml
+CMakeLists.txt
+
+
+
+1.1.4 compile/kempail/ pkg
+catkin_make
+
+catkin_make simple CMake.
+
+CMake:
+mkdir build
+cd build
+cmake ..
+make
+make install   # optionally
+
+
+catkin_make: # in a catkin workspace
+事先source你的环境配置(setup)文件：
+$source /opt/ros/kinetic/setup.bash
+$catkin_make              # compile all engineers/project in src.
+
+catkin_make install  [optionally]
+
+if not in catkin_ws, in my_src
+catkin_make --source my_src
+catkin_make install --source my_src
+
+total:
+source /opt/ros/kinetic/setup.bash
+cd ~/catkin_ws
+rospack find 
+rospack depends1
+roscd 
+rosls
+rosed
+cd ./src
+catkin_create_pkg
+cd ~/catkin_ws
+catkin_make
+
+
+1.1.5 node
+
+nodes:   exec files
+messages:ros data type
+topics:  node->msg->topic->msg->node
+master:  manager/help nodes
+rosout:  == stdout/stderr
+roscore: host + rosout + param server
+
+rospy == python client lib
+roscpp == c++ client lib      # cpp --c plus plus
+rosjs == javascripts
+rosjava == java
+
+$roscore
+$rosnode list
+$rosnode info /rosout
+
+$rosrun turtlesim turtlesim_node #rosrun [pkgname] [nodename]
+$rosrun turtlesim turtlesim_node __name:=my_turtle
+$rosnode list
+$rosnode ping my_turtle
+
+roscore = ros+core : master (provides name service for ROS) + 
+		     rosout (stdout/stderr) +
+		     parameter server 
+
+rosnode = ros+node : ROS tool to get information about a node.
+rosrun = ros+run : runs a node from a given package. 
+
+total:
+roscore
+rosnode list/info/ping
+rosrun pkg node ?
+
+
+1.1.6 topic
+
+terminal1:
+$roscore
+$rosrun turtlesim turtlesim_node           ? where if find node?
+
+terminal2:
+$rosrun turtlesim turtle_teleop_key
+
+
+terminal3:
+rqt_graph:
+sudo apt-get install ros-<distro>-rqt
+sudo apt-get install ros-<distro>-rqt-common-plugins
+
+*rosrun rqt_graph rqt_graph   # graph display tel by topic
+
+
+rostopic -h
+
+rostopic list -h
+*rostopic list -v             # list all topics, v --verbose/ve'bos/ ==detail
+
+*rostopic echo /turtle1/cmd_vel    #display data pub in topic. vel --velocity. 
+
+pose/pos/ pose to photo.
+geometry/d3i'amitri/ graph,jihexue.
+twist/twist/ round.
+velocity/ve'loseti/speed.
+theta --8 xilazimu
+					? topic and type name by what
+rostopic type /turtle1/cmd_vel #only type same, can tel
+
+rosmsg show turtlesim/velocity
+*rosmsg show geomitry_msgs/Twist
+
+
+rostopic pub [topic] [msg_type] [args]
+rostopic pub -1 /turtle1/cmd_vel turtlesim/velocity -- 2.0 1.8
+*rostopic pub /turtle1/cmd_vel turtlesim/velocity -r 3  -- 2.0 1.8
+rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'
+
+rostopic hz [topic]  # 3
+rostopic hz /turtle1/pose
+rostopic type /turtle1/cmd_vel | rosmsg show
+
+*rosrun rqt_plot rqt_plot
+
+
+total:
+
+**rostopic list -v             # list all topics, v --verbose/ve'bos/ ==detail
+**rostopic echo /turtle1/cmd_vel    #display data pub in topic. vel --velocity. 
+*rosmsg show geomitry_msgs/Twist
+**rostopic pub /turtle1/cmd_vel turtlesim/velocity -r 3  -- 2.0 1.8
+
+*rosrun rqt_graph rqt_graph   # graph display tel by topic
+*rosrun rqt_plot rqt_plot
+
+
+
+1.1.7 services
+services is another tel mode of nodes, after topic and msg.
+services is another msg mode of nodes, request-><-response
+
+rosservice list
+rosservice call
+rosservice type
+rosservice find
+rosservice uri
+
+
+*$rosservice list
+$rosservice type clear
+$rosservice call clear
+
+*$rosservice type spawn | rossrv show
+
+*$rosservice call spawn 2 2 0.2 ""
+
+
+
+rosparam set
+rosparam get 
+rosparam load
+rosparam dump
+rosparam delete
+rosparam list
+
+
+*$rosparam list | get /
+$rosparam set background_r 150
+$rosparam call clear
+$rosparam get background_g
+$rosparam get /
+
+$rosparam dump params.yaml
+$rosparam load params.yaml copyspace
+$rosparam get copyspace/background_b
+
+rosparam - yaml-> save|operate  /ParametrServer/data
+
+
+total:
+*$rosservice list
+*$rosservice type spawn | rossrv show
+*$rosservice call spawn 2 2 0.2 ""
+
+*$rosparam list | get /
+$rosparam set background_r 150
+$rosparam call clear
+$rosparam get background_g
+rosparam dump/load  param.yaml
+
+
+1.1.8 rqt_console & roslaunch
+
+$rosrun rqt_console rqt_console            #display msg
+$rosrun rqt_logger_level rqt_logger_level
+
+$rosrun turtlesim turtlesim_node
+$rostopic pub /turtle1/cmd_vel geometry_msgs/Twist -r 1 -- '[2.0,0.0,0.0]' '[0.0, 0,0,0.0]'
+
+
+log level:
+Fatal>Error>Warn>Info>Debug
+
+
+roslaunch
+roslaunch [package] [filename.launch]
+
+$roscd beginner_tutorials
+$mkdir launch
+$cd launch
+$touch turtlemimic.launch   # mimic --copy
+
+<launch>
+
+   <group ns="turtlesim1">
+     <node pkg="turtlesim" name="sim" type="turtlesim_node"/>
+   </group>
+ 
+   <group ns="turtlesim2">
+     <node pkg="turtlesim" name="sim" type="turtlesim_node"/>
+   </group>
+ 
+   <node pkg="turtlesim" name="mimic" type="mimic">
+     <remap from="input" to="turtlesim1/turtle1"/>
+     <remap from="output" to="turtlesim2/turtle1"/>
+   </node>
+ 
+ </launch>
+
+
+$roslaunch beginner_tutorials turtlemimic.launch
+$rostopic pub /turtlesim1/turtle1/cmd_vel geometry_msgs/Twis -r 1 -- '[2.0,0.0,0.0]' '[0.0, 0,0, 1.8]'
+
+$rqt_graph
+
+
+total:
+console/level
+roslaunch xxx.launch
+
+
+1.1.9 rosed
+
+rosed [package_name] [filename]  #default vim
+$rosed roscpp Logger.msg
+
+
+1.1.10 create msg & srv
+
+*.msg code/test pub/sub
+*.srv code/test srv/client
+
+data type of xxx.msg:
+int8, int16, int32, int64(plus uint*)
+float32 float64
+string
+time,duration
+other msg files
+variable-length array[] and fixed-lenth array[C]
+Header
+
+
+xxx.msg:
+Header header
+string  varname
+
+xxx.srv:   #request --- response
+int64 A
+int64 B
+---
+int64 Sum
+
+
+$cd ~/catkin_ws/src/beginner_tutorials
+$mkdir msg
+$echo "int64 num" > msg/Num.msg
+for to python code, edit two files:
+
+vim/rosed package.xml:
+
+<build_depend>message_generation</build_depend>
+<run_depend>message_runtime</run_depend>
+
+
+vim/rosed CMakeLists.txt:
+'''
+find_package(
+  ...
+  COMPONENTS message_generation
+  ...
+)
+
+catkin_package(
+  ...
+  CATKIN_DEPENDS message_runtime
+  ...
+)
+
+add_message_files(
+  FILES
+  Num.msg
+)
+
+generate_messages()
+'''
+
+
+rosmsg show [message type]
+source ./devel/setup.bash
+rosmsg show beginner_turtorials/Num
+rosmsg show Num
+
+
+roscd beginner_tutorials
+mkdir srv
+roscp [pkg_name][file][to path]
+roscp rospy_tutorials AddTwoInts.srv srv/AddTwoInts.srv
+
+for *.srv to python code source.edit file
+
+CMakeLists.txt:
+'''
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+  std_msgs
+  message_generation
+)
+
+add_service_files(
+  FILES 
+  AddTwoInts.srv
+  ...
+)
+'''
+rossrv show beginner_tutorials/AddTwoInts
+rossrv show AddTwoInts
+
+
+msg & srv all done:
+
+CMakeLists.txt:
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
+
+for add new file.msg, remake
+cd catkin_ws
+catkin_make
+
+所有在msg路径下的.msg文件都将转换为ROS所支持语言的源代码。
+生成的C++头文件将会放置在~/catkin_ws/devel/include/beginner_tutorials/。 
+Python脚本语言会在 ~/catkin_ws/devel/lib/python2.7/dist-packages/beginner_tutorials/msg 目录下创建。 
+lisp文件会出现在 ~/catkin_ws/devel/share/common-lisp/ros/beginner_tutorials/msg/ 路径下. 
+
+
+rosmsg -h
+rosmsg show -h
+
+
+total:
+package/msg/xxx.msg
+package/srv/xxx.srv
+
+rosmsg show Num
+rossrv show AddTwoInts
+
+roscp pkg_name file src/file
+
+xxx.msg:
+Header header
+string  varname
+
+xxx.srv:   #request --- response
+int64 A
+int64 B
+---
+int64 Sum
+
+*** depends detail up up up
+
+
+
+1.1.12 publisher and subscriber by Python
+
+
+vim /beginner_tutorials/scripts/talker.py
+'''
+#!/usr/bin/env python
+# license removed for brevity
+import rospy
+from std_msgs.msg import String
+
+def talker():
+    pub = rospy.Publisher('chatter', String, queue_size=10)
+    rospy.init_node('talker', anonymous=True)
+    rate = rospy.Rate(10) # 10hz
+    while not rospy.is_shutdown():
+        hello_str = "hello world %s" % rospy.get_time()
+        rospy.loginfo(hello_str)
+        pub.publish(hello_str)
+        rate.sleep()
+
+if __name__ == '__main__':
+    try:
+        talker()
+    except rospy.ROSInterruptException:
+        pass
+
+'''
+chatter/kete/ tianpian zhenchan.
+queue/kju/ list,duilie.
+amount,total
+communication/ce'mjuniket/talk each other.
+anonymous/e'nonimes/ any
+
+chmod +x talker.py
+
+
+
+
+vim /beginner_tutorials/scripts/listener.py
+'''
+#!/usr/bin/env python
+import rospy
+from std_msgs.msg import String
+
+def callback(data):
+    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+    
+def listener():
+
+    # In ROS, nodes are uniquely named. If two nodes with the same
+    # node are launched, the previous one is kicked off. The
+    # anonymous=True flag means that rospy will choose a unique
+    # name for our 'listener' node so that multiple listeners can
+    # run simultaneously.
+    rospy.init_node('listener', anonymous=True)
+
+    rospy.Subscriber("chatter", String, callback)
+
+    # spin() simply keeps python from exiting until this node is stopped
+    rospy.spin()
+
+if __name__ == '__main__':
+    listener()
+
+'''
+
+
+1.1.13 test x x
+cd ~/catkin_ws
+source ./devel/setup.bash
+
+rosrun beginner_tutorials talker.py
+rosrun beginner_tutorials listener.py
+
+1.1.15 srv client by python
+
+vim ./scripts/add_two_ints_server.py
+'''
+#!/usr/bin/env python
+
+from beginner_tutorials.srv import *
+import rospy
+
+def handle_add_two_ints(req):
+    print "Returning [%s + %s = %s]"%(req.a, req.b, (req.a + req.b))
+    return AddTwoIntsResponse(req.a + req.b)
+
+def add_two_ints_server():
+    rospy.init_node('add_two_ints_server')
+    s = rospy.Service('add_two_ints', AddTwoInts, handle_add_two_ints)
+    print "Ready to add two ints."
+    rospy.spin()
+
+if __name__ == "__main__":
+    add_two_ints_server()
+
+'''
+
+
+
+vim ./scripts/add_two_ints_client.py
+'''
+#!/usr/bin/env python
+
+import sys
+import rospy
+from beginner_tutorials.srv import *
+
+def add_two_ints_client(x, y):
+    rospy.wait_for_service('add_two_ints')
+    try:
+        add_two_ints = rospy.ServiceProxy('add_two_ints', AddTwoInts)
+        resp1 = add_two_ints(x, y)
+        return resp1.sum
+    except rospy.ServiceException, e:
+        print "Service call failed: %s"%e
+
+def usage():
+    return "%s [x y]"%sys.argv[0]
+
+if __name__ == "__main__":
+    if len(sys.argv) == 3:
+        x = int(sys.argv[1])
+        y = int(sys.argv[2])
+    else:
+        print usage()
+        sys.exit(1)
+    print "Requesting %s+%s"%(x, y)
+    print "%s + %s = %s"%(x, y, add_two_ints_client(x, y))
+
+'''
+
+
+
+1.1.16 test
+. devel/setup.bash
+rosrun beginner_tutorials add_two_ints_server.py
+...
+rosrun beginner_tutorials add_two_ints_client.py 1 3
+
+1.1.17 record data & display 
+
+mkdir ~/bagfiles
+cd ~/bagfiles
+rostopic list -v
+
+rosbag record -a 
+rosbag record -O subset /turtle1/cmd_vel /turtle1/pose
+
+rosbag info subset.bag
+rosbag play -r 2 xxx.bag
+
+total:
+rosbag record/info/play
+
+1.1.18 roswtf
+
+1.1.19 roswiki
+
+1.1.20 next
+
+
+
+4.1.1  urdf --unified robot description format
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
