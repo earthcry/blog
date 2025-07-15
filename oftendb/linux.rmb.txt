@@ -1,0 +1,2140 @@
+tags_: @@ssh 
+tree_: '''>
+empty
+<'''
+concept_: ssh mode login remote host
+core_: '''>
+# login
+ssh name@ip     #remote ip
+<'''
+detail_: '''>
+secure shell	/si'kjue/
+#login no password:
+#http://blog.csdn.net/zengqiang1/article/details/52997885
+# create public/private rsa key pair. ~/.ssh/id_rsa,id_rsa.pub
+$ssh-keygen # == ssh-keygen -t rsa. all to default.
+# copy to remote host.
+#sshelper.ook over
+cat ~/.ssh/id_rsa.pub | ssh -p 2222 192.168.43.1 'cat >> ~/.ssh/authorized_keys'
+scp {-P 2222} ~/.ssh/id_rsa.pub nu@192.168.43.1:~
+or
+cat ~/.ssh/id_rsa.pub | ssh -p 22 user@host 'cat >> ~/.ssh/authorized_keys'
+# copy key into file
+cat ~/id_isa.pub >> ~/.ssh/authorized_keys
+# In server, edit perms of file and dir
+chmod 755 ~
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+<'''
+time_: 20180217162310
+
+@@ln @@link 
+# soft link:
+# same as shortcut in windows
+ln -s /aaa/bbb/file1  /ddd/file2
+# file1 and file2 must use /path;
+#hard link:
+# = ((cp -p) + (sync update))
+ln /aaa/bbb/file1 /ddd/file2 
+# must in same part;and not dir;
+# ls -i /ddd/file2
+wizard #cd X-desktop
+Gparted
+mount /dev/sda1 /mnt
+mount /dev/srcpart /mnt/src
+mount /dev/bacpart /mnt/bak
+swapon /dev/hda3
+mount -o loop myfile.iso /media/cdimage
+mount -o rw,loop myfile.iso /media/cdimage
+umount -l /isodevice
+#或直接在U盘目录中赋予一个目录读写权限:    
+mount -o remount,rw /livemnt/boot/6、
+mount -t ntfs-3g /dev/sda3 /media/win7  //-t type
+mount -t vfat /dev/sda11 /media/u
+mount -t iso9660 /dev/cdrom /mnt/cdrom
+mount -t iso9660 -o loop /home/user/file.iso /mnt/cdrom
+//loop/ro/rw/iocharset; a file as disk part
+lsof |grep delete
+servive rsyslogd restart
+### zip
+tar -cvpz -f /backup.tgz . -C /back-dir --exclude=/lost+found 2>> err.txt
+tar -xvpz -f /backup.tgz . -C /unzip-dir
+#man tar
+-C, --directory=DIR
+# datename: name_`date '+%Y-%m-%d'`_img.tar.gz
+apt-get install p7zip-full
+7z l aa.7z		#list aa.7z
+7z e aa.7z		#curent dir
+7z x aa.7z		#full path
+7z x aa.7z -omydir	# output mydir
+7z a aa.7z dir
+7z a aa.zip dir -tzip
+rm -rf all-dir
+tar -ztvpf xxx.tar.gz
+tar -zcvpf /home/data/xxx.tar.gz . -C /zipdir   # 压缩的文件不带路径；
+tar -zxvpf /home/data/xxx.tar.gz   -C /unzipdir
+tar -zxvpf /home/data/xxx.tar.gz  /home/nu/data/zipdir  # 带路径；
+tar -zxvpf /home/data/xxx.tar.gz aaa.txt        # 只解压某个文件目录；
+-C --directory=dir 重定向(切换)到某个目录；
+# tar好象只能在当前目录下解压；
+tar -cvpz -f /a/b/aaa.tgz /c/mydir
+tar -cvpz -f /a/b/aaa.tgz /c/mydir/*
+tar -xvpz -f /a/b/aaa.tgz .
+tar -xvpz -f /a/b/aaa.tgz ~/c/mydir/
+tar -xvpj ...
+# normal
+tar -tvpz -f file.tar.gz
+tar -cvpz -f file.tar.gz . --directory /zip-dir
+tar -xvpz -f file.tar.gz . --directory /unzip-dir
+  
+# tar a dir to package
+	c - creart
+	x - unpack,unzip
+	v - display
+	f - name with filename, must back by file.zip
+	z - gzip
+	j - bz2
+	C - --directory
+# package mydir
+tar -cvp -f mydir.tar mydir
+# package and zip mydir
+tar -cvpz -f mydir.tar.gz mydir/ 
+# unzip and unpack
+tar xvpz -f mydir.tar.gz ./
+# maybe tar zip slowly,so can do samely
+tar cvf - mydir | gzip -> foo.tar.gz
+#char '-' as filename is std in|out
+sudo apt-get install rar
+sudo apt-get install unrar
+rar a aaa.rar aaa.txt bbb.txt
+rar x aaa.rar tmp/
+rar --help
+unrar -?	//for help
+unrar -x	//unzip file
+unrar -l	//list files
+unrar -t	//test file
+# gzip GNU zip
+# gzip only zip a file once, so first pack folder to one with tar 
+gzip -v aa.txt 		# zip file and display
+gzip -dv aa.txt.gz	# unzip file and display
+gzip -rv mydir		# recursion zip every file to every zip in folder.
+gzip -drv mydir		# unzip ...
+gzip -v mydir.tar       # zip a backup file.
+gunzip/gzip -d     .gz
+gzip -1 file // fast zip;
+gzip -9 file // fine zip;
+gzip -9 mydir.tar
+gunzip mydir.tar.gz
+zip -r mydir.zip mydir
+unzip 
+user manager
+1.root,uid=0;
+2.user,uid=500,6000;
+3.app,uid=1,499;
+In ubuntu, root and user switch:
+1.user-->root: >sudo su
+2.root-->user: >su user|exit
+3.sudo passwd root
+4.sudo passwd -l root/-u root//disable/enable
+5.system/sysmanager/loginwin//autologin
+manager soft:
+/etc/passwd  //usrname...
+ever line have 7 parts;
+usrname:root
+password:x
+usrid:0
+usrgpid:0
+usrnote:admin
+usrhome:/root
+usrenv:/bin/bash //shell //cmd parse//echo $SHELL
+/etc/shadow   //password...
+ever line have 9 parts;
+usrname:root;
+usrpass:md5;! is diabled;
+time:pass last edit;
+max time:0     //edit pass time bridge;
+min time:99999 //edit pass at least time;
+warning:7      //war passtime will pass;
+no active:
+lost time:
+usr manager
+    create usr:
+        1./etc/passwd add a record;
+        2.home dir;
+        3.config;
+        4.password;
+        adduser/useradd  //useradd zhangsan
+        useradd -u 600 -g 500 -G 501 -d /home/www -s /bin/sh -c mywebsite
+        adminweb;
+        tail -5 /etc/passwd
+        tail -5 /etc/shadow
+        ls /home/
+        man useradd
+        passwd adminweb
+        tail -5 /etc/shadow
+    userdel
+        userdel [-r] adminweb
+    modify usr:
+        useradd myuser
+        passwd myuser
+        usermod -l youuser myuser //rename
+        usermod -L youuser        // lock youuser
+        usermod -U youuser        // unlock..
+        passwd -S youser          //look state
+        passwd -l youser          // lock passwd
+        passwd -u youser          // unlock passwd
+# permission
+chmod +x a.sh
+# run file
+./a.sh
+/opt/a.sh
+? dir & dir/*
+chmod -R u+r tmpdir
+chmod  //change the permissions mode of a file or a dir
+ls -l file
+chmod u+x file         
+chmod g+w,o-r file
+chmod g=rwx file
+u user
+g group
+o other
+a all
+r 4
+w 2
+x 1
+rwx 421
+rwxrw-r-- 
+ 7  6  4
+chmod 640 file
+ls -ld /tmp/a/b
+chmod 777 /tmp/a
+chmod -R u+w dir  -R递归修改
+useradd linzhiling
+passwd linzhiling
+file      r:cat/more/less/head/tail
+          w:vim
+          x:script command
+directory r:ls
+          w:touch/mkdir/rmdir/rm
+          x:cd
+chmod u+w filename
+1: have perms
+0: no perms
+rwx as a group
+r-x 101,--10-->5
+rwx 111,--10-->7
+r: 4.read
+w: 2.write
+x: 1.execute
+7=4+2+1=rwx
+6=4+2=rw
+5=4+1=rx
+a: all
+u: user
+g: group
+o: other
+-: normal file
+d: directory
+l: link
+b: block
+c: character
+-rw------- (600)  只有拥有者有读写权限。
+-rw-r--r-- (644)  只有拥有者有读写权限；而属组用户和其他用户只有读权限。
+-rwx------ (700)  只有拥有者有读、写、执行权限。
+-rwxr-xr-x (755)  拥有者有读、写、执行权限；而属组用户和其他用户只有读、执行权限
+-rwx--x--x (711)  拥有者有读、写、执行权限；而属组用户和其他用户只有执行权限。
+-rw-rw-rw- (666)  所有用户都有文件读、写权限。
+-rwxrwxrwx (777)  所有用户都有读、写、执行权限。
+rwx = 111 = 7
+rw- = 110 = 6
+r-x = 101 = 5
+r-- = 100 = 4
+-wx = 011 = 3
+-w- = 010 = 2
+--x = 001 = 1
+--- = 000 = 0
+chown   //change file ownership
+chown nudo file
+chown nu:nugroup file aa.txt bb.txt
+chown -R James:writers * //current dir and subdir file owner is James of writers
+chmod g+w file
+
+@@chgrp  @@group
+//look
+user1 is in group.user2
+newgrp user2
+user1 exet /home/user2/xxx
+groups nu
+cat /etc/group
+//add
+useradd -G groupA Carry      // add new user
+usermod -a -G groupA Carry   // add old user
+chgrp   //change file group ownership
+chgrp lamp file
+
+@@umask
+umask -S   
+umask 777-754  //custom default permissions
+ping 192.168.1.11
+ifconfig eth0 1.1.1.1 netmask 255.255.255.0 up
+# up down enable disable
+ifconfig eth0 -dynamic
+share file to mobile by es-file-explorer
+++++++++++++++++++++++++++++++++++++++++
+init 6  reboot
+init 0  shutdown
+1.sudo apt-get install dnsmasq
+2.vim /etc/resolv.conf ;nameserver 127.0.0.1;//maybe not;
+3.touch /etc/resolv.dnsmasq 
+	nameserver 202.101.172.35 //zhejiangdianxin	
+	nameserver 61.153.81.75	  //most new dns
+	nameserver 8.8.8.8
+	nameserver 8.8.4.4
+4.vim /etc/dnsmasq.conf
+	#resolv-file=   replace  resolv-file=/etc/resolv.dnsmasq
+5.vim /etc/dhcp3/dhclient.conf    //maybe not
+	#prepend domain-name-server 127.0.0.1; //del #;
+12.04 installed dnsmasq-base;
+vim /etc/NetworkManager/NetworkManager.conf
+	#dns=dnsmasq
+vim /etc/default/dnsmasq
+	IGNORE_RESOLVCONF=yes
+6.sudo /etc/init.d/dnsmasq restart
+ |sudo service dnsmasq restart
+7.explorer set firefox
+Proxy :  Manual proxy configureation
+source package//
+binary package// pkg.deb /pkg.rpm
+script install package//xxx.tar.gz   python setup.py install
+apt-cache search pkgname
+dpkg -i *.deb
+apt-get/yum
+python setup.py install
+sudo apt-get install alien
+sudo alien --scripts ***.rpm
+sudo dpkg -i ***.deb
+:r !date
+:map  I#<ESC>
+:set ff
+:set ff=unix
+:%s/^M//g
+concept_: encoding of terminal, vim, file.
+core_: '''>
+iconv -f GBK -t UTF-8 file1 -o file2
+# filename conv
+convmv -f GBK -t UTF-8 *.mp3
+convmv -f GBK -t UTF-8 --notest *.mp3
+convmv -f GBK -t UTF-8 --notest -r *.mp3  # digui
+<'''
+detail_: '''>
+一、编码问题
+编码常见为 gbk utf-8 big5 cp936
+1、查看现在文本的编码
+:set fenc
+:set fileencoding
+2、修改终端编码，可以设置终端或者在vim中
+:set tenc=编码
+:set termencoding=utf-8
+3、以指定的编码显示文本，但不保存到文件中。
+:set enc=编码
+:set encoding=utf-8
+4、转换当前文本的编码为指定的编码
+:set fenc=编码
+:set fileencodings=utf-8 ，然后 w （存盘）一下即可转化为 utf8 格式，
+:set fileencodings=cp936  ，然后 w （存盘）一下即可转化为 ANSI 格式。
+or ?
+:set fileencoding=utf-8 ，然后 w （存盘）一下即可转化为 utf8 格式，
+:set fileencoding=cp936  ，然后 w （存盘）一下即可转化为 ANSI 格式。
+# encoding、fileencoding、fileencodings、termencoding，它们的意义如下:
+# * encoding: Vim 内部使用的字符编码方式，包括 Vim 的 buffer (缓冲区)、菜单文本、消息文本等;
+# * fileencoding: Vim 中当前编辑的文件的字符编码方式，Vim 保存文件时也会将文件保存为这种字符编码方式 (不管是否新文件都如此);
+# * fileencodings: Vim 启动时会按照它所列出的字符编码方式逐一探测即将打开的文件的字符编码方式，并且将 fileencoding 设置为最终探测到的字符编码方式。因此最好将 Unicode 编码方式放到这个列表的最前面，将拉丁语系编码方式 latin1 放到最后面;()
+# 注意顺序是不能错的。ucs-bom必须要设置为第一个，utf-8必须是第二个，latin1必须是最后一个。为什么这样设置可以看VIM文档：
+# :help fencs
+# * termencoding: Vim 所工作的终端 (或者 Windows 的 Console 窗口) 的字符编码方式。
+# 所以, 这样设置vimrc文件, 就会解决上面的问题:
+# chinese=gb2312(unix)=cp936(win)
+set fileencodings=utf-8,chinese,latin-1
+set termencoding=utf-8
+set encoding=utf-8
+# disp in vim. ~/.vimrc 
+# at same time support GBK and utf-8
+set fileencodings=ucs-bom,utf-8,cp936
+set termencoding=utf-8
+set encoding=utf-8
+<'''
+time_:20170820223558
+
+
+tags_: @@sshfs @@mount
+tree_: '''>
+empty
+<'''
+concept_: mount remote dir to current dir
+core_: '''>
+# mount a b
+sshfs 192.168.43.1:/storage/emulated/0 ~/android -p 2222
+# must umount before exit, otherwise termianl dead.
+sudo umount -l ~/android
+<'''
+detail_: '''>
+<'''
+time_: 20180217162628
+tags_: @@install @@tar.gz @@tar.bz2 @@dpkg  @@make
+concept_: install 
+core_:'''>
+# install mode:
+apt-get  # stable
+ppa      # new
+make     # source
+# install opencv lib, but not know all name.
+sudo apt-cache search opencv
+sudo apt-get install libopencv-dev
+# list soft installed
+dpkg -l           # all soft
+dpkg -l "*vim*"   # about vim
+# ppa --personal package archive
+# search add ppa source in https://launchpad.net/ubuntu/+ppas/
+# ppa: user/soft_name
+sudo add-apt-repository ppa:numix/ppa
+sudo apt-get update
+sudo apt-get install xxx
+sudo add-apt-repository --remove ppa:numix/ppa
+#
+sudo pip install xxx
+# source install
+tar -zxvf filename.tar.gz -C /tmp/
+sudo apt-get build-dep xxx  #download depends
+./configure  #for setup
+make         #bianyi
+make install
+[sudo checkinstall]
+sudo make uninstall
+<'''
+detail_:'''>
+deb
+#must select best server in software&updates, and update.
+sudo apt-get build-dep xxx  #download depends
+#由于关系包有很多，如果想卸载可以在安装前先记录下build-dep安装的包：
+apt-get build-dep nginx | tee nginx-build-dep.txt
+#Debian系统可以用Deborphan清理没有被依赖的软件包：
+apt-get install deborphan
+#查找没有被依赖的软件包:
+deborphan -sPz
+#删除找到的包：
+apt-get autoremove `deborphan`
+dpkg -i file.deb
+an linus的安装格式，跟red hat的rpm非常相似，最基本的安装命令是：dpkg -i file.deb 
+dpkg 是Debian Package的简写，是为Debian 专门开发的套件管理系统，方便软件的安装、更新及移除。所有源自Debian的Linux发行版都使用dpkg，例如Ubuntu、Knoppix 等。
+以下是一些 Dpkg 的普通用法：
+1、dpkg -i <package.deb>
+安装一个 Debian 软件包，如你手动下载的文件。
+2、dpkg -c <package.deb>
+列出 <package.deb> 的内容。
+3、dpkg -I <package.deb>
+从 <package.deb> 中提取包裹信息。
+4、dpkg -r <package>
+移除一个已安装的包裹。
+5、dpkg -P <package>
+完全清除一个已安装的包裹。和 remove 不同的是，remove 只是删掉数据和可执行文件，purge 另外还删除所有的配制文件。
+6、dpkg -L <package>
+列出 <package> 安装的所有文件清单。同时请看 dpkg -c 来检查一个 .deb 文件的内容。
+7、dpkg -s <package>
+显示已安装包裹的信息。同时请看 apt-cache 显示 Debian 存档中的包裹信息，以及 dpkg -I 来显示从一个 .deb 文件中提取的包裹信息。
+8、dpkg-reconfigure <package>
+重新配制一个已经安装的包裹，如果它使用的是 debconf (debconf 为包裹安装提供了一个统一的配制界面)。
+<'''
+time_:20180221210454
+tags_: @@rime @@im @@inputMethod @@shurufa
+concept_: rime
+tree_:'''>
+input method
+<'''
+core_:'''>
+update systemSetttings/languageSupport
+rime.im
+sudo apt install ibus-rime              #ibus-rime0.0
+log out注销；然后进入ibus文字输入设定中将rime加入到活动列表。
+systemSettings/language support/keyboard input method system -->ibus
+systmeSettings/text entry/input sources to use --->add chinese(rime)(ibus)
+super+space    切换输入法
+ctrl+`  --> setup
+dictManager
+xxx.userdb.txt、xxx.userdb.kct.snapshot 
+#close rime for free
+cd ~/.config/ibus/rime
+#bin/rime_dict_manager [--list]
+rime_dict_manager -l
+shift+delete
+<'''
+detail_:'''>
+rime
+rime.im
+https://github.com/rime/home/wiki/UserGuide
+https://github.com/rime/home/wiki/RimeWithIBus
+https://github.com/rime/ibus-rime
+https://www.cnblogs.com/BlackStorm/p/Install-IBUS-RIME-Input-Method-On-Ubuntu-15-04-LTS.html
+@ibus-rime
+### install ibus-rime: ubuntu-15.04.4
+# providing libyaml-cpp1.5, librime, rime-data, ibus-rime
+# or sudo add-apt-repository ppa:lotem/rime
+sudo apt update
+sudo apt install ibus-rime              #ibus-rime0.0
+#sudo apt install librime-data-wubi      # not default to install   /usr/share/rime-data/*
+#sudo apt install librime-data-zyenpheng librime-data-triungkox4p #古
+#sudo apt install librime-data-ipa_xsampa #国际音标
+log out注销；然后进入ibus文字输入设定中将rime加入到活动列表。
+systemSettings/language support/keyboard input method system -->ibus
+systmeSettings/text entry/input sources to use --->add chinese(rime)(ibus)
+super+space    切换输入法
+ctrl+`  --> setup
+#ibus-rime0.2
+#C++12, gcc>=4.8
+gcc -v
+@add new
+加载新输入方案如五笔，从/usr/share/rime-data里：
+ln -s /usr/share/rime-data/wubi87.schema.yaml ~/.config/ibus/rime/wubi86.scheme.yaml
+然后修改rime的设置文件，在schema_list配置信息下添加wubi87配置信息即可：
+vim ~/.config/ibus/rime/default.yaml
+schema_list:
+  - schema: wubi87
+  - schema: wubi_pinyin
+  - schema: luna_pinyin
+保存，然后重新部署rime，再按ctrl+`或者F5，就可以切换方案选择rime输入引擎,，就可以使用五笔输入法了。
+明月拼音luna_pinyin
+我们可以做一些微调设置，可以创建一个文件来对默认的 default.yaml 打补丁：
+vim ~/.config/ibus/rime/default.custom.yaml
+patch:
+  schema_list:
+    - schema: luna_pinyin
+    - schema: cangjie6
+    - schema: luna_pinyin_fluency
+    - schema: luna_pinyin_simp
+    - schema: jyutping
+  "menu/page_size": 7
+这里我更换了可用的输入方案，并将候选词数改为 7 个。
+@guangbiao
+WPS 等 qt 程序下输入法不跟随光标，需要安装 qtconfig-qt5 以及 ibus-qt4 包，在 qtconfig 的 interface 里面设置 input style 为 Over the spot ，保存退出再运行基于 qt 的程序即可看到输入法跟随光标。
+目前（基于我简陋的自定义设置）发现的问题：
+    [ ] 基于 qt 的程序下即使设置了跟随光标，也会保留一个预显示框；
+    [ ] 联想能力还是不足，但记忆功能好一点；
+    [-] 没有网址模式，输入网址时不太方便；
+    看了默认配置，主键区的 . 可以触发 url 模式，小键盘暂时不能。
+    [ ] 没有设置小键盘的输入功能，默认效果是回车会换到下一行，并接受选词；
+    [ ] 没有设置选词键位，默认效果是 Arrow Up / Arrow Down 、 PageUp / PageDown 、 , / . 选词；
+    [x] 没有设置默认英文输入，切换中文输入的功能（应该是ibus的设置）；
+    ibus 跟 fcitx 一样，都可以在系统里设置输入法，新增一个 Chinese (Rime) 就好了。我之前是只有一个 Chinese ，然后在终端 ibus engine rime 设置的输入法，所以格外别扭。
+    [x] 没有设置默认英文模式。如果可以给 Rime 设置默认英文模式的话，只保留一个 Entry 就好了；
+    给选词方案加一个 patch 就好了，比如在我的 luna_pinyin_simp.custom.yaml 中：
+patch:
+  "switches/@0/reset": 1
+效果是把 switches 项下的第一个设置也就是 ascii_mode 默认打开。
+    [ ] 输入状态是全局的，不能对不同窗口保留不同的中英文状态。
+@dict
+#dict
+系统词典：xxx.dict.yaml --deploy--> xxx.table.bin;
+用户词典：xxx.userdb.kct;
+#词库导入设置
+RIME的词典由两部分组成。
+1.系统文本词库（xxx.dict.yaml结尾），通过「重新部署/deploy」生成的固态词典（一般以xxx.table.bin结尾）。这部份词库因为在输入过程是固定不変的，所以存在用大量的词量，也不允许用户来直接删除。
+另一部分就是记录我们用户输入习惯的用户词典（一般以xxx.userdb.kct）结尾。这部份词库的词量，正常情况下是由用户输入的时候随时生成的；其词量可以动态调整，数量理论上来说不会特别多，也允许用户自行删除（shift+delete）。
+2.导入词库之前需进行繁简转换
+五、RIME个人词库配置同步（针对文件installation.yaml，文件夹sync）
+RIME本身不可以实现云同步，但我们可以借助第三方云端实现此功能。我本人使用的坚果云网盘，类似的像是百度，115均可。
+第一步打开用户文件夹中的installation.yaml文件，修改sync_dir指向位置（这个位置将是RIME的词典与配置存储的地方）
+另外也可修改installation_id为自己喜欢的名称（为字母下划线数字，也可以不修改，我的是修改为了lin）
+...
+佛振曰：
+* 新增：固态词典可引用多份码表文件 
+深蓝词库转换；精确的简繁体转换TextPro OpenCC；牛人语录；
+深蓝的强処在於能够将各頪输入法的二进制词库还原成文本码表的形式；
+词库管理：
+【中州韵】和【鼠须管】暂无图形工具，可取得 librime 编译产出的工具程序 
+@dictManager
+#close rime for free
+cd ~/.config/ibus/rime
+#bin/rime_dict_manager [--list]
+rime_dict_manager -l
+shift+delete
+通过命令行方式实现以下功能。 
+执行 rime_dict_manager 之前需要关闭正在使用的输入法，释放以独占方式打开的词典文件。 
+请，将工作目录设为「Rime 用户文件夹」。
+在此执行 rime_dict_manager 查看所支持的参数及命令格式；加上参数 --list 查看用户词典列表。
+Rime 所要求的 UTF-8 (no BOM) 编码： 
+:se fenc=utf8 nobomb ff=unix
+同步备份：
+default: \sync\UUID
+custom:
+installation.yaml
+sync_dir: 'D:\Dropbox\RimeSync'
+usb:
+sync_dir: '/Volumes/USBDRIVE/RimeSync'
+默认地，每套 Rime 会随机生成一个 UUID 作为标识。不同 installation ID 可区分来自不同机器/系统的用户词典。 
+    编码转换
+window GBK(gb2312)
+linux  UTF-8
+vim diaplay encoding:
+:set fileencoding
+~/.vimrc:
+set encoding=utf-8 fileencodings=ucs-bom,utf-8,cp936
+文件编码转换
+1.在Vim中直接进行转换文件编码,比如将一个文件转换成utf-8格式
+:set fileencoding=utf-8
+2. iconv 转换，iconv的命令格式如下：
+iconv -f encoding -t encoding inputfile
+比如将一个UTF-8 编码的文件转换成GBK编码
+iconv -f GBK -t UTF-8 file1 -o file2
+@datafile 
+Rime 中的數據文件分佈及作用
+除程序文件以外，Rime 還包括多種數據文件。 這些數據文件存在於以下位置：
+共享資料夾
+【中州韻】 /usr/share/rime-data/
+【小狼毫】 "安裝目錄\data"
+【鼠鬚管】 "/Library/Input Methods/Squirrel.app/Contents/SharedSupport/"
+用戶資料夾
+【中州韻】 ~/.config/ibus/rime/ （0.9.1 以下版本爲 ~/.ibus/rime/）
+【小狼毫】 "%APPDATA%\Rime"
+【鼠鬚管】 ~/Library/Rime/
+用戶資料夾則包含爲用戶準備的內容，如：
+〔全局設定〕 default.yaml
+〔發行版設定〕 weasel.yaml
+〔預設輸入方案副本〕 <方案標識>.schema.yaml
+※〔安裝信息〕 installation.yaml
+※〔用戶狀態信息〕 user.yaml
+編譯輸入方案所產出的二進制文件：
+〔Rime 棱鏡〕 <方案標識>.prism.bin
+〔Rime 固態詞典〕 <詞典名>.table.bin
+〔Rime 反查詞典〕 <詞典名>.reverse.bin
+記錄用戶寫作習慣的文件：
+※〔用戶詞典〕 <詞典名>.userdb.kct
+※〔用戶詞典快照〕 <詞典名>.userdb.txt、<詞典名>.userdb.kct.snapshot 見於同步文件夾
+以及用戶自己設定的：
+※〔用戶對全局設定的定製信息〕 default.custom.yaml
+※〔用戶對預設輸入方案的定製信息〕 <方案標識>.custom.yaml
+※〔用戶自製輸入方案〕及配套的詞典源文件
+註：以上標有 ※ 號的文件，包含用戶資料，您在清理文件時要注意備份！
+@custom 
+方案定義
+一套輸入方案，通常包含「方案定義」和「詞典」文件。
+方案定義，命名爲 <方案標識>.schema.yaml，是一份包含輸入方案配置信息的 YAML 文檔。
+關閉用戶詞典和字頻調整
+以【五笔86】爲例：
+# wubi86.custom.yaml
+patch:
+  translator/enable_user_dict: false
+@rime-data
+2.1 朙月拼音（预装）
+sudo make install librime-data-luna-pinyin
+2.2 双拼
+sudo apt-get install librime-data-double-pinyin
+2.3 宫保拼音
+sudo apt-get install librime-data-combo-pinyin
+2.4 速记打字法
+sudo apt-get install librime-data-stenotype
+2.5 注音、地球拼音
+sudo apt-get install librime-data-terra-pinyin librime-data-bopomofo
+2.6 仓颉五代（预装）
+sudo apt-get install librime-data-cangjie5
+2.7 速成五代
+sudo apt-get install librime-data-quick5
+2.8 五笔86、袖珍简化字拼音、五笔画
+sudo apt-get install librime-data-wubi librime-data-pinyin-simp
+2.9 IPA (X-SAMPA)
+sudo apt-get install librime-data-ipa-xsampa
+2.10 上海吴语
+sudo apt-get install librime-data-wugniu
+2.11 粤拼
+sudo apt-get install librime-data-jyutping
+2.12 中古汉语拼音
+sudo apt-get install librime-data-zyenpheng librime-data-triungkox3p
+2.13 快速仓颉
+sudo apt-get install librime-data-scj6
+2.14 笔顺五码
+sudo apt-get install librime-data-stroke6
+@fcitx
+###ubuntu-14.04################################################3
+fcitx-im.org
+language support:chinese(simp)pinyin(trad)rime
+add-apt-repository ppa:fcitx-team/nightly #add source
+apt-get update
+apt-cache search fcitx
+apt-get install fcitx			#flexible IM framework
+#config fcitx
+GUI config
+sudo im-config
+#sudo im-config -s fcitx
+reboot
+apt-cache search fcitx
+apt-get install fcitx-rime		#rime engine
+fcitx -r
+#apt-get install fcitx-table-wubi	# f framework table
+copy file of wubi2008
+reploy:
+rm -rf ~/.config/fcitx/default.yaml
+fcitx -r
+it will auto create table.
+import userdict:
+# ~/.config/fcitx/rime
+# close rime
+rime_dict_manager -r wubi2008.userdb.txt
+#config:
+~/.config/fcitx/rime
+/use/share/rime-data
+custom wubi2008:
+default.custom.yaml
+wubi2008.schema.yaml
+wubi2008.dict.yaml
+reploy:
+rm -rf ~/.config/fcitx/default.yaml
+restart im
+sync userdict:
+# ~/.config/fcitx/rime
+# installation.yaml
+#	id: nudoubuntu
+#	sync_dir: /home/xxx
+rime_dict_manager -s
+添词、删词、调序；
+添词：1.每个字都拼出，再按space; 2.entry 4 char, and select by number;
+调序：select number;
+删词：select, shift+delete
+###ubuntu-14.04###############################################3
+###ubuntu-12.04
+fqrouter:
+https://code.google.com/p/rimeime/
+Ubuntu PPA:
+launchpad.net/ubuntu/+ppas
+### install fcitx:
+# this repo provides libkyotocabinet, libgoogle-glog for Ubuntu 12.04;
+# these packages are officially supported since Ubuntu 12.10.
+sudo add-apt-repository ppa:fcitx-team/nightly
+sudo add-apt-repository ppa:fcitx-team/dailybuild-fcitx-master
+sudo apt-get update
+sudo apt-get install fcitx-rime
+# http://wiki.ubuntu.org.cn/fcitx
+# setup in english environment:
+>sudo apt-get install fcitx-pinyin im-switch
+>im-switch -s fcitx -z all_ALL
+# edit /etc/X11/xinit/xinput.d/fcitx
+xim=fcitx
+xim_program=/usr/bin/fcitx
+xim_arg=''
+gtk_im_module=fcitx
+qt4_im_module=fcitx
+depends='fcitx'
+# not appear fcitx in GTK program at sometime, so
+# modify: gtk.immodules, immodules.cache
+# /usr/lib/gtk-3.0/3.0.0/immodules.cache
+# 如果immodules.cache文件没有，Ubuntu用户可以用生成
+# sudo gtk-query-immodules-3.0 >/usr/lib/gtk-3.0/3.0.0/immodules.cache 
+#将：
+#"fcitx" "Fcitx (Free Chinese Input Toy of X)" "fcitx" "/usr/share/locale" "ja:ko:zh:*" 
+#更改为：
+#"fcitx" "Fcitx (Free Chinese Input Toy of X)" "fcitx" "/usr/share/locale" "en:ja:ko:zh:*" 
+###ubuntu-12.04
+<'''
+time_:20180409161625
+@@sources
+? soft center upgrade more
+/etc/apt/sources.list,
+*** @@source package ***
+rpm default path
+/etc/
+/usr/bin            //cmd
+/usr/lib/           //func lib
+/usr/share/doc/     //base help
+/usr/share/man/     //help
+rpm -ql httpd
+//source pkg
+/usr/local/softname/
+/etc/rc.d/init.d/httpd start
+service httpd start             //sameple,redhat 
+/usr/local/apache2/bin/apachect1 start
+/usr/local/src/
+/usr/local
+http://mirror.bit.edu.cn/apache/httpd/
+WinSCP
+tar -zxvf httpd.2.2.9.tar.gz
+du -sh httpd.2.2.9
+cd /usr/local/httpd.2.2.9/
+./configure --prefix=/usr/local/apache2
+make  //bianyi//make clean
+make install //
+/usr/local/apache2/bin/apachectl start
+service httpd stop
+rm -rf /usr/local/apache2/
+tags_:@@ubuntu
+concept_: ubuntu
+tree_:'''>
+linux
+    ubuntu
+<'''
+core_:'''>
+ubuntu install
+    download iso
+    grub
+    install
+    update | apt/apt-get/aptitude
+    update systemSettings/languageSupport
+    vim-gnome
+    ERUS
+        cp bak
+        sshfs
+        ssh autologin
+    rime
+    nutstore
+    firefox
+    xware/xunlei
+    vlc
+ubuntu interface switch
+    ctrl+alt+F1~F6 to cmdline;
+    ctrl+alt+F7    to xwin;
+    #switch to cmd prompt from boot
+    #/etc/default/grub
+    ...="quiet splash text"
+    sudo update-grub
+    :w !sudo tee % 		#save up permisssion
+shortcuts
+    desktop.app:supper+a
+<'''
+detail_:'''>
+	ubuntu install
+1. sources
+gedit /etc/apt/sources.list to 163
+# download mirrors.163.com sources.list.163
+sudo apt update         # for sources
+sudo apt dist-upgrade   # for all soft 
+2.ubuntu/Nutstore
+	20, sudo apt-get install vim
+	21, Python2.x  not Python3  # Nutstore only for Python2.x
+	22. install append lib
+		apt-get install openjdk-7-jre-headless gvfs-bin python-notify
+	23. download bin file
+		https://www.jianguoyun.com/static/exe/installer/nutstore_linux_dist_x64.tar.gz
+	24. rename  nutstore_bin.tar.gz
+	25. unzip into the dir
+		$mkdir -p ~/.nutstore/dist && tar zxf nutsore_bin.tar.gz -C ~/.nutstore/dist
+	26. install menu and ico
+		$ ~/.nutstore/dist/bin/install_core.sh
+	27. finish and open
+		In dash search
+3.python-pip
+pip list
+pip install --upgrade pip
+4.numpy scipy matplotlib
+0.调整grub2
+之所以此条设为0是因为一般单系统用户可以跳过；然而对于双系统用户来说，特别是Ubuntu作为第二系统的时候，需要调整一下默认的启动顺序。grub2（grub的升级版）是控制操作系统启动的预加载器，就是刚开机OEM之后的那个紫色界面。双系统用户刚装完Ubuntu的时候grub是默认Ubuntu作为第一启动项的。如果需要改成其他系统如Windows作为默认，需要再Ubuntu下打开bash：
+cd /etc/grub.d/
+sudo mv 30_os-prober 01_os-prober
+这里是将原有的操作系统启动的优先顺序从30提升到01。
+如果顺便修改下grub界面等待时间，则继续：
+cd /etc/default/
+sudo gedit grub
+打开图形界面。将其中的 GRUB_TIMEOUT 对应的数值改为等待的秒数；顺便检查下#GRUB_HIDDEN_TIMEOUT=0这一行如果没有前面的#号的话一定要补上。 我一般设等待时间是1秒。保存并关闭。
+最后，一定要：
+sudo update-grub2
+这时才使修改真正生效。此时可以重启欣赏一下了。
+menuentry "install  ubuntu" {
+  insmod gzio
+  insmod part_msdos
+  insmod ext4
+  set root='hd0,msdos8'
+  search --set -f /ubuntu-16.04.4-desktop-amd64.iso
+  loopback loop /ubuntu-16.04.4-desktop-amd64.iso
+  set root=(loop)
+  linux /casper/vmlinuz.efi boot=casper iso-scan/filename=/ubuntu-16.04.4-desktop-amd64.iso
+  initrd /casper/initrd.lz
+  boot
+}
+5.rime
+ibus-rime
+6.apt/apt-get
+https://www.sysgeek.cn/apt-vs-apt-get/
+<'''
+time_: 20180409080200
+tags_: @@fdisk @@fenqu @@format
+concept_: fdisk
+tree_:'''>
+<'''
+core_:'''>
+sudo fdisk -l  # look dev
+sudo fdsik /dev/sda
+m --menu
+p --==fdisk -l, part
+d --delete
+p
+n --add new
++50G
+mkfs -t ext4 /dev/sda10
+<'''
+detail_:'''>
+mkswap
+man mkswap
+fsck
+auto mount /etc/fstab
+blkid /dev/sda6  #uuid
+uuid /mnt/sda6 ext4 defaults 0 0
+<'''
+time_: 20180407163504
+tags_: @@disk  @@du @@df @@space @@size @@format
+concept_: disk cmd
+core_:'''>
+#format disk
+mkfs -t ext4 /dev/sdb  #ext4 format,
+mkswap /dev/sda3
+#space  
+df -Th          # df-diskFileSystem T-type h-human 
+sudo fdisk -l   # disp all disks and parts,
+sudo cfdisk  	# disp all item of sys disk and part,
+du -h  xxx.mkv  # du-diskUsage a file size
+du -sh dir1     # dir size
+du -h --max-depth=1  # subdirs size
+#resource
+top	   	#cpu;ram;
+<'''
+detail_:'''>
+<'''
+time_:20180217161129
+tags_: @@ap @@wifi @@router
+concept_: raspberry access point
+core_:'''>
+static ip
+dhcp dnsmasq
+hostapd
+<'''
+detail_:'''>
+1.sources.list
+2.static interface name
+touch vim /etc/udev/rules.d/10-network.rules
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="aa:bb:cc:dd:ee:ff", NAME="wlan0"
+3.static ip
+static eth0 10.42.0.76
+static wlan0 192.168.4.1
+/etc/network/interfaces
+auto wlan0
+iface wlan0 inet static
+address 192.168.4.1
+netmask 255.255.255.0
+4.DHCP
+sudo apt-get install dnsmasq
+vim /etc/dnsmasq.conf
+listen-address=127.0.0.1,10.42.0.76,192.168.4.1
+dhcp-range=192.168.4.50,192.168.4.150,12h
+sudo service dnsmasq restart
+5.hostapd
+sudo apt-get install hostapd
+touch vim /etc/hostapd/hostapd.conf
+interface=raspi_ap
+driver=nl80211
+ssid=ssid
+hw_mode=g
+channel=13
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+wpa_passphrase=passwd
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+#test
+sudo hostpad -d /etc/hostapd/hostapd.conf
+ctrl+c
+vim /etc/default/hostapd
+DAEMON_CONF="/etc/hostapd/hostapd.conf"
+sudo service hostapd start
+http://shumeipai.nxez.com/2016/12/06/raspberry-pi-to-create-a-wireless-relay-science-internet-router.html
+<'''
+time_: 20180405160919
+----------------------------------------------------------------------------
+ 
+tags_: @@permission @@authority
+concept_: quanxian
+tree_:'''>
+<'''
+core_:'''>
+_________ ___ _____ ____________ ________ _______________
+| | | | | | | | |
+| | | | | | | | +–符号连接(s_link)
+| | | | | | | |
+| | | | | | | +—–文件名(name)
+| | | | | | |
+| | | | | | +—-文件最后更改时间(time)
+| | | | | |
+| | | | | +————以字节计的文件长度(size)
+| | | | |
+| | | | +———-文件属组(group)
+| | | |
+| | | +——————–文件属主(user)
+| | |
+| | +——-连接数位(count)
+| |
+| +——-文件模式位(mode),占9位
+|
++————文件类型位(type),占一位
+以上9个字段中除了s_link外，其他字段对不同文件和目录都应该有。其中user、group、time和name的含义自
+明，本文就不再介绍，其它字段将分专题小节在本文介绍。
+<'''
+detail_:'''>
+https://blog.csdn.net/roland_wg/article/details/2900865
+三、文件类型(type)
+Linux支持的文件类型主要包括一下7类，箭头右面的字符就是相应的文件类型位标志：
+1、普通文件========>-
+2、目录文件========>d
+3、符号连接========>l
+4、字符设备文件====>c
+5、块设备文件======>b
+6、命名管道FIFO
+7、套接口socket
+其中FIFO和socket超出了本文的范畴，不做介绍。其它文件简单解释如下：
+1、普通文件：就是普通文件(废话！)，你用’vi myfile’建立的myfile就是普通文件，比如可执行二进制代码
+文件、script脚本文件、ASCII文本文件、数据文件、配置文件……就解释到这样行吗？
+2、目录文件：目录可以理解成放其它文件和/或其它目录的容器，是一种特殊文件，其内容由目录项组成，每个
+目录项主要包括两部分内容：文件名name和索引节点号inode，两者和起来称为连接，我们将在下小节对inode
+进行更详细的介绍。
+3、设备文件：不知道诸位是否有使用DOS的经验，如果我们的机器只有三个DOS系统文件IO.SYS, MSDOS.SYS,
+COMMAND.COM，而你需要编辑一份英文文档，日后再通过打印机输出，你能怎么办？
+COPY CON MYDOC.TXT
+；在此输入文档内容
+^+D ；结束存盘
+COPY MYDOC.TXT > PRN ；打印文档
+如果你熟悉这个过程，那你就已经理解设备文件了。以上的CON和PRN分别是DOS定义的两个设备文件，分别对应
+终端和并行打印口。这种设计使我们不必了解设备使用的具体硬件细节，按使用普通文件相同的方法来使用外部
+设备。
+Linux下的设备文件分为三大类：字符设备、块设备和网络设备，要想准确区别它们可能需要单独写一篇更臭更
+长的文章，大致情况是：字符设备是直接读取的，不使用缓冲区，象串行口、终端等；而块设备都是通过缓冲区
+进行读取的，并且每次只能读取一定数量的块，比如磁盘每次至少要读取一个扇区(如512字节)，块设备可以实
+现随机读写；网络设备即前面提到的socket，因为我还不很熟悉，就不乱说了。设备文件一般都保存在/dev目
+录下，诸位可以用ls -l命令看看都有什么？反正本文的重点在于介绍普通文件和目录，设备文件不是重点，所
+以就只介绍到这里。
+四、索引节点、硬连接和连接计数
+==============================
+1、索引节点inode：
+Linux为每个文件分配一个称为索引节点的号码inode，可以将inode简单理解成一个指针，它永远指向本文件的
+具体存储位置。系统是通过索引节点(而不是文件名)来定位每一个文件。例如：
+假设我们在硬盘当前目录下建立了一个名为mytext文本文件，其内容只有一行：
+This is my file.
+当然这行文字一定是存储在磁盘数据区某个具体位置里(物理上要通过磁头号、柱面号和扇区号来描述，在本例
+中假设分别是1、20、30)。
+假设其inode是262457，那么系统通过一段标准程序，就能将这个inode转换成存放此文件的具体物理地址(1磁
+头、20柱面、30扇区），最终读出文件的内容：“This is my file.”
+所以inode是指向一个文件数据区的指针号码，一个inode对应着系统中唯一的一片物理数据区，而位于两个不
+同物理数据区的文件必定分别对应着两个不同的inode号码。
+文件拷贝命令：
+# cp /home/zyd/mytext newfile
+在当前工作目录建立了一个新文件newfile，其实际操作主要包括如下三步：
+1、在当前目录中增加一个目录项，其文件名域填入newfile，并分配了一个新的inode，假设是262456。
+2、将原文件(在1磁头、20柱面、30扇区)的内容复制了一份到新的空闲物理块(假设是1磁头、20柱面、31扇
+区)。
+3、填写一些其他关键信息，使系统通过这些信息及inode号码可以完成物理地址的转换。
+所以文件复制要分配新的inode和新的数据区，虽然两个文件的内容是一样的。
+2、硬连接hardlink：
+我们实际使用文件时一般是通过文件名来引用的。通过上面的讨论，我们知道：1个inode号码肯定和一片完全
+属于一个文件的数据区一一对应。那么一个文件系统中两个或更多个不同的文件名能否对应同一个文件呢？答案
+是肯定的。我们知道inode号码是记录在文件名对应的目录项中的，我们可以使两个或多个文件的目录项具有相
+同的inode值，实际上就使它们对应着同一个文件。有几个目录项具有相同的inode号，我们就说这个文件有几
+个硬连接(hardlink)，对于普通文件，ls -l命令的连接计数count域的数值就是本文件拥有的硬连接数。硬连
+接可以通过ln命令建立，例如：
+# ln /home/zyd/mytext hardlink_mytext
+就建立了一个新的文件hardlink_mytext，这个文件的inode同样是262457。建立硬连接实际上只是增加了一个
+目录项，但并复制文件数据区，原文件的数据区由两个文件共享。这一方面能够节约大量磁盘空间，同时可以保
+证两个文件能同步更新。
+‘ls -il’可以显示文件的inode(在下面最左边)：
+262456 -rw-rw-r– 1 zyd zyd 17 Nov 3 14:52 newfile
+262457 -rw-rw-r– 2 zyd zyd 17 Nov 3 14:50 hardlink_mytext
+262457 -rw-rw-r– 2 zyd zyd 17 Nov 3 14:50 mytext
+3、连接计数count：
+前面我们介绍了，文件的连接计数域表明本系统中共有几个文件目录项的inode和本文件相同，也就是本文件共
+有几个硬连接。如上面的例子中hardlink_mytext和mytext文件的count值都是2。
+那么对于目录，其count域的含义是什么呢？目录的count同样表示共有多少个目录项指向此目录，不过要详细
+说明必须进一步解释VFS文件系统的结构，为简单起见，只要这样理解就行了：(count-2)等于本目录包含的直
+接子目录数(就是只包括儿子，不包括孙子啦！)。例如：如果一个目录/abc的count域为5，那么
+/abc目录一定包含3个子目录。
+至此我们已经介绍了普通文件、目录文件、设备文件、硬连接、连接计数、索引节点等非常重要的概念。
+4、进一步说明：
+硬连接文件实际上并不是一种新的文件类型，两个文件互为对方的硬连接。它们应该都是普通文件(谁能告诉
+我：其它类型的文件可以硬连接吗？)。两个文件除了名称或/和文件目录不同外，其它部分完全相同，更改了一
+个文件，另一个的文件长度、内容、更改时间等都将相应发生变化，更改了一个文件的权限位mode，另一个也会
+发生同样的变化。
+注意连接计数字段count，互为硬连接的两个文件的count值都是2，表明有两个inode指向同一文件的inode。
+当我们删除其中一个文件时，系统首先将(count-1)->count，如果结果是零，就将其目录项和数据区都删除，
+否则只将本目录项删除，数据区仍然保留，仍然可以通过另外的文件名访问。根据这个特性，可以通过为重要的
+文件建立硬连接的方法来防止其被误删除。
+一个文件系统允许的inode节点数是有限的，如果文件数量太多，即使每个文件都是0字节的空文件，系统最终
+也会因为节点空间耗尽而不能再创建文件。所以当发现不能建立文件时首先要考虑硬盘数据区是否还有空间(可
+通过du命令)，其次还得检查节点空间。
+互为硬连接的多个文件必须位于同一个文件系统上。根设备及任何一个需要mount才能挂接进来的分区、软盘、
+NFS、光驱等都是一个独立的文件系统，每个文件系统有一个相应的设备号，不同文件系统中具有相同inode节
+点的文件间没有任何联系。系统则通过设备号和inode号的组合唯一确定一个文件。
+Linux之所以能支持多种文件系统，其实是由于Linux提供了一个虚拟文件系统VFS，VFS作为实际文件系统的上
+层软件，掩盖了实际文件系统底层的具体结构差异，为系统访问位于不同文件系统的文件提供了一个统一的接
+口。实际上许多文件系统并不具备inode结构，其目录结构也和以上的讨论不同，但通过VFS，系统均为其提供
+了虚拟一致的inode和目录项结构。所以，’ls -il’命令实际显示的inode应该是VFS inode，也就是说，
+inode是存在于内存中的数据结构，而不一定是实际的硬盘结构。但为Linux量身定做的ext2文件系统具备实际
+的inode和连接型目录项结构，所以，对于ext2文件系统，可以认为我们上面讨论的关于硬连接的概念是完全正
+确的。
+本节最后两段的说明如果您暂时理解不了也没关系，随着学习的深入，慢慢就能理解了。
+五、符号连接
+============
+不同文件系统中的文件不能建立硬连接，但可以通过符号连接进行同步。符号连接是一种独立的文件类型，它有
+自己的数据区，但数据区的内容只是一个被它指向的文件的路径名。前言那节的例子1.5说明文件sym_link是一
+个指向/tmp/sym_target文件的符号连接，如果我们cat sym_link，系统自动将它指向的文件打开显示而不是
+显示sym_link文件本身，注意sym_link的文件长度是15，正是字符串/tmp/sym_target的长度。建立符号连接
+和建立硬连接一样使用ln命令，不过要加入’-s’选项：
+ln -s /home/zyd/file_system/mytext my_sym_link
+# ls -li my_sym_link
+262458 lrwxrwxrwx 1 zyd zyd 28 Nov 3 14:55 my_sym_link -> /home/zyd/file_system/mytext
+思考题：建立符号连接时一般都要输入目标文件的绝对路径，为什么？
+(提示：假设我们想让用户在任意当前目录都能执行/usr/local/my_bin/myproc而运行如下命令：
+# cd /usr/local/bin
+# ln -s ../my_bin/myproc myproc)
+六、文件模式位mode
+==================
+通过chmod命令可以改变用户对相应文件的存取权限。
+Linux系统用一个16位的字来存储每个文件的type和mode，其中高4位通过组合来决定文件的type，它是在文件
+创建时写入的，用户不能更改。下面介绍后面的12位模式位
+bit|11 10 9 |8 7 6 | 5 4 3 | 2 1 0 |
+—-|——–|——–|———|———|
+| X X X |X X X | X X X | X X X |
+—-|——–|——–|———|———|
+mode r w x r w x r w x
+将这12位分成4组，高位组(9,10,11位)每位都有特殊的含义，下面将具体说明。此高位组(6,7,8位)决定文件
+属主拥有的权限，再下一组决定文件属组成员对此文件拥有的权限，最低位组决定除了属主及属组以外的用户拥
+有的对此文件操作的权限。
+较低3组中每组从最低位到最高位分别是执行位、改写位和读取位，哪位置1表示有相关权限。例如第6位是1表示
+属主可以执行此文件，第4位是1同组其他用户可以改写此文件，第2位是1表示其它用户可以读此文件。每组的3
+位构成一位8进制数，可以将各权限位的组合通过3位8进制表示，例如：
+111 101 100表示成754，则命令：
+chmod 754 filename使文件的属主能读、写和执行filename文件，本组的其他用户可以读和执行此文件，但不
+能修改。其他用户则只能读该文件。
+第11位是SUID位，第10位是SGID位，第9位是粘附位。
+如果某个可执行文件设置了SUID位，则此文件运行时的进程将具备和此文件属主相同的权限。
+/usr/bin/passwd设置了SUID位且其属主是root，则任何用户运行它时，其进程就具备了root权限，这就是为
+什么普通用户也可以通过passwd命令更改自己的登陆口令的原因(实际就是改变/etc/shadow文件，只有root有
+权读写此文件).具备SUID位且属主可执行，则属主执行位显示s来代替没有SUID位的x，如果属主不能执行，则
+显示为大写的S。
+SGID和SUID含义相对应。设置SGID位且属组可执行，则属组执行位改成s显示，否则以S显示。
+粘附位根据其他用户是否可执行分别在ls -l时在其他用户执行位上显示成t或T。对于可执行文件，设置了粘附
+位可以使其第一次运行后在交换分区swap中保留正文的副本，由于交换分区的文件是连续存放的，所以下次运行
+时能较快调入内存。对于现代文件系统来说，这一功能已经没有什么实际意义了。
+如果对一个目录设置了粘附位，则只有对于该目录具有写许可权的用户且满足如下三个条件之一，才能删除或更
+名该目录下的文件：
+1、超级用户root。
+2、此目录的拥有者。
+3、拥有要被删除或更改名字的文件。
+这一特性被Linux使用到了/tmp目录上：任何人都可以使用该目录存储文件，但只有文件所有者和root可以删除
+或更名文件。
+最后要谈的是目录的读、写和执行位的准确含义
+初学者常常对目录的权限位理解得似是而非，原因主要在于对文件系统的确切结构不理解。
+r表示读目录，w表示写目录，而x表示搜索目录(注意不是执行目录)
+我们通过以上讨论已经知道目录实际是一种特殊文件，它由目录项构成，每个目录项包括该目录下一个文件的文
+件名和inode。所以读权限就是读目录项的权限，因此获得此目录所包含的文件名列表。同样写目录权限就是更
+改目录目录文件(增加、减少和更名目录项)，实际就是能否在该目录建立、删除文件和为文件改名。搜索权限通
+俗点可以理解为进入目录对文件内容进行操作的权限，包括打开文件、获取文件的进一步详细信息等权力。更通
+俗点，我们可以将目录比喻为盛药的盒子，我们在一个大药盒(根目录)上贴上叫“药品”的标签(目录名)，下面
+列着“青霉素”和“感冒药”(目录项)，拥有x权限相当于有打开这个盒子的钥匙。如果我们拥有钥匙，就能打
+开这个盒子(拥有根目录的x权限，可以进入)，打开后发现里面还有一个加锁的盒子贴有“感冒药”标签(子目
+录)，下面列着“感冒通”、“感康”……,另外还有一个药瓶里面装有消炎药青霉素(文件)。
+如果我们需要服用“青霉素”(相当于打开根目录下的文件)，则我们必须拥有开大箱子的钥匙(根目录x权限)和
+吃药的权力(相应文件权限),但如果我们需要服用“感康”，则必须还有下一把钥匙。目录读权限相当于我们是
+否识字，写权限相当于我们是否拥有一只笔。只要识字，我们没有任何钥匙也能大致了解大箱子内有什么，但无
+法了解小盒子里有些什么具体药品。如果需要了解就必须首先能打开大箱子。如果我们要向大箱子内放入一种新
+药或拿出一种药品(相当于在根目录内创建、删除文件)，我们首先必须能进入大箱子(x)，然后有笔(w)能相应
+更改大箱子的标签。
+有了以上的比喻，下面进行正式说明：
+1、当我们打开任何文件时(也就是我们的命令中包含最终文件名时)，对该文件名的绝对路径中的每个目录均必
+须拥有x搜索权限。也只有拥有了x权限，才能用cd命令进入该目录。
+2、读权限允许我们通过ls命令获得该目录的文件名列表，但前提仍然是必须对该目录的所有上级目录拥有x权限
+(想想药盒的故事)。
+3、在满足目录权限的前提下，最终对文件的读、写、执行取决于文件权限。
+4、只要你拥有一个目录的写权限及其所有上层目录的搜索权限，你就能在该目录建立文件和删除文件，即使这
+个文件不归你所有！！！
+5、超级用户可以超越大多数文件权限的检查。
+思考题：
+1、为什么目录建立的默认权限是rwxr-xr-x？
+2、假设在你的当前目录下有一个子目录test，你拥有读和写权限，没有搜索权限，如下命令哪些能够成功执
+行？为什么？
+ls test
+ls -l test
+cd test
+cp /etc/passwd ./test/newpasswd
+del test/new_file
+ln test/new_file up_file
+七、更改文件模式mode
+====================
+更改文件模式可以通过chmod命令进行，我们将mode的低12位每3位一组组成4位8进制数，被设置权限的位为1，
+否则为0，作为chmod的参数之一，后面跟需要更改权限的文件名列表，例如：
+# chmod 4752 this.file
+设置了this.file的SUID位(4)，文件属主可以读、写和执行(7)、同组其他用户可以读和执行，不能更改(5)、
+其他用户只能改写、不能读和执行(2)——哪位真的这样设置了权限位，肯定脑筋有点问题:)
+(全文完) 
+<'''
+time_: 20180327161211
+tags_: @@tabs @@terminal @@switch
+concept_:  tabs of terminal
+tree_:'''>
+desktop
+    terminal
+        tabs
+    firefox
+    app
+    shortkey
+<'''
+core_:'''>
+open: ctrl+alt+t,   --parent
+open: ctrl+shift+t, --childs
+swith: 
+    alt + n
+    ctrl+ pageDown/pageUp
+Ctrl+p 向上显示缓存命令
+Ctrl+n 向下显示缓存命令
+Shift+PgUp/PgDn 终端上下翻页滚动
+CTRL + L: 清楚屏幕
+CTRL + A: 移动到行首
+CTRL + E: 移动到行末
+application
+    super+a/app 
+tabs of firefox
+    open: ctrl+t
+    close: ctrl+w
+    switch: ctrl+tab
+desktop
+    Edit--> Keybord Shortcuts 
+<'''
+detail_:'''>
+<'''
+time_: 20180322212046
+tags_: @@scp 
+tree_:'''>
+<'''
+concept_: secure copy
+core_:'''>
+scp local_file root@ip:/srv/aadir/
+scp -r loacl_dir root@ip:/srv/aadir/
+scp root@ip:/srv/aadir/aa.txt ./
+scp -args root@ip:/usr/local/src/*.log /root/
+args:
+-r         # copy dirs
+-P 2222    # port
+-v         # display progress
+-C         # use zip option
+-4         # ip4 force
+-6         # ip6 force
+<'''
+detail_:'''>
+<'''
+time_: 20180322152253
+tags_: @@cp @@copy
+tree_:'''>
+<'''
+concept_:
+core_:'''>
+cp --help
+man cp
+cp -avi   
+cp -uvi
+-a ==pdr
+-r --dir
+-u --update, only updated to cp
+-v --display
+<'''
+detail_:'''>
+cp file1 file2     # in same dir, copy a new file2.
+cp /home/myspace/aaa.txt ~/txtdir/    
+cp ./ccc.txt ./bbb.txt ./txtdir/
+cp -i ./aaa.txt ./txtdir/        # interacter / -f --force
+ls -l . ./txtdir/                # duibi attribites of ccc.txt
+cp -a ccc.txt ./txtdir           # as same as copy, -a = -pdr
+ls -l . ./txtdir/
+cp    ./txtdir/ ./bak/           # == cp ./txtdir/* ./bak/
+cp -r ./txtdir/ ./bak/           # copy dir txtdir with all files and dirs in it
+cp -r ./txtdir/ ./bak/           # if bak not exit:txtdir==>bak,exit:bak/txtdir 
+cp -r dir1 dir2 file1 dir3
+cp -u ~/.bashrc ./bak/bashrc     # only date new 
+cp -s ~/.../linux.txt ./linux_slink_txt
+cp -l ~/.../linux.txt ./linux_hlink.txt  # same as source
+cp ~/linux_slink_txt  ./linux.txt        # real copy source
+<'''
+time_: 20180322152410
+tags_: @@help  @@manual
+concept_: help
+core_:'''>
+cmd --help
+or 
+man cmd
+<'''
+detail_:'''>
+whatis ls
+cp --help
+info ls
+whereis cp
+man 1 cp	//look help
+man 3 printf
+<'''
+time_: 20180222162237
+tags_: @@uninstall @@remove @@clean
+concept_: uninstall
+core_:'''>
+apt-get remove xxx		# del pkg save cfg
+apt-get --purge remove xxx  	# del pkg and cfg
+apt-get clean			# del all cache pkg
+apt-get autoclean		# del removed pkg
+apt-get autoremove		# del no installed pkg of depend
+<'''
+detail_:'''>
+<'''
+time_: 20180221221028
+tags_: @@uninstall @@remove @@clean
+concept_: uninstall
+core_:'''>
+apt-get remove xxx		# del pkg save cfg
+apt-get --purge remove xxx  	# del pkg and cfg
+apt-get clean			# del all cache pkg
+apt-get autoclean		# del removed pkg
+apt-get autoremove		# del no installed pkg of depend
+<'''
+detail_:'''>
+<'''
+time_: 20180221221028
+tags_:@@speed @@net
+concept_: 带宽详情监控工具
+core_:'''>
+监控总体带宽使用――nload、bmon、slurm、bwm-ng、cbm、speedometer和netload
+监控总体带宽使用（批量式输出）――vnstat、ifstat、dstat和collectl
+每个套接字连接的带宽使用――iftop、iptraf、tcptrack、pktstat、netwatch和trafshow
+每个进程的带宽使用――nethogs
+<'''
+detail_:'''>
+https://www.cnblogs.com/EasonJim/p/7119318.html
+http://os.51cto.com/art/201404/435279.htm
+http://www.tuicool.com/articles/R73ym2
+<'''
+time_:20180219162606
+tags_: @@sync @@rsync
+concept_: rsync
+core_:'''>
+rsync -av /home/aaa/ /home/bbb  # aaa/all files
+rsync -av /home/aaa /home/bbb   # a hole aaa dir
+<'''
+detail_:'''>
+# only sync a->b not a<->b
+download   # dir  
+download/  # all file under/
+rsync -rtuv /home/nu/android/111/ /home/nu/aaa/
+rsync -e 'ssh -p 2222' -rauv 192.168.43.1:/storage/emulated/0/111/ /home/nu/aaa
+rsync -e 'ssh -p 2222' -ruv /home/nu/aaa/ 192.168.43.1:/storage/emulated/0/111
+rsync -e 'ssh -p 2222' -rauv 192.168.43.1:/storage/emulated/0/111/ /home/nu/aaa
+<'''
+time_: 20180217163015
+@@apt-get ***
+sudo //linshi have root permission; 
+/etc/sudoers
+/var/log/messages
+sudo cmd
+su //user turn to root;know root pwd;
+sudo su //user turn to root;
+apt-get //advanced packaging tools 
+apt-get = yum
+//looking installed //graph usage 新立德
+dpkg -l
+dpkg -l dns*
+dpdg --get-selections |less
+sudo apt-cache search xxx
+sudo apt-cache show xxx		//info
+sudo apt-get install xxx [--reinstall]
+sudo apt-get -f install //fix
+sudo apt-get update //update sources
+sudo apt-get upgrade //pkg
+sudo apt-get remove [--purge]//cfgfile
+sudo apt-get dist-upgrade //os
+apt-cache depends package //look
+apt-cache rdepends package //look
+sudo apt-get build-dep package //install compil env
+apt-get source package
+sudo apt-get clean/autoclean //unused pkg
+sudo apt-get check  //bad depends
+sudo vim /etc/apt/source.list
+*** @@clean
+apt-get clean			# del all cache pkg
+apt-get autoclean		# del no installed pkg
+apt-get remove xxx		# del pkg save cfg
+apt-get purge golang
+apt-get autoremove		# del no installed pkg of depend
+apt-get --purge remove xxx  	# del pkg and cfg
+# 要掌握, 就达到熟练的程度。
+tags_: @@^A @@^aquan
+concept_: dell unable sight charachor
+core_:'''>
+:%s/\%x01/ /gc
+<'''
+detail_:'''>
+^A     %x01
+^aquan %x00
+<'''
+time_:20170821115041
+@@time
+mtime: modify time, content modify.inside change.
+ctime: change time, attribute or permision change.outside change.
+atime: access time, cat,more,read,
+no create time.
+@@env
+echo $PATH
+echo $HOME
+@@jpg @@mp3 @@pdf
+xdg-open xxx.jpg
+xdg-open http://www.baidu.com
+@@ipEthernet
+list cmd: 
+    nm-tool
+    ifconfig -a
+#set ip of ubuntu/linux
+vim /etc/network/interfaces
+vim /etc/NetworkManager/NetworkManager.conf managed true;
+#set ip of raspbian/linux
+vim /etc/network/interfaces
+vim /etc/dhcpcd.conf
+# dhcp/static/manual
+# 1.dhcp ip
+auto eth0
+iface eth0 inet dhcp
+sudo /etc/init.d/networking restart
+or
+$>sudo dhclient eth0
+# 2.static ip
+auto eth0
+iface eth0 inet static
+address 192.168.2.100
+netmask 255.255.255.0
+gateway 192.168.2.1
+#network 192.168.2.0
+#broadcast 192.168.2.255
+sudo /etc/init.d/networking restart ?
+stop: Job failed while stopping
+start: Job is already running: networking
+tail -f /var/log/upstart/networking.log
+ifdown eth0 && ifup eth0
+# 3.set xuni ip
+# 4.see hostname, set hostname
+sudo /bin/hostname
+sudo /bin/hostname newname xxx
+# 5.set dns
+method 1:
+vi /etc/network/interfaces
+dns-nameservers 8.8.8.8
+method 2:
+sudo vi /etc/resolvconf/resolv.conf.d/base
+nameserver 202.96.134.133
+nameserver 202.96.134.33
+sudo etc/init.d/resolvconf restart
+# list DNS
+nmcli dev list iface eth0 | grep DNS
+# 6.pppoe
+                                    
+ip ifconfig:
+sudo ifconfig eth0 19.33.44.22 netmask 255.255.254.0 up
+dns /etc/resolv.conf
+nameserver DNS_IP
+ethernet/adapter/cable
+ 
+ 
+@@fstab
+#!/bin/bash
+#!/bin/sh
+/etc/fstab	#part and mount point and file system 
+@@update
+apt update  	  # for sources
+apt dist-upgrade  # update all soft
+@@download
+1, cd ~/Downloads
+2, wget http://xxx.com/xxx.tar.gz
+3, tar zxvf xxx.tar.gz
+4, cd xxx
+5, ./congfigure
+6, make
+7, sudo make install
+@@flashplugin
+sudo apt-get install gnash mozilla-plugin-gnash
+tags_: @@mtp @@usb
+concept_: mtp
+core_:'''>
+# in virtul dir "gvfs"
+# or type "mount cmd to ls path"
+/rut/user/$UID/gvfs
+/run/user/1000/gvfs/mtp:host=xxxxxx 
+/run/user/1000/gvfs/mtp:host=%5Busb%3A002%2C015%5D/Internal storage
+<'''
+detail_:'''>
+mtp:host=%5Busb%3A002%2C015%5D
+mtp://[usb:002,013]
+mtp:host=%5B usb %3A 002 %2C 013 %5D
+mtp://   [   usb :   002 ,   013 ]
+<'''
+time_:20170821104947
+@@adsl, @@pppoe
+setup:
+sudo pppoeconf
+...
+look log:
+plog/(ifconfig ppp0)
+...
+edit for off often:
+sudo vim /etc/ppp/options
+lcp-echo-failure 40
+link:
+sudo pon dsl-provider
+sudo poff 
+@@>, >>
+cat a.txt >> b.txt # append a to b;
+cat a.txt >  b.txt # same copy.
+@@Byte,bit
+字位bit比特，storage information min danwei.
+二进制数的位数
+一个位，表示两种状态0，1；2^1
+二个位，表示四种状态00,01，10，11；2^2
+...                                2^3
+1B = 8bit 01101010;
+字节Byte，字长，
+字节的数量级：
+以幂为基数，2^10，2进制; 
+1KB = 1024B  = 2^10B;
+1MB = 1024KB = 2^20B; 
+1GB = 1024MB = 2^30B; 
+1TB = 1024GB = 2^40B; 
+1KiB = 1000B = 10^3B;十进制；
+1MiB = 1000K = 10^6B;
+1GiB = 1000M = 10^9B;
+@@down xware
+@@crontab
+sys: /etc/crontab
+usr: crontab -e
+sudo service cron restart
+crontab -r    # end task
+crontab -l    # list task
+*/2 * * * * xdg-open ~/Downloads/yxfj.jpg
+@@app of ubuntu
+goldendict
+goldendict-wordnet
+scrot
+GIMP，
+vlc media player
+@@openvpn
+/etc/rc.local
+openvpn /etc/openvpn/client.ovpn >/dev/null &
+openvpn --daemon --config client.ovpn
+sudo openvpn --config /etc/openvpn/config/client.ovpn --ca /etc/openvpn/config/ca.crt
+client
+dev tap
+proto tcp-client
+remote 192.168.135.75 1194
+resolv-retry infinite
+nobind
+mute-replay-warnings
+redirect-gateway
+ca /etc/openvpn/ca.crt
+cert /etc/openvpn/client.crt
+key /etc/openvpn/client.key
+comp-lzo
+verb 4
+@@l2tp-ipsec-vpn
+apt
+104.200.20.76
+23.239.31.143
+key:vpn69.com
+@@pptp
+network>vpn-connections>vpn-configure:
+gateway: xxx.xxx.xxx.xxx
+username:
+password:
+advanced:
+    no EAP
+    select MPPE
+@@phone
+150 6911 5912
+183
+@@goagent
+down:
+https://github.com/goagent/goagent
+local\proxy.ini
+appid = appid1 | appid2 | appid3
+uploader.bat | uploader.py 
+Windows/goagent.exe & IE proxy
+Chrome/Opera & SwitchyOmega 放文件到扩展设置，导入 SwitchyOptions.bak
+https://github.com/FelisCatus/SwitchyOmega/releases
+Firefox 请安装 FoxyProxy ，Firefox需要导入证书，方法请见 FAQ
+出现连接不上的情况可以尝试使用 gscan 或 GoGo Tester 测速。
+https://github.com/yinqiwen/gscan/
+@@firefox
+????
+down
+cp /opt/
+tar -xvpj -f xxx
+sudo mv firefox firefox36
+cd firefox36
+sudo chmod 755 *
+sudo mv /usr/bin/firefox /usr/bin/firefox-old
+sudo ln -s /opt/firefox36/firefox /usr/bin/firefox
+sudo vi /etc/apparmor.d/usr.bin.firefox
+@@date
+date +%T
+date +%Y%m%d
+date +%x
+date +%S
+date +%a
+date +'%a %x'
+@@docker
+@@apt
+apt-cache search xxx
+apt-get install xxx
+apt-get remove
+@@shell
+shell---core, 
+user interface, 
+cmd resolver.	/ri'zolv/
+UGI Shell: windows,x-win,gnome,kde,unity;
+CLI Shell: bash,sh;
+@@dns
+/etc/
+/etc/resolvconf/resov.conf.d/base  	# resolver /ri'zolv/ 解析器；
+nameserver 114.114.114.114
+nameserver 180.76.76.76		#baidu
+nameserver 42.120.21.30		#OpenDNS
+@@proxy
+?good only on gui-configure
+/etc/environment
+1.system settings/network/network proxy:manual
+2.~/.bashrc
+http_proxy=usr:pwd@@http://xxx:port/
+export http_proxy
+3.if only apt-proxy:
+/etc/apt/apt.conf
+Acquire::http::Proxy "http...";
+unset http_proxy
+@@prompt edit
+.bashrc
+PS1='\u@@\h:\w\$'
+PS1='\u@@\t:\w\$'
+@@Internet:
+cache.dns,
+ipv6,
+agent,vpn,ssh
+rescue.iso cn input,
+@@grub menu
+/etc/grub.d/
+@@ppa:
+get ppa-name:
+    https://launchpad.net/ubuntu/+ppas
+    search rime
+add:
+    sudo add-apt-repository ppa:user/ppa-name
+del:
+    cd  /etc/apt/sources.list.d/
+install:
+    sudo  apt-get  update 
+    sudo  apt-get  install fcitx-rime
+ubuntu app:
+vim-gnome, kuaipan4uk, fcitx-rime,
+@@setup ubuntu
+sudo df -TH
+sudo umount -l /isodevice
+@@google, sulv,dns;
+@@bootstartup app
+find Startup applications in index dash, click add,and
+input: gnome-session-properties
+name:start team viewer
+comd:/usr/bin/teamviewer
+tags_:@@bootLinux @@bootRun @@runLevel @@bootStart 
+concept_: bootStartScript
+core_:'''>
+os->/boot->init process->runlevel->/etc/init.d->login->loginshell
+boot-->init-->rcS.d-->rcN.d-->rc.local
+    rc1.d/rc2.d/../rc6.d/rcS.d --ln--> init.d
+    rc.local file
+method 1.rc.local脚本
+caution: Must befor "exit 0"
+method 2.如何给ubuntu添加一个开机启动脚本
+sudo chmod 755 new_service.sh
+sudo mv new_service.sh /etc/init.d/
+cd /etc/init.d/
+sudo update-rc.d new_service.sh defaults 90 80
+sudo update-rc.d -f new_service.sh remove 
+<'''
+detail_:'''>
+linux runlevel:
+0 : shutdown
+1 : single user for fix//like window safe mode;rootpass,runlevel
+2 : multiuser,without NFS (same as 3 no network) 
+3 : full multiuser mode 
+4 : unused
+5 : x11
+6 : reboot
+关于Ubuntu运行级别、开机启动脚本的说明
+http://www.linuxidc.com/Linux/2016-08/133989.htm
+1.1自启动脚本目录
+    rc1.d/rc2.d/../rc6.d/rcS.d --ln--> init.d
+    rc.local file
+1.2运行级别runlevel
+    $runlevel  #/etc/init/rc-sysinit.conf
+    这些就是我们默认开机状态下，要启动的服务，如果我们将自己的脚本放在/etc/init.d/目录下，同时在rcN.d中创建软链，指向该文件（软链的名称应该是S<num><service name>,便可以开机自启这些服务。同时我们还可以修改配置文件/etc/init/rc-sysinit.conf中的DEFAULT_RUNLEVEL的值，修改操作系统默认的运行级别。
+1.3自启脚本的启动顺序
+假设我们的操作系统运行级别是2，那么在/etc/rc2.d/文件夹下的脚本执行顺序是怎样的？因为有些服务需要先启动，有些服务需要后启动，他们之间存在先后关系，即有向图的关系。
+S[number][service name] --> ../init.d/servicename
+1.4 关于rcS.d rc.local文件夹的意义
+boot-->init-->rcS.d-->rcN.d-->rc.local
+1.5自启和关闭自启服务
+在理解了自启服务的原理之后，我们可以手动添加脚本链接文件到指定的rcN.d目录下，但是这种纯手工的方式比较复杂，因此我们可以使用简单的命令来实现这种功能，或者是指定的工具来实现。
+命令版本# update-rc.d来自动实现System V 的RunLevel的启动脚本服务，前提是这些服务的启动脚本位于/etc/init.d/目录下。
+update-rc.d <service name> start|stop| <order number> <run levels>
+eg:
+sudo update-rc.d rinetd start 20 2
+sudo update-rc.d rinetd stop 20 0
+update-rc.d <service name> enable|disable  <runlevels> # 开启或者是禁止
+eg:
+sudo update-rc.d rinetd disable 2 在runlevel2中暂时禁止该服务
+update-rc.d <service name> default [NN | SS KK]
+eg：
+sudo update-rc.d rinetd default 80 80  # default 表示在2 3 4 5 中添加80(the first 80)顺序的Start，在0 6 中添加80(the second 80)顺序的Kill服务
+注意实现去对应的文件夹查看该服务的ordernumber
+从启动里面删除
+sudo update-rc.d -f <service name> remove
+这样在所有的运行级别中就会删除掉关于该service的自启和关闭服务链接（删除的仅仅是链接，而不是/etc/init.d/文件夹中的脚本文件）
+1.6对于init [number]命令
+rc0.d 表示的关机 rc6.d表示的是重新启动
+因此我们还可以在不重新启动操作系统的前提下，切换操作系统的RunLevel
+sudo init <num>
+init:
+init 6
+SystemV5 init->upstart|systemd
+runlevel
+init 5
+vim /etc/inittab
+id:3:initdefault
+<'''
+time_: 20171003180029
+----------------------------------------------------------------------------
+@@timerun
+crontab -e cfg
+04 *** /home/test.sh // AM04 to excute script
+tags_:@@shutdown @@reboot @@dingshiguanji
+concept_:shutdown
+core_:'''>
+sudo su
+shutdown -h 22:30 &   # run behand
+<'''
+detail_:'''>
+shutdown -r 10        # reboot after 10minite 
+shutdown -c           # cancel
+<'''
+time_:20170820190915
+tags_:@@linuxType
+concept_:
+tree_:'''>
+<'''
+core_:'''>
+fuchsia/flutter/dart
+1.linux type
+2.link to linux
+3.disk parts
+redhat/centos 
+debian/ubuntu  //install soft
+netcraft.com    //svr os
+SecureCRT/QuictSSHd/PuTTY // link to linux; 
+disk
+1.parts
+2.write file system
+3.dev sda2;
+4.mount /home
+<'''
+detail_:'''>
+<'''
+time_: 20180416165954
+@@password:
+复杂性：
+    8位以上，大小写，数字、符号
+    no word
+    no link usr
+容易记忆：
+    flzx_3QC
+时效性：
+VMware8 CentOS6.5
+ifconfig eth0 192.168.1.11
+SecureCRT/PuTTY
+WinRCP
+*** @@terminal ***
+open terminal:
+ctrl+alt+t
+ctrl+shift+t open tabpage
+ctrl+shift+w close tabpage
+ctrl+pageup  switch tabpage
+alt+tab switch windows
+ubuntu alt open cmdline
+ctrl+P == up arrow
+ctrl+N == down arrow
+*** @@dir ***
+/boot   : system leader;core files,leader files;
+/etc    : app and system config files;
+/bin    : user often cmd;file and dir cmd;all users;
+/sbin   : system edit cmd;
+/lib    : system run require lib files;
+/dev    : system dev files;/dev/cdrom/;
+/var    : save var data;log files,cache file;
+/mnt    : mount dev dir;/mnt/cdrom;
+/proc   : system ram and cpu info; meminfo;in ram;
+/sys    : in ram
+/tmp    : system run linshi file;
+/usr    : unix soft resource big;windows;
+/home   : mult users online at same time;
+/root   : admin main dir;
+/opt/   : /usr/local: c:/program
+/data-dir and sys-soft-dir
+passwd/data backup
+firewall no self
+/bin 二进制可执行命令
+/dev 设备特殊文件
+/etc 系统管理和配置文件
+/etc/rc.d 启动的配置文件和脚本
+/home 用户主目录的基点，比如用户user的主目录就是/home/user，可以用~user表示
+/lib 标准程序设计库，又叫动态链接共享库，作用类似Windows里的.dll文件
+/sbin 系统管理命令，这里存放的是系统管理员使用的管理程序
+/tmp 公用的临时文件存储点
+/root 系统管理员的主目录（呵呵，特权阶级）
+/mnt 系统提供这个目录是让用户临时挂载其他的文件系统。
+/lost+found 这个目录平时是空的，系统非正常关机而留下“无家可归”的文件（Windows下叫什么.chk）就在这里
+/proc 虚拟的目录，是系统内存的映射。可直接访问这个目录来获取系统信息。
+/var 某些大文件的溢出区，比方说各种服务的日志文件
+/usr 最庞大的目录，要用到的应用程序和文件几乎都在这个目录。其中包含：
+/usr/X11R6 存放X window的目录
+/usr/bin 众多的应用程序
+/usr/sbin 超级用户的一些管理程序
+/usr/doc linux文档
+/usr/include linux下开发和编译应用程序所需要的头文件
+/usr/lib 常用的动态链接库和软件包的配置文件
+/usr/man 帮助文档
+/usr/src 源代码，linux内核的源代码就放在/usr/src/linux里
+/usr/local/bin 本地增加的命令
+/usr/local/lib 本地增加的库
+######################## @@cmd #############################################
+@@chown
+chown -R nu:nu google-chrome.deb
+@@whereis vim
+update-alternatives --config vi
+echo $VIMRUNTIME in vim
+cmd is charactors on linux of every part to operate.
+命令是对linux的每个部分进行操作的指令。
+parts of linux:
+linxu的各个部分：
+4.cmd,help             cmd, operate(look)
+###file/package
+1.dir,file            dir,file,filetext, operate(cat,edit,search,zip)
+9.package,soft        xdg-open //open soft in cmd line.
+###user/permissions
+###disk/net
+3.search
+6.tar,7z, zip,rar
+linux exefile can run whenever ext is what;
+* one or more;
+? one char;
+[] custom;file1.txt,file2.txt,file3.txt;rm -rf file[13].txt
+# root user;
+$ normal user;
+1.file
+    a.cmd : cmd+[opt]+[obj]
+    b.dir   
+    c.file
+    d.link
+ls/less/mkdir/touch/cp/mv/rm/ln
+@@cd
+pwd //print work dir
+cd ~ //to home;
+cd -//reback;
+cd !$ //cd last passed dir;
+cd ..
+@@ls
+ls -htl|more // space to next page, and q to quit.
+ls -ahl//all,human,list,
+ls -t|S // sort by time or size
+ls -R |more // recursive display,|more in more pages|less //space enter q
+ls -i(id)   //file id
+clear
+cat/more/less/head/tail
+cat aaa.txt //concatenate=type;read all at once
+cat passwd > myfile.txt 
+echo "aaaaaa" > aaa.txt
+vi aaa.txt
+more /etc/httpd/conf/httpd.conf
+space/f a page;enter a line;q to exit;
+less space pageup...
+head -3 passwd
+tail -4 passwd //log at cur time;
+tail -f -4//dongtai disp log
+mkdir /tmp/aaa /tmp/bbb
+mkdir -p /a/b/c/d #-p parents
+rmdir /rm -r #del no null;
+@@find
+find /etc -name "f*" -exec ls {} \;
+find path -options [-xxx]
+find path -options -exec cmd {} \;
+find path -options -ok   cmd {} \;
+find path -options -print|xargs
+# path          find path; 
+# option        find mode; option /o/
+# [-xxx]        process mode; /eo/, /eo/
+    -print      output to stout
+    -exec       "cmd {} \;", '{}'---find content, ';'---end cmd, '\'zhuanyi
+    -ok         same as up, and safer..firm
+# option
+    -name       find by name
+    -perm       find by permission
+    -user       find by file owner
+    -type       f-normal file, d-dir ...
+    -size n: [c] [-depth]
+    -mtime -n +n in 3, out 3
+            a,access-rx; c,status; m, modify-w;
+    -amin -n     in 3' access file
+    -cmin -n
+    -mmin -n
+    -atime -n    in 3*24h access file
+    -ctime -n
+    -mtime -n
+1.find . -amin -9
+2.find . -name "*.log"
+3.find . -perm 777
+4.find . -type f -name "fire*"
+5.find . -type d|sort           # find dir and sort
+6.find . -size +1024c -print    # >1k
+7.find . -name "passwd" -exec grep "root" {} \;
+8.find . -name "*.log"  -exec mv {} /home/log/ \;
+9.find . -name "*.log"  -exec cp {} /home/log/ \;
+@@xargs
+1.find . -type f -print|xargs file
+2.find . -name *.txt -print|xargs echo "" >/home/list.txt
+3.find . -perm -7 -print|xargs chomd o-w
+4.find . -type f -print|xargs grep "password"
+5.find . -name \* -type f -print|xargs grep "password"
+6.find . -name "*.log" |xargs -i mv {} test4
+7.find . -name "*.log" |xargs -I [] mv [] test4
+8.find . -name "*.log" |xargs -i -p mv {} test4
+9.find . -type f -atime +0 -print0 | xargs -0 -l1 -t rm -f
+10.find /home/test/ -name "*.tmp" | xargs rm -f
+11.find /home/test/ -name "cache" | xargs rm -rf #与cache相关的文件
+@@batch operate files
+# find/rename/rm
+# batch rm
+find . -name "*.pyc" -exec ls -htl {} \;
+find . -name "*.pyc" -exec rm -rf {} \;
+# .             current dir;
+# "file.exx"    will del file;
+# rm -rf        cmd;
+# {} \;         same content;
+# linux batch @@rename  | python: os.rename(oldpath,newpath)
+#Perl | C
+man rename
+rename -n "s/a/b/" *.py | rename a b *.py
+reguler:
+rename "s/boo0(?)(?)/boo000$1$2/" *.py
+# must "" not '';
+# 去文件名空格：
+rename "s/[ ]+/_/g" *
+# other
+'s/^/nu/'
+'s/.html$/.htm/'
+'s/$/.bak/'
+'s/.bak$//'
+# 规则化 数字编号：
+# 1.jpg 2.jpg 9.jpg 11.jpg 100.jpg
+rename 's/^/00/' [0-9].jpg              # add 00 at single number name file.
+rename 's/^/0/' [0-9][0-9].jpg          # add 0  at double number name file.
+-n 用来测试rename过程，并不直接运行，可以查看测试效果后，然后再运行。
+# spec name
+cook (copy) = cook\ \(copy\)
+# can use 'Tab' key to see spec zifu
+# tongpeifu:
+*   # all
+?   # single zifu
+[0-9] # single num, 8.jpg
+[0-9][0-9] # double num, 98.jpg
+###############################
+ linux 批量重命名文件
+ 模拟结果文件路径结构大概是：/当前目录/模型名/字模型名模拟/模拟温度/模拟结果文件。
+ 模拟结果文件命名时相同的。模拟结果文件需要修改模拟结果文件的后缀名。
+ 附shell脚本：
+ find -type f|grep 'bonds.reax'|xargs rename 's/\.reax$/\.bof/' //该目录及子目录下所有'bonds.reax'文件重命名为'bonds.bof'
+ find -type f|grep 'dump.reax'|xargs rename 's/\.reax$/\.trj/' //该目录及子目录下所有'bonds.reax'文件重命名为'bonds.bof'
+ find -type f|grep 'data'|xargs rename 's/\.data$/\.anm/' //该目录及子目录下所有含data的文件修改后缀
+####################################
+@@grep global regular expresion
+filename:
+find path -name string
+filecontent:
+grep option pattern path/filename
+grep -n "php" aa.txt
+# -r recursive 
+grep -r "syncthing" /etc 
+# -R recursive exinlude some dir
+grep -R --exclude-dir=.git 'string' .
+# -n line number
+# -l onely file name
+# -i ignore big or case.
+# -h hidden file name
+# -v all line not pattern
+grep -v "#" /etc/httpd/conf/httpd.conf
+find . -name "*.mp3" | grep -i "jay" | grep -vi "remix"
+# -A -B -C
+-A n #after n line, 
+-B n #before n line, 
+-C n #center, before n line and after n line.
+ifconfig | grep -A 2 "Link encap"
+ifconfig | grep -C 2 "lo"
+@@xargs
+@@locate httpd.conf
+updatedb
+locate newfile
+@@mv move
+mv file1 ./tmp/ 
+mv file1 file2    # rename
+mv dir1 dir2      # if dir2 not exist: dir1==>dir2, if exit: dir2/dir1
+                  # not +r
+@@rm remove
+rm -rf
+rm -irfp //del dir//no reback -r recursive -p parents
+ctrl+c
+find . -name "*.wmv" -exec rm -rf {} \;		//del all *.wmv
+touch aaa.txt bbb.txt
+echo hello>>aaa.txt
+echo My name is Nudo>>aaa.txt
+clear
+@@pip of python 
+1.install setuptools(easy_install xxx)
+sudo apt-get install setuptools
+2.
+tar -zxf pip6.0.0.tar.gz
+cd pip6...
+sudo su
+python setup.py install
+3.usage
+sudo su
+pip install xxx
+pip show xxx(version)
+pip uninstall xxx
+pip search xxx
+pip list (installed)
+pip zip xxx
+pip install --upgrade xxx
+pip install --upgrade xxx==version
+4.packages
+nose 		test tools
+distribute  
+virtualenv
+write username
+aaa
+bbb
+ctrl d
+wall Happy new year!
+mesg n
+mesg y
+service sendmail start
+mail username
+title
+aaa
+bbb
+ctrl d
+mail
+& 2
+& r
+& q
+############################### CentOs #####################################
+@@lamp:
+1.sudo su   //user-->root;
+2.sudo apt-get install update
+3.sudo apt-get install mysql-server mysql-client
+4.mysql -u root -p  //test if success.
+5.sudo apt-get install apache2
+6.localhost
+7.sudo apt-get install php5 libapache2-mod-php5
+8.chmod 777 /var/www/  
+9.cd /var/www
+10.ls
+11.vi phpinfo.php
+12.<?php phpinfo() ?>
+13.sudo /etc/init.d/apache2 restart
+14.localhost/phpinfo.php
+15.sudo apt-get install php5-mysql php5-curl php5-gd php5-idn php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-record php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl
+16.sudo /etc/init.d/apache2 restart
+17.http://localhost/phpinfo.php
+18.sudo apt-get install phpmyadmin
+19.sudo mv /usr/share/phpmyadmin /var/www
+@@fix centos:
+root pass->init 1->grub pass->cdrom to fix
+signal fix:
+reboot->bootmenu->edit kernel line->add 1->init 1
+passwd root
+vim /etc/inittab
+cdrom fix:
+rescue installed system
+bash#chroot /mnt/sysimage   //change main dir;mount hd at sysimage/
+sh#pwd
+sh#ls
+//del grub pass
+vim /boot/grub/grub.conf
+del----password --
+del----vga=791
+passwd root
+//get inittab from pkg
+cd /root
+rpm -qf /etc/inittab    //look inittab in which pkg
+mkdir /mnt/cdrom
+mount /dev/cdrom /mnt/cdrom/
+rpm2cpio /mnt/cdrom/Packages/initscripts-xxx-i386.rpm \
+        |cpio -idv ./etc/inittab    //get inittab from pkg
+cp ./etc/inittab /etc/inittab
+@@yum install **
+set ip:
+setup       // redhat net set sys
+vi /etc/sysconfig/network-scripts/ifcfg-eth0
+service network restart
+vim /etc/yum.repos.d/CentOS-Base.repo
+yum list
+yum search httpd
+yum -y install *    //-y auto yes
+yum -y install gcc  //c language bianyi
+rpm -q gcc
+yum -y update *     //!!!must have * or update all include core
+yum -y remove *     //!!!...//remove pkg apend
+yum grouplist
+yum groupinstall
+yum groupremove
+// ISO as yum resource
+mount /dev/cdrom /mnt/cdrom
+cd /etc/yum.repos.d/
+mv CentOS-Base.repo CentOS-Base.repo.bak
+mv CentOS-Debuginfo.repo CentOS-Debuginfo.repo.bak
+mv CentOS-Vault.repo CentOS-Base.Vault.bak
+vim CentOS-Media.repo
+baseurl=file:///mnt/cdrom
+#...
+#...        // note must head and tail and no space
+enabled=1
+*** @@script install package ***
+webmin
+*** @@rpm package
+need tree/circle/module/rpmfind.net
+allname/name//var/lib/rpm
+mount /dev/sr0 /mnt/cdrom/
+@@rpm query:
+rpm -q *              //query allname
+rpm -qa | grep httpd  //all about httpd
+rpm -qi *              // info
+rpm -qip ***.rpm       // package info
+rpm -ql *              // list //install path
+rpm -qlp ***.rpm       // package path info
+rpm -qf sysfile       // file //file is included which pkg
+rpm -qR *             // requires //pkg depend
+rpm -qRp ***.rpm      //
+@@rpm install:
+rpm -ivh ***.rpm    //-i install -v verbose -h hash --nodeps
+rpm -Uvh ***.rpm    // upgrade
+rpm -e   *          //-e erase uninstall
+rpm -V *        // verify 校验//8
+rpm2cpio ***.rpm cpio -idv ./filepath
+cpio -idv       //copy-in automkdir view // "\" cmd newline
+rpm2cpio /mnt/cdrom/Packages/***.rpm |cpio idv ./bin/ls
+@@over
+

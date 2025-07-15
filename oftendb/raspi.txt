@@ -1,0 +1,373 @@
+ 
+ 
+Raspberry Pi 3B 
+ 
+BrickPi 
+ 
+如何利用树莓派打造一款机器人 
+Raspberry Pi Robotic Blueprints树莓派机器人蓝图权威宝典 
+ 
+0.Recent
+1.wifi auto link like GUI_WIFIs with static ip
+    1.0 2wlan -> router
+    1.1 bash script
+    1.3 + a min router
+
+
+
+SD_CardFormatter0500SetupEN.exe
+
+
+定位 图像 激光 超声波 红外线
+定位 图像 激光 区别
+视觉 激光 定位
+
+# _@install 
+win32Diskimager/USBImageTool 
+noobs 
+# 
+ 
+# source 
+# /etc/apt/sources.list 
+ 
+# update/3.5inch 
+sudo apt-mark hold raspberrypi-bootloader 
+sudo apt-get update 
+sudo apt-get upgrade 
+ 
+# raspberrypi set 
+sudo raspi-config 
+ 
+# enable root 
+root:Raspbian 
+pi:xxx 
+sudo passwd root 
+ 
+sudo passwd-unlock root 
+ 
+# soft and env 
+ 
+# cn charactor 
+sudo apt-get install ttf-wqy-microhei ttf-wqy-zenhei xfonts-wqy 
+ 
+# input 
+sudo apt-get install scim-pinyin 
+ 
+# explorer 
+sudo apt-get install chromium-browser chromium-|10n 
+ 
+# _@vim 
+sudo apt-get install vim 
+ 
+# https://github.com/raspberrypi 
+ 
+# _@ssh  
+ 
+# Raspi cable connect pc： 
+1. new ethernet link, and edit it to share. 
+2. sudo arp-a 
+3. ssh 
+ssh pi_@192.168.50.131 
+raspberry 
+ 
+ip route 
+ifconfig 
+nmap -v -sP 192.168.0.0/24 | less 
+_____________________________________________________________ 
+ 
+# _@wifi setup in cmd line. 
+# staticIP of wifi auto link: 
+ 
+allow-hotplug wlan0 
+#iface wlan0 inet manual 
+#iface wlan0 inet dhcp 
+iface wlan0 inet static 
+    address 192.168.70.139 
+    netmask 255.255.255.0 
+    gateway 192.168.70.1 
+    broadcast 192.168.70.255     
+    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf 
+ 
+___________________________________________________________ 
+Method1: 
+sudo vim /etc/network/interfaces 
+ 
+auto lo 
+iface lo inet loopback  
+iface eth0 inet dhcp 
+auto wlan0  
+allow-hotplug wlan0 
+iface wlan0 inet dhcp  
+wpa-ssid "你的wifi名称" 
+wpa-psk "你的wifi密码" 
+ 
+ 
+Method2: 
+sudo vim /etc/wpa_supplicant/wpa_supplicant.conf 
+ 
+ctrl_interface=/var/run/wpa_supplicant 
+ctrl_interface_group=0 
+ap_scan=2 
+network={   
+    ssid="WIFI名称" 
+    psk="WIFI密码" 
+    } 
+ 
+# manual link 
+# shell/wpa_cli 
+iwconfig 
+ifconfig wlan0 up 
+iwlist wlan0 scan | less 
+wpa_cli 
+>add_network 
+>set_network 0 ssid "666" 
+>set_network 0 psk "key" 
+>enable_network 0 
+>quit 
+dhclient wlan0 
+ifconfig 
+ 
+/// 
+wpa_passphrase tp_liNK > wpa.conf 
+wpa_supplicant -iwlan0 -cwpa.conf -B 
+ 
+ 
+ 
+ 
+检查无线设备情况（假设无线网卡是wlan0）： 
+iwconfig   /iw dev wlan0 link (=iw dev=interface wlan dev ) 
+ 
+开启无线设备电源：打开wlan接口 
+ifconfig wlan0 up  
+ 
+/ip link set wlan0 up /ifup wlan0 
+ 
+扫描所检测到的无线网络： 
+iwlist scan | less       # all unlink wifi 
+ 
+iwlist scanning          # linked wifi 
+/iw dev wlan0 scan | less 
+/iwlist wlan0 scan  
+______________________________________________________________________________ 
+ 
+输入以下命令，会提示你输入密码。回车生成的wpa.conf是连接配置文件 
+wpa_passphrase tp_liNK > wpa.conf 
+ 
+连接wifi通过配置文件。-B意味着background模式 
+wpa_supplicant -iwlan0 -cwpa.conf -B 
+_______________________________________________________________________________ 
+ 
+ 
+通过DHCP获取IP地址： 
+dhcpcd|dhclient wlan0 
+ 
+如果是dhcp。如下激活， 
+dhclient -r 
+dhclient wlan0 
+ 
+dns:/etc/resolv.conf 
+nameserver 8.8.8.8 
+nameserver 8.8.4.4 
+ 
+----------------------------------------------------------------------------- 
+连接wifi（根据essid连接）： 
+iw wlan0 connect [essid] 
+iw dev wlan0 connect [网络 SSID] key 0:[WEP 密钥] 
+ 
+如果网络使用的是WPA或者WPA2协议，则需要使用一个叫做wpasupplicant的工具， 
+因为wpa模式的密码，你输入的和实际使用的有变换。需要用另外一组api来是做处理。 
+通过如下命令可以自动安装： 
+sudo apt install wpasupplicant 
+ 
+sudo vim /etc/wpasupplicant/wpa_supplicant.conf 
+ 
+ctrl_interface=/var/run/wpa_supplicant 
+ap_scan=1 
+network={ 
+        ssid="[your SSID name]" 
+        psk="[your WiFi password]" 
+        priority=1 
+} 
+ 
+然后在后台启动该命令： 
+sudo wpa_supplicant -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf & 
+在该命令中，最后的&符号意思为将该命令挂到后台运行。 
+_____________________________________________________________________________ 
+ 
+#config 
+raspi-config 
+source.list 
+deb http://mirrors.aliyun.com/raspbian/raspbian/ jessie main non-free contrib 
+deb-src http://mirrors.aliyun.com/raspbian/raspbian/ jessie main non-free contrib 
+nmap -v -sP 192.168.1.1/10稍等片刻，然后可以看到Raspberry Pi的设备 
+ 
+为了安全, 推荐关闭root用户ssh登录, 方法为修改"/etc/ssh/sshd_config", 将 PermitRootLogin yes 改为 PermitRootLogin no 
+重启ssh服务: service ssh restart 
+
+ 
+ 
+ 
+ 
+# _@bootrun
+# Method1: /etc/rc.local
+# Method2: /etc/init.d/myscript.py  chmod +r /etc/init.d/myscript.py
+# Method3: cron crontab
+
+# & 
+python /home/pi/myscript.py & 
+
+exit 0
+ 
+ 
+关于Ubuntu运行级别、开机启动脚本的说
+
+目录简介
+
+1.1介绍Ubuntu下面的自启动脚本目录
+
+1.2 Linux操作系统运行级别的概念
+
+1.3关于操作系统自启脚本的启动顺序
+
+1.4    Linux操作系统运行级别的概念
+
+1.5 自启和关闭自启服务
+
+1.6 对于init [number]命令
+
+Content：
+
+1.1 介绍Ubuntu操作系统关于自启动脚本的几个目录
+
+其中rc0.d~rc.6.d文件夹下分别对应的是操作系统0-6级运行的状态下需要执行的脚本。此外还有rcS.d文件夹和rc.local文件，而在这些文件夹下的文件，都是软链文件，指向指定位置的脚本，有图为证：
+
+经查看，发现这些软链都是指向同一个文件夹../init.d/的脚本文件，
+
+我们查看其它的文件夹，发现情况都是这样子。因此所有开机自启动的脚本文件都是放在/etc/init.d/目录下面的：
+
+那么这些rcN.d分别代表什么意义？或者是说是不是按照0~6的顺序依次运行？肯定不是。因为我们查看rc0.d folder
+
+发现，在该文件夹下，居然有halt（关机）脚本，因此开启操作系统的时候，肯定不可能执行这个。因此证明rcN.d这几个folders之间是相互独立的，没有什么本质的联系。
+
+那么为什么会有这几个文件夹的区别呢？这就引入了linux操作系统的运行级别（run-level）概念。
+
+1.2 Linux操作系统运行级别的概念
+
+根据前面学习的内容，我们知道有rc0~6在加 rcS.d & rc.local,后面这两个我们先不看，至少存在0-6共七种运行级别。这里的运行级别的概念被称为System V的运行机制。这七种运行级别的含义如下（仅仅针对Ubuntu，其他系统定义可能不完全一样）：
+
+我们可以通过runlevel查看当前系统的运行状态
+
+也就是说我们系统的运行级别目前是2，该参数的配置文件/etc/init/rc-sysinit.conf
+
+因此我们开机自启动的脚本在rc2.d文件夹下，所有的软链指向/etc/init.d/中的脚本文件：
+
+这些就是我们默认开机状态下，要启动的服务，如果我们将自己的脚本放在/etc/init.d/目录下，同时在rcN.d中创建软链，指向该文件（软链的名称应该是S<num><service name>,便可以开机自启这些服务。同时我们还可以修改配置文件/etc/init/rc-sysinit.conf中的DEFAULT_RUNLEVEL的值，修改操作系统默认的运行级别。
+
+1.3 关于操作系统自启脚本的启动顺序
+
+假设我们的操作系统运行级别是2，那么在/etc/rc2.d/文件夹下的脚本执行顺序是怎样的？因为有些服务需要先启动，有些服务需要后启动，他们之间存在先后关系，即有向图的关系。
+
+我们查看该文件夹下的软链名称（见上图），软链的名称有一定的规则：
+
+S[number][service name] --> ../init.d/servicename
+
+S 表示 Start，开启服务
+
+[number]表示的是该脚本的运行优先级，number越小，脚本的运行优先级就越高
+
+[service name]表示的是服务的名称。
+
+因此我们如果需要定义一个服务启动的优先级（顺序），则需指定脚本的number即可。
+
+根据此规则，我们查看rc6.c文件夹（重启运行级别）：
+
+按照number的顺序，显示Kill服务，之后再Start一些服务，最后重新启动S90reboot.
+
+1.4 关于rcS.d rc.local文件夹的意义
+
+该脚本是在rc0~6.d文件夹下的脚本执行之前执行rcS.d文件夹下的脚本命令。
+
+1.5 自启和关闭自启服务
+
+在理解了自启服务的原理之后，我们可以手动添加脚本链接文件到指定的rcN.d目录下，但是这种纯手工的方式比较复杂，因此我们可以使用简单的命令来实现这种功能，或者是指定的工具来实现。
+
+命令版本# update-rc.d来自动实现System V 的RunLevel的启动脚本服务，前提是这些服务的启动脚本位于/etc/init.d/目录下。
+
+update-rc.d <service name> start|stop| <order number> <run levels>
+
+eg:
+
+sudo update-rc.d rinetd start 20 2
+
+sudo update-rc.d rinetd stop 20 0
+
+update-rc.d <service name> enable|disable  <runlevels> # 开启或者是禁止
+
+eg:
+
+sudo update-rc.d rinetd disable 2 在runlevel2中暂时禁止该服务
+
+update-rc.d <service name> default [NN | SS KK]
+
+eg：
+
+sudo update-rc.d rinetd default 80 80  # default 表示在2 3 4 5 中添加80(the first 80)顺序的Start，在0 6 中添加80(the second 80)顺序的Kill服务
+
+注意实现去对应的文件夹查看该服务的ordernumber
+
+从启动里面删除
+
+sudo update-rc.d -f <service name> remove
+
+这样在所有的运行级别中就会删除掉关于该service的自启和关闭服务链接（删除的仅仅是链接，而不是/etc/init.d/文件夹中的脚本文件）
+
+1.6 对于init [number]命令
+
+我们在命令行中关闭操作系统或者是重新启动，使用的是
+
+在本质上调用的是：
+
+ 
+
+rc0.d 表示的关机 rc6.d表示的是重新启动
+
+因此我们还可以在不重新启动操作系统的前提下，切换操作系统的RunLevel
+
+sudo init <num>
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+tags_: _@sources _@yuan
+
+concept_: update sources
+
+core_:'''>
+/etc/apt/sources.list
+deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ jessie main non-free contrib
+<'''
+
+detail_:'''>
+
+<'''
+time_:20171009171019
+
+----------------------------------------------------------------------------
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+
+_@over

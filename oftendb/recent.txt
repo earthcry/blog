@@ -1,0 +1,20 @@
+0/36----------------------------------------------------------------------
+tags_: _@time _@date
+
+concept_: 
+
+tree_: '''>
+
+<'''
+
+core_: '''>
+# insert date with shortkey
+iab xtime <c-r>=strftime("%Y%m%d%H%M%S%A")<cr>
+:read!date +\%Y%m
+<'''
+
+detail_: '''>
+
+<'''
+time_: 20220311161151
+

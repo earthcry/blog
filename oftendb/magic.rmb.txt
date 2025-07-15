@@ -1,0 +1,160 @@
+
+
+    Data Magic
+
+
+5 day task picture 五天任务图 use frame to sure task
+高效快感，实现底气。睿智，气魄。
+酝酿情绪，进入状态；
+
+cyber rendering. augmented mind 增强思维
+thought by image.rending.virtual by graphicSimulate.
+
+        编程能力=掌握语言+解决问题de能力；
+        解决问题de能力=问题类型+对应魔法+操作习惯；
+        敌情，兵种，兵法；
+  
+    代码现象 表示的概念& 代码问题；框架+重点；一但上了规道，停不下来；
+    概念是描述什么现象的？是解决什么问题的？
+    concept logic 议论、探讨 概念关系，因果变化；
+    对于任何问题，最困难之处在于要全面考虑所有的细节情况。维度；detail
+    计算机可以把任何问题分解为那几个简单的步骤；
+    数据结构是兵种，算法是兵法，函数模块是中间公共力量；
+
+  enjoy at upgradly realize. 愉悦在逐级实现。
+  阅读框架规道；
+  阅读级别：
+  a,框架，主题概念；
+  b,实例，细节，理解主题；
+  c,魔法总结；
+  d,实例上手；
+  e,应用扩展；
+  f,记忆图谱文件；
+
+认知阅读法：
+关键阅读、关键摘取、系统认知、关联构图、关联生长、表现形式3种、化身认知、
+特性体验、操作、step、应用、
+回顾文档、总结、概括、找出概念们之间的生长关系
+人类领域的对应概念；
+一概念一操作；把握节奏；
+# 3.4.2 了解然后想象
+#       1.问题的实质是什么；
+#           ‘无马的马车’新问题？有类似解决过的问题吗？己知解法，模式；
+#           每一个输入，预期输出是什么？
+#           改变描述，重新，简化描述；
+#       2.让问题真实化
+#           什么是必须的？
+#           纸牌游戏，拿一副牌，尝试；
+# 3.4.3 编程之前先思考
+#        透彻理解问题。
+# 3.4.4 实验，尝试；
+#           从简单开始，一部分一部分实验。不要企图一次写出整个程序。
+#           化整为零，各个击破，分治策略；
+#           尝试，在有想法之前。
+#           如果解决不了问题，就先找到问题所在；
+# 3.4.5 简化，分解，框架，行走：转向，左腿，右腿；填充子问题
+# 3.4.6 停下来思考，反思是否好。
+# 3.4.7 放松：让自己休息一下，如果长时间未解，注意力的节奏；
+
+虚拟实现步骤：
+1.原型，最简单的，最核心的，最容易实现的；
+2.因果条件，找出原型条件；
+3.效率实现条件；
+4.迭代升级；
+Image/coreFm/English/php
+View/logic/Step/Program
+Image View  : Request UI Implement;actions;params;
+Core  Logic : Simple Core;upgrade;Abstract Frame;concept;
+English Step: Imple setps in english;concept;
+PHP Program : action-cmd;methods imple;sober, talk concept；anchorFunc/inc;
+物理过程要清晰，对应代码过程要清晰；猴子选大王；
+概念的代码表现形式；
+图像表现形式；
+自然语言表现形式；
+ 
+Get operate object 获取操作对象。
+
+#       ***算法是方式；定性实现的；策略，布局，
+#       ***程序是方法；具体实现的；
+#       ***算法是条件和操作方法. 细化到所有可能性.
+#       ***a algo have two parts: object + operate
+
+data structures and algorithm analysis in python
+datastructure is a var of save more data and relation each other.
+associative asc /e'soshietiv/关联，联想，
+algorithm/'algerizm/ 算法
+analysis /e'nalisis/ 分析
+simulate /'simuleit/ 模拟
+augment  /o:g'ment/  增加，增大；
+迭代赋值：for $a=$a.$str;
+
+# 喝汤,热水，
+# 1.data.magic
+# 2.instance from start.
+# ??? cn file
+# 不的能不能解决，是能不能快速解决；
+# 扩展思维，玩耍特性；
+# operate object to simple.
+#       ***算法是条件对象和操作方法. 细化到所有可能性.
+#       ***a algo have two parts: object + operate
+#       start operater object and question condition
+#       功能分解概括
+#       大功能＝小功能+框架
+#  function thought: can pice out to test, and update.
+#               what type question this is a?
+#               it is give a list return once list.
+# 2014/11/13 16:06:29
+
+
+
+# question analysis with function concept.
+# file is a set, every line is a item.
+# program is ok a class question
+# imaginal thinking,_@conceptionImage,iteration image
+# image/'imidg/ imaginal/i'madginel/
+# xaxxexxixoxxux   <--operate object, _@resultModel
+# Thinking mode:
+# cube,virtual&actual
+# question abstract a concept
+# question resolve to parts
+# question transform to ok
+# question to simple
+# core - imaginal thinking
+# resultModel,operateObject.
+# Question:
+# Analysis:
+# Core:
+# coding & concept logic
+
+
+# 讨论问题要有现象，
+# 结论要有现象对象；
+
+concept:example layer, txt,py.
+concept relation logic layer, daotu.
+
+
+
+# grow thinkingMode.
+# cutMelon/breakParts thinkingMode.
+
+# in programe, use concept to name var.
+
+CognitiveComputingFormat:
+
+_@tag1 _@tag2 _@tag3
+Format:
+__concept:content
+__content:
+____core:detail
+____detail:'''
+abc
+'''
+
+
+
+
+
+
+
+_@over

@@ -1,0 +1,630 @@
+tags_: @@time @@date
+tree_: '''>
+
+<'''
+concept_: insert time or date in text.
+core_: '''>
+# insert date with shortkey
+iab xtime <c-r>=strftime("%Y%m%d%H%M%S%A")<cr>
+:read!date +\%Y%m
+<'''
+detail_: '''>
+
+<'''
+time_: 20220311191301
+
+
+tags_: @@switch @@windows @@mul @@tabs
+concept_: switch tabs of terminal,vim,explorer or buffers|splitwins of vim
+core_:'''>
+0.firefox,pdf,terminal:
+alt+tab
+1.vim & shell: 
+:sh / exit
+ctrl+d
+2.vim: buffer & buffer
+#open
+:e dir
+:e ~/file     # open a buffer and file
+:e new
+switch buffer: 
+:bp             # buffer pre  file
+:bn /ctrl+6     # buffer next file
+shutdown:
+:bd             # buffer down
+list:
+:ls             # display all file
+:f              # diaplay current file
+:b2             # fast swtch 2.file
+:b1~n           # 切换至第n个文件
+3.tabs of vim:
+:tabe  -e --new
+:tabc  -c --current close
+:tabo             #关闭所有其他的tab 
+gt                #switch
+set showtabline=2 #set vim tab;
+:tabs             # 查看所有打开的tab 
+:tabp 或gT        #前一个 
+:tabn 或gt        #后一个 
+:tab split  在新标签页中，打开当前缓冲区中的文件。
+:tabf  允许你在当前目录搜索文件，并在新标签页中打开。比如:tabf img.*。此命令只能打开一个文件.
+Vim默认最多只能打开10个标签页。你可以用set tabpagemax=15改变这个限制。
+列示标签页
+:tabfirst或:tabr  移动到第一个标签页。
+:tablast  移动到最后一个标签页。
+移动标签页
+:tabm [次序]  移动当前文件的标签页次序。比如:tabm 1将把当前标签页移动到第2的位置。如:tabm不指定参数将被移动到最后。
+配置标签页
+:set showtabline=[1,2,3]  标签页在窗口上方显示标签栏。=0完全不显示标签栏，=1只有用户新建时才显示，=2总是显示标签栏。
+多标签页命令
+:tabdo <命令>  同时在多个标签页中执行命令。比如:tabdo %s/food/drink/g 命令把当前多个标签页文件中的“food”都替换成“drink”。
+帮助
+:help tab-page-intro命令，可以获得关于标签页使用的更多信息。
+4.vim: split win:
+vim file1 file2
+:sp       # --split win
+:vsplit   # ||split win
+#在窗格间切换的方法
+Ctrl+w+方向键——切换到前／下／上／后一个窗格
+Ctrl+w+h/j/k/l ——同上
+Ctrl+ww——依次向后切换到下一个窗格中
+<'''
+detail_:'''>
+窗口
+1、打开多个窗口（vim编辑中）
+打开多个窗口的命令以下几个：
+横向切割窗口
+:new+窗口名(保存后就是文件名) 
+:split+窗口名，也可以简写为:sp+窗口名
+纵向切割窗口名
+:vsplit+窗口名，也可以简写为：vsp+窗口名
+ 
+    vim -o file1 file2 ...  #水平打开多窗口，
+    vim -O file1 file2 ...  #垂直打开多窗口,
+    vim -d file1 file2 ...  #垂直打开多窗口,并且进行比较
+    vimdiff file1 file2 ..  #等同于上一句
+ 
+2、关闭多窗口
+可以用：q!，也可以使用：close，最后一个窗口不能使用close关闭。使用close只是暂时关闭窗口，其内容还在缓存中，只有使用q!、w!或x才能真能退出。
+ 关闭窗口
+     q  或 close   #关闭当前窗口
+     only          #保留当前窗口，关闭其它所有窗口
+     qall(qa)          #退出所有窗口
+     wall          #保存所有窗口
+3、窗口切换
+:ctrl+w+j/k，通过j/k可以上下切换，或者:ctrl+w加上下左右键，还可以通过快速双击ctrl+w依次切换窗口。
+4、窗口大小调整
+纵向调整
+:ctrl+w + 纵向扩大（行数增加）
+:ctrl+w - 纵向缩小 （行数减少）
+:res(ize) num  例如：:res 5，显示行数调整为5行
+:res(ize)+num 把当前窗口高度增加num行
+:res(ize)-num 把当前窗口高度减少num行
+横向调整
+:vertical res(ize) num 指定当前窗口为num列
+:vertical res(ize)+num 把当前窗口增加num列
+:vertical res(ize)-num 把当前窗口减少num列
+5、给窗口重命名
+:f file
+6、vi打开多文件（进入vim前）
+vi a b c
+:n 跳至下一个文件，也可以直接指定要跳的文件，如:n c，可以直接跳到c文件
+:e# 回到刚才编辑的文件
+7、文件浏览
+:Ex 开启目录浏览器，可以浏览当前目录下的所有文件，并可以选择
+:Sex 水平分割当前窗口，并在一个窗口中开启目录浏览器
+:ls 显示当前buffer情况
+8、vi与shell切换
+:shell 可以在不关闭vi的情况下切换到shell命令行
+:exit 从shell回到vi
+<'''
+time_: 20170907232113
+----------------------------------------------------------------------------
+@@tab move many lines at once. 
+v, >.   except #
+tags_: @@reg  @@copy @@cp @@clipboard @@buffer
++
+concept_: copy from win1 to win2
+core_:'''>
+:reg
+"*y "*p
+"+y "+p
+<'''
+detail_:'''>
+ 跨窗复制 
+# osreg+ vimreg"
+# cp doc1 to doc2
+# origin copy
+register寄存器,粘贴板，为临时寄存器,+是系统寄存器；0123456789"+;
+:reg	//look registers查看12个粘贴板内容命令；
+"+tag+y/p
+y-yank
+p-paster
+y   # copy selected
+yy  # copy line
+:~$vim --version    # look vim support 
+                    # have '+clipboard' is support, maybe install vim-gnome (GUI)
+:~$ sudo apt-get install vim-gnome
+visual mode
+"+y   
+"+p   # + os clipboard, ctrl+c, shift+ctrl+c(gnome-terminal)
+"*y   # * os buffer area, real-time
+"*p
+1.buffer:    v select, "*p. real-time, select = save
+2.clipboard: "+y, "+p
+______________________________________________________
+"*yny # copy n line
+set mouse=v    # set mouse select
+# copy from tabwindow a to tabwindow b:
+:160,244ya a    # a:buffers
+:e bb.txt
+:pu a
+-------------------
+"f4yy
+:w
+:e bb.txt
+"fp
+windows/linux ctrl+c，VIM i Shift+Ctrl+V.
+nmap <c-v> "+gp  
+nmap <c-c> "+y 
+let mapleader=","
+nmap <leader>v "*p
+nmap <leader>c "+y
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+songlen/cnblogs
+ vim 如何与外界粘贴复制
+在学习使用vim 的过程序，我们知道在vim 里面，粘贴复制的命令是y/p ，但是我们总会碰到这样的问题：如何把vim 里面复制的内容粘贴到vim 之外或者把vim 外面复制的内容粘贴到vim 里面？
+经过网上多次的查阅资料，终于学会了怎么实现这个过程
+首先，我们先了解这样一个概念：vim 缓冲区和系统剪贴板
+vim 里面粘贴复制实际上是在vim 缓冲区 存取数据
+而系统的ctry+c ctry+v 是与系统剪贴板之间的交互
+我也不知道我这样描述准不准确，反正大概就是这个意思：vim 粘贴复制和系统粘贴复制操作的不是同一个东西，所以系统和vim 之间不是那么容易直接使用的
+但是，这个问题还是可以解决的
+1. 用vim 打开一个文件，然后执行命令：reg 查看是否有 + 或者 × 号  或者执行：version 命令 查看是否有+clipboard
+    如果存在：
+　　　则可以使用 “+y 将vim 里面的内容复制到系统剪贴板或者 +p 将系统剪贴板里面的内容复制到vim 里面
+　如果不存在：
+　　　则需要安装vim-gnome， 然后就可以用以上命令粘贴复制
+2. 可以在 /etc/vim/.vimrc 里面设置 clipboard=unnamedplus 这样就可以直接使用 y p命令直接粘贴复制了
+<'''
+time_: 20171010062805
+@@ASCII @@UTF-8
+set fileencording=utf8
+vi +":set fileencording=utf-8" +":set fileformat=unix" +":wq" name.txt
+tags_: @@encoding @@bianma
+concept_: encoding
+core_: '''>
+mount -o iocharset=cp936
+unix charset=cp936
+<'''
+detail_: '''>
+cp936是微软自己发布的用在文件系统中的编码方式。
+cp936即 code page 936（代码页936）是以GBK（国标扩展字符集）为基础的编码。
+GB2312（国标字符集）只是GBK的一部分。GB2312只支持常用的汉字，而且是简体字。GBK支持繁体字和生僻字。
+GB2312和GB18030-2000是中国国家标准。GBK其实并未国标，是源于微软为中文设计的字符集，中国国家标准局基于GBK建了GB18030。
+<'''
+time_:20170820223418
+tags_: @@ff @@format @@dos @@unix 
+concept_: fileformat
+core_:'''>
+:set ff           #disp fileformat
+:set ff=unix
+:set fileformat=unix
+<'''
+detail_:'''>
+批量：
+sudo find /home/test -name "*.txt" | xargs fromdos  #(dos2unix)
+apt-get install tofrodos
+dpkg -L tofrodos #fromdos, todos;
+ln -s /usr/bin/fromdos /usr/bin/dos2unix
+or:
+vi ~/.bashrc
+alias dos2unix=fromdos
+<'''
+time_:20170820224324
+@@guide @@tutor
+www.vim.org
+www.vim.org/scripts
+http://vimcdoc.sourceforge.net/
+http://easwy.com/blog/archives/advanced-vim-skills-catalog/
+http://www.cnblogs.com/zhangsf/archive/2013/06/13/3134409.html
+practical vim,vim实用技巧
+@@install
+vim-gnome vim-scripts vim-doc vim-addon-manager
+@@vimrc @@path @@config @@setup
+:version
+/home/username/.vimrc
+/etc/vim/vimrc
+sys: $VIM/vimrc
+usr: $HOME/.vimrc
+2nd: ~/.vim/vimrc
+...
+echo $VIM
+echo $HOME
+@@color 
+:colo evening
+whereis vim
+/usr/share/vim
+/usr/share/vim/vim73/colors/
+~/.vimrc:
+colorscheme evening
+~/.vim/colors
+evening.vim
+darkblue.vim
+desert.vim
+@@scripts
+vim-addons status
+vim-addons install
+man vim-addons
+@@help in vim, cd ~/.vim/doc,in vim, :helptags .;
+:helptags ~/.vim/doc
+:help taglist.txt
+# in vim, curser to var, press ctrl+], ctrl+o reback;
+@@NERDTree
+# unzip .vim/ ,look like '~/.vim/plugin/NERD_tree.vim'
+# :NERDTree ; ctr+ww;
+# 设置NerdTree快捷开关in .vimrc
+map <F3> :NERDTreeMirror<CR>
+map <F3> :NERDTreeToggle<CR>
+@@bufexplorer @@minibufexpl
+# minibufexpl, edit more files it auto appear.
+# open history-files-list, switch quickly;
+# :BufExplorer   to list
+# esc,esc,\be  \bs  \bv |,be ,bs ,bv     <Leader>be
+# :help bufexplorer.txt
+# .vimrc
+""""""""""""""""""""""""""""""
+" BufExplorer
+""""""""""""""""""""""""""""""
+let g:bufExplorerDefaultHelp=0       " Do not show default help.
+let g:bufExplorerShowRelativePath=1  " Show relative paths.
+let g:bufExplorerSortBy='mru'        " Sort by most recently used.
+let g:bufExplorerSplitRight=0        " Split left.
+let g:bufExplorerSplitVertical=1     " Split vertically.
+let g:bufExplorerSplitVertSize = 30  " Split width
+let g:bufExplorerUseCurrentWindow=1  " Open in new window.
+autocmd BufWinEnter \[Buf\ List\] setl nonumber 
+@@ctags/taglist
+apt-get install ctags			# support taglist
+# usage,best to source dir;
+$ctags -R *				        # create tags file on source files
+@@taglist :Tlist
+apt-get install vim-scripts		# vim-addon-manager
+vim-addons install taglist
+# usage: Tlist|TlistToggle|TlistOpen to open list; ctrl+ww to switch;
+# .vimrc
+"""""""""""""""""""""""""""""""
+" TagList
+""""""""""""""""""""""""""""""
+let Tlist_Show_One_File=1 	           "不同时显示多个文件的tag，只显示当前文件的    
+let Tlist_Exit_OnlyWindow=1            "如果taglist窗口是最后一个窗口，则退出vim   
+"let Tlist_Ctags_Cmd="/usr/bin/ctags"  "将taglist与ctags关联 
+let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口 
+if MySys() == "windows"                "设定windows系统中ctags程序的位置
+let Tlist_Ctags_Cmd = 'ctags'
+elseif MySys() == "linux"              "设定linux系统中ctags程序的位置
+let Tlist_Ctags_Cmd = '/usr/bin/ctags'
+endif
+""""""""""""""""""""""""""""""
+" winManager setting
+""""""""""""""""""""""""""""""
+let g:winManagerWindowLayout = "BufExplorer,FileExplorer|TagList"
+let g:winManagerWidth = 30
+let g:defaultExplorer = 0
+nmap <C-W><C-F> :FirstExplorerWindow<cr>      # keyboard map
+nmap <C-W><C-B> :BottomExplorerWindow<cr>
+nmap <silent> <leader>wm :WMToggle<cr> 
+# python.vim
+pydiction
+快的依据： 
+    快捷键； 
+    函数补全； 
+    代码块补全；snipMate 
+入门最好材料vimtutor; 
+模式： 
+normal模式状态: esc 
+Insert模式状态 : i 
+Command模式  : : 
+vim turn @@page:
+ctrl+b/ctr+f    # turn a page,b=before,f=follow
+ctrl+d/e;
+gg              # top page
+shift+g         # end page
+:36 / nG        # move n line
+set nu, set nonu
+# set number, set nonumber; 
+@@move @@cursor:
+by char: h/j/k/l;22l;
+by word: 2w,9e;
+by line: 0,ctrl-$;?
+0  top of line 
+$  end of line
+@@edit:
+Create: i/a/A/o/O;insert,append,open; 
+Delete: x/dw/de/d$/dd;d3w/2dd; 
+Update: r/R/ce/c$/ replace,correct;
+  undo: u/U/ctr+r；ctr+y回复上次； 
+@@lines @shiftwidth @position
+:set nu/nonu; 
+:1,10s/^/#/g    //1至10行前加#注释； 
+:1,10>>          //1至10行向右移动2个Tab； 
+:1,10d            //1至10行删除； 
+:set shiftwidth?
+:set shiftwidth=10
+:ce  --center
+:ri  --right
+:le  --left
+@@find @@replace @@search /n,N
+find ?up /down
+substitute:
+:s/old/new/g;(gc)  # current line, g=global,c=confirm 
+:n,$s/             # from n line to last line.
+:%s/               # all lines
+:s#old#new#g       # old=/home/nu  new=/home/nudata 
+:s+old+new+g
+@^M  
+:s/\r/g
+@@save, read, quit 
+:w                      //保存当前 
+:w filename;            //当前内容到某文件； 
+:m,nw!filename          # 将指定的第m到n行覆盖到another filename文件中
+:m,nw!>>filename        # 追加，而非覆盖
+V+Select+:w filename;   //保存当前选择内容到某文件；d会删； 
+V+Select+:w!>>filename; //追加保存当前选择内容到某文件；d会删； 
+# read
+:r filename;   //读取某文件到当前；
+:r !ls (ls /home/nu); 
+# quit
+:wq/x                  # save and quit
+:q!                    # not save and firm quit
+:w !sudo tee %	       # edit read only file,get super permision save curr
+                       # tee: save from stdin to file
+                       # %: is a readonly register in vim save path currfil
+@@copy: firefox & vim：
+vim to vim:     v select, "*p 
+firefox to vim: ctrl+c  , "+p
+@@password @@pwd
+vim -x file1         #create a encry  file need password
+----------------------------------------------------------------------------
+@@cmdOutside
+Read:/?nN/:set ic/:!ls/:!dir/;   %对括号的配对查找； 
+帮助系统 
+F1；:help; :help xxx; 
+ 
+启动脚本 
+:edit ~/.vimrc  
+:edit  /$VIM/_vimrc 
+:r $VIMRUNTIME/vimrc_example.vim 
+:write 
+ 
+命令集显示与补全 
+非兼容模式 :set nocp 
+:!ls /:!dir 
+:e+ctr+d 
+TAB>>>:edit 
+:edit fil TAB 
+ 
+ 
+ 
+VIM 常用配置： 
+default path: /etc/vim/vimrc
+custom path: ~.vimrc
+ 
+winpos 500 130 
+set lines=20 columns=70 
+inoremap <S-h> <Left> 
+inoremap <S-j> <Down> 
+inoremap <S-k> <Up> 
+inoremap <S-l> <Right> 
+ 
+ 
+关联了.js  打开方式； 
+ 
+编辑——》配色方案vim74/colors目录下，网上都有代码的，复制过来， 
+ 
+"中文乱码 
+set encoding=utf-8  
+colorscheme desert  
+set number 
+set im 
+"解决console输出乱码 
+language messages zh_CN.utf-8 
+set nobackup   
+set guifont=Consolas:h14   
+set tabstop=4  
+"set ai   
+"set si  
+"set guioptions-=T  
+"nmap <F1> :w!<CR>:!python %<CR>   
+"cd C:\Users\fangjunda\Desktop\python 
+  
+   
+设置缩进： 
+  
+set sw=2，就把缩进数改成了2个字符 
+ 
+自动缩进有两个选项 
+set autoindent 
+set cindent 
+autoindent 就是自动缩进的意思，当你在输入状态用回车键插入一个新行，或者在 normal 状态用 o 或者 O 插入一个新行时，autoindent 会自动地将当前行的缩进拷贝到新行，也就是”自动对齐”，当然了，如果你在新行没有输入任何字符，那么这个缩进将自动删除。 
+cindent 就不同了，它会按照 C 语言的语法，自动地调整缩进的长度，比如，当你输入了半条语句然后回车时，缩进会自动增加一个 TABSTOP 值，当你键入了一个右花括号时，会自动减少一个 TABSTOP 值。 
+ 
+ 
+set guifont=Consolas:h14  
+set tabstop=4 color rain  
+set nu  
+set ai  
+set si  
+set guioptions-=T 
+set nobackup  
+nmap <F1> :w!<CR>:!python %<CR>  
+cd C:\Users\fangjunda\Desktop\python 
+第一个是设置字体的 
+第二个是tab设置的 
+第三个是我选的配色方案（rain可以换成你colors文件中任意一个文件的名字） 
+第四个是显示行号 
+第五个是自动缩进 
+第六个是智能缩进 
+第七个是不要工具栏 
+第八个是不产生~文件 
+最后两个比较重要：nmap这个，需要你提前配置好python路径，<F1>可以换成任何你想要的快捷键，不冲突就好，执行之前会保存 
+最后一个是默认路径，在Linux环境下，我们可以:wq保存，但是这里不太好用，我们设置好路径，就直接:wq filename。就在我们改动的默认路径下生成一个filename。 
+ 
+ hi LineNr guifg=LightBlue  //设置行号颜色 
+ 
+ _vimrc里面的设置： 
+"打开行号 
+set nu 
+"自动高亮 
+syn on 
+"设置备份文件的默认路径 
+set backupdir=（如：set backupdir=D:\gvim\temp） 
+ 
+"设置代码折叠 
+set fdm=indent 
+"设置代码折叠宽度为4个字符 
+set fdc=4 
+"设置配色 
+colo desert 
+"设置折行 
+if (has("gui_running")) 
+" 图形界面下的设置 
+set nowrap 
+set guioptions+=b 
+else 
+" 字符界面下的设置 
+set wrap 
+endif 
+"标签切换 
+map th :tabnext 
+map tl :tabprev 
+map tn :tabnew 
+map td :tabclose 
+"tab宽度 
+set tabstop=4 
+"tab自动缩进宽度 
+set shiftwidth=4 
+"设置自动缩进 
+set ai 
+"将 tab 键转换为空格 
+set expandtab 
+ 
+"设默认为插入模式 
+set im 
+ 
+"-----------something not too important-----------------------" 
+" 搜索时高亮显示被找到的文本 
+set hlsearch 
+" 覆盖文件时不备份 
+set nobackup 
+" 打开状态栏标尺 
+set ruler   
+ 
+VIM 常用命令 
+进入vi的命令 
+vi filename :打开或新建文件，并将光标置于第一行首 
+vi +n filename ：打开文件，并将光标置于第n行首 
+vi + filename ：打开文件，并将光标置于最后一行首 
+vi +/pattern filename：打开文件，并将光标置于第一个与pattern匹配的串处 
+vi -r filename ：在上次正用vi编辑时发生系统崩溃，恢复filename 
+vi filename….filename ：打开多个文件，依次编辑 
+移动光标类命令 
+h ：光标左移一个字符 
+l ：光标右移一个字符 
+space：光标右移一个字符 
+Backspace：光标左移一个字符 
+k或Ctrl+p：光标上移一行 
+j或Ctrl+n ：光标下移一行 
+Enter ：光标下移一行 
+w或W ：光标右移一个字至字首 
+b或B ：光标左移一个字至字首 
+e或E ：光标右移一个字j至字尾 
+) ：光标移至句尾 
+( ：光标移至句首 
+}：光标移至段落开头 
+{：光标移至段落结尾 
+nG：光标移至第n行首 
+n+：光标下移n行 
+n-：光标上移n行 
+n$：光标移至第n行尾 
+H ：光标移至屏幕顶行 
+M ：光标移至屏幕中间行 
+L ：光标移至屏幕最后行 
+0：（注意是数字零）光标移至当前行首 
+$：光标移至当前行尾 
+屏幕翻滚类命令 
+Ctrl+u：向文件首翻半屏 
+Ctrl+d：向文件尾翻半屏 
+Ctrl+f：向文件尾翻一屏 
+Ctrl＋b；向文件首翻一屏 
+nz：将第n行滚至屏幕顶部，不指定n时将当前行滚至屏幕顶部。 
+插入文本类命令 
+i ：在光标前 
+I ：在当前行首 
+a：光标后 
+A：在当前行尾 
+o：在当前行之下新开一行 
+O：在当前行之上新开一行 
+r：替换当前字符 
+R：替换当前字符及其后的字符，直至按ESC键 
+s：从当前光标位置处开始，以输入的文本替代指定数目的字符 
+S：删除指定数目的行，并以所输入文本代替之 
+ncw或nCW：修改指定数目的字 
+nCC：修改指定数目的行 
+删除命令 
+ndw或ndW：删除光标处开始及其后的n-1个字 
+do：删至行首 
+d$：删至行尾 
+ndd：删除当前行及其后n-1行 
+x或X：删除一个字符，x删除光标后的，而X删除光标前的 
+Ctrl+u：删除输入方式下所输入的文本 
+搜索及替换命令 : 
+/pattern：从光标开始处向文件尾搜索pattern 
+?pattern：从光标开始处向文件首搜索pattern 
+n：在同一方向重复上一次搜索命令 
+N：在反方向上重复上一次搜索命令 
+：s/p1/p2/g：将当前行中所有p1均用p2替代 
+：n1,n2s/p1/p2/g：将第n1至n2行中所有p1均用p2替代 
+：g/p1/s//p2/g：将文件中所有p1均用p2替换 
+选项设置 
+all：列出所有选项设置情况 
+term：设置终端类型 
+ignorance：在搜索中忽略大小写 
+list：显示制表位(Ctrl+I)和行尾标志（$) 
+number：显示行号 
+report：显示由面向行的命令修改过的数目 
+terse：显示简短的警告信息 
+warn：在转到别的文件时若没保存当前文件则显示NO write信息 
+nomagic：允许在搜索模式中，使用前面不带“\”的特殊字符 
+nowrapscan：禁止vi在搜索到达文件两端时，又从另一端开始 
+mesg：允许vi显示其他用户用write写到自己终端上的信息 
+最后行方式命令 
+：n1,n2 co n3：将n1行到n2行之间的内容拷贝到第n3行下 
+：n1,n2 m n3：将n1行到n2行之间的内容移至到第n3行下 
+：n1,n2 d ：将n1行到n2行之间的内容删除 
+：w ：保存当前文件 
+：e filename：打开文件filename进行编辑 
+：x：保存当前文件并退出 
+：q：退出vi 
+：q!：不保存文件并退出vi 
+：!command：执行shell命令command 
+：n1,n2 w!command：将文件中n1行至n2行的内容作为command的输入并执行之，若不指 
+定n1，n2，则表示将整个文件内容作为command的输入 
+：r!command：将命令command的输出结果放到当前行 
+ 
+常见错误解决： 
+提示：无法生成备份文件（请按！。。。） 
+解决方法：切换到命令行模式，用命令:w!保存配置文件。当配置文件中有set im 时，可能无法切换到命令行模 式，可以在编辑栏中，关闭插入模式。 
+ 
+ 
+ 
+GVIM 存档：:w filename 
+ 
+VIM 常用插件 
+ 
+snipMate //代码块自动补全； 
+NeoComplCache 
+superTab 
+fx/tx/;/,/Fx/;
+@@over
+

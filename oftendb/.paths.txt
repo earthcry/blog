@@ -1,0 +1,91 @@
+/home/nu/android
+/home/nu/oftendb
+/home/nu/oftendb/execute
+/home/nu/oftendb/execute/sync
+/home/nu/oftendb/execute/sync/rmed
+/home/nu/oftendb/execute/sync/bothmodify
+/home/nu/oftendb/frequency
+/home/nu/oftendb/frequency/collins_word_list
+/home/nu/oftendb/english
+/home/nu/oftendb/english/jasonPic
+/home/nu/oftendb/english/cambridgePic
+/home/nu/oftendb/english/kk
+/home/nu/oftendb/english/ebigear
+/home/nu/oftendb/MindNote
+/home/nu/oftendb/MindNote/cachemk
+/home/nu/oftendb/raspi
+/home/nu/oftendb/chandler2
+/home/nu/oftendb/chandler2/θ_files
+/home/nu/oftendb/chandler2/ɪə_files
+/home/nu/oftendb/chandler2/eɪ_files
+/home/nu/oftendb/chandler2/consonants_files
+/home/nu/oftendb/chandler2/tsdz_files
+/home/nu/oftendb/chandler2/word_files
+/home/nu/oftendb/chandler2/words_files
+/home/nu/oftendb/chandler2/wj_files
+/home/nu/oftendb/chandler2/ə_files
+/home/nu/oftendb/cleaner
+/home/nu/oftendb/0img
+/home/nu/oftendb/0img/PronunciationPairs
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 23
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 28
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 3
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 9
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 8
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 10
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 22
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 12
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 18
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 47
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 38
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 1
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 43
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 20
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 41
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 46
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 27
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 5
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 49
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 44
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 16
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 14
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 32
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 30
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 33
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 26
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 40
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 7
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 11
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 36
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 15
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 6
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 45
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 21
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 29
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 42
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 2
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 13
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 17
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 31
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 50
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 39
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 24
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 4
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 37
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 48
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 34
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 35
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 19
+/home/nu/oftendb/0img/PronunciationPairs/Pronunciation Pairs MP3/Unit 25
+/home/nu/oftendb/Camera
+/home/nu/oftendb/photo
+/home/nu/oftendb/photo/20180807_212544
+/home/nu/oftendb/chandler
+/home/nu/oftendb/chandler/trdr_files
+/home/nu/oftendb/chandler/20160719_files
+/home/nu/oftendb/chandler/zz_files
+/home/nu/oftendb/chandler/hlr1_files
+/home/nu/oftendb/chandler/rlh2_files
+/home/nu/oftendb/chandler/td_files
+/home/nu/oftendb/nudo
