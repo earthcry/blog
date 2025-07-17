@@ -63,3 +63,4 @@ git remote add origin git@github.com:earthcry/blog.git
 git push -u origin main
 
 
+git@github.com:earthcry/blog.git
