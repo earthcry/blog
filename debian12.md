@@ -1,12 +1,21 @@
 
 # Debian 12
 
-### Install
+## Install debian
+
+### disk
+Btrfs文件系统
+
 
 uefi setup
 part
 fdisk -l / lsblk
 df -hT
+
+df -i # inode 
+lsof | grep deleted 
+
+
 mount | grep sdb1
 
 gdisk /dev/sdb or parted
@@ -33,16 +42,6 @@ sudo mount -a
 - Alacritty
 - 
 
-Btrfs文件系统
-
-
-https://app.warp.dev/download?package=deb
-
-fdisk -l or lsblk 
-df -h
-df -i # inode 
-lsof | grep deleted 
-
 
 ### 修复文件系统错误
 sudo  umount  /dev/sda8
@@ -53,12 +52,19 @@ sudo mount /dev/sda7 /mnt/boot/efi
 sudo mount /dev/sda10 /mnt/home/
 
 
-
-sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Ubuntu
+### grub install
 sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Debian 
 
 
 用live光盘重装GRUB引导，在Live系统中输入如下命令：/sbin/grub-install –root-directory=/mnt /dev/sda，重新安装GRUB引导。
+
+
+### install deb
+tar -zxvf 文件名.tar.gz -C /目标路径/
+tar -ztvf 文件名.tar.gz
+
+sudo dpkg -i xxx.deb
+sudo apt -f -y install
 
 
 
@@ -69,13 +75,9 @@ sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=
 
 我们这里遍地黄荆，听说驱蚊效果很好，所以看看有没有谁会做蚊香的教我一下，我用它来做蚊香.
 
-
-tar -zxvf 文件名.tar.gz -C /目标路径/
-tar -ztvf 文件名.tar.gz
-
-sudo dpkg -i xxx.deb
-sudo apt -f -y install
-
+### bashrc lost
+代码不高亮
+sudo cp /etc/skel/.bashrc ~/
 
 
 
