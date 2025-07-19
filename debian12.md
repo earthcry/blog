@@ -21,6 +21,72 @@ umount
 /dev/sdb1 /mnt/mydisk
 sudo mount -a
 
+
+
+### Linux  Terminal  Emulator
+
+- Terminator
+- Terminology
+- Tabby
+- WezTerm
+- Kitty
+- Alacritty
+- 
+
+Btrfs文件系统
+
+
+https://app.warp.dev/download?package=deb
+
+fdisk -l or lsblk 
+df -h
+df -i # inode 
+lsof | grep deleted 
+
+
+### 修复文件系统错误
+sudo  umount  /dev/sda8
+sudo  fsck  -y  /dev/sda8 
+
+sudo mount /dev/sda8 /mnt/
+sudo mount /dev/sda7 /mnt/boot/efi 
+sudo mount /dev/sda10 /mnt/home/
+
+
+
+sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Ubuntu
+sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Debian 
+
+
+用live光盘重装GRUB引导，在Live系统中输入如下命令：/sbin/grub-install –root-directory=/mnt /dev/sda，重新安装GRUB引导。
+
+
+
+听不懂就学一样孟德尔遗传定律！高中有学，再不行，让小辈教
+
+听一亩耘心王澍老师的话，动手烧稻壳炭给水稻补充钾肥
+
+
+我们这里遍地黄荆，听说驱蚊效果很好，所以看看有没有谁会做蚊香的教我一下，我用它来做蚊香.
+
+
+tar -zxvf 文件名.tar.gz -C /目标路径/
+tar -ztvf 文件名.tar.gz
+
+sudo dpkg -i xxx.deb
+sudo apt -f -y install
+
+
+
+
+
+
+
+
+
+
+
+
 ### 支持增量/差异备份
 tags: backup;
 - timeshift
