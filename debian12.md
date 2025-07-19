@@ -1,6 +1,18 @@
 
 # Debian 12
 
+
+
+
+
+
+
+
+
+
+
+
+
 ## Install debian
 
 ### disk
@@ -75,12 +87,19 @@ sudo apt -f -y install
 
 我们这里遍地黄荆，听说驱蚊效果很好，所以看看有没有谁会做蚊香的教我一下，我用它来做蚊香.
 
-### bashrc lost
+### Highlight 高亮
+tags: highlight; 
+
 代码不高亮
+
+**Terminal**
+.bashrc lost.
 sudo cp /etc/skel/.bashrc ~/
 
-
-
+**Tabby**
+/bin/bash not
+/usr/local/bin/bash work
+sudo cp /bin/bash /usr/local/bin/bash
 
 
 
