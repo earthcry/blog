@@ -61,6 +61,13 @@ menuentry 'Ubuntu 12.04 LiveCD' {
     initrd (loop)/casper/initrd.lz
 }
 
+menuentry 'Ubuntu' {
+    set root='(hd0,1)'
+    linux /boot/vmlinuz root=/dev/sda1
+    initrd /boot/initrd.img
+}
+
+
 sudu  fd -l
 umount -l /isodevice
 /ubuntu-16.04.3-desktop-amd64.iso
@@ -74,6 +81,14 @@ menuentry "WinPE.iso" --class windows {
     linux16 /iso/memdisk iso raw
     initrd16 /iso/win7pe.iso 
 }
+
+menuentry "Windows 10" {
+    insmod part_gpt
+    insmod fat
+    set root='hd0,gpt9'
+    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+}
+
 
 ~$ update-grub2
 
