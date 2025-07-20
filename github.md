@@ -5,6 +5,30 @@ Source of earthcry.github.io.git
 
 ## Usage of githunb
 
+## Two
+
+Order:
+
+1. before edit, pull.
+2. after edit, 
+  1. first to stash, 
+  2. and then pull
+  3. stash apply
+  4. fix
+  5. add and commit
+I
+
+If commit first and then pull, to reset:
+git status
+git reflog
+git reset --mixed HEAD^
+git stash
+git pull
+git apply
+edit fix
+add , commit
+
+
 ## Two device push/pull to github
 
 1. second device:
