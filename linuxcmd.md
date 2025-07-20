@@ -1,5 +1,12 @@
 
 
+
+
+
+
+### 
+dpkg --list | grep apache2
+
 ### deb appimage
 
 **AppImage** 一个程序一个文件。

@@ -156,6 +156,13 @@ cp default.yaml default.yaml.bak
 cp ~/blog/unix/fcitx5-rime/build/* ./
 setui select, restart
 
+
+### sync
+foldA -> foldB
+SOURCE=""
+DESTINATION=""
+rsync -avz "$SOURCE" "$DESTINATION"
+
 ### Timeshift
 tags: timeshift
 
@@ -168,12 +175,15 @@ tags: timeshift
 - 
 - highlight lost, cp bashrc
 - add fcitx5-rime
+- firefox: dark reader
+- rsync: hard usb.
+- Firefox,about:addons
+  - 沉浸式翻译Immersive Translate
+  - dark reader
+  
 - 
 - 
-- 
-- sync
 - quicknote
-- translate
 - vimrc
 - grub
 
