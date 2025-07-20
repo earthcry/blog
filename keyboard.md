@@ -1,6 +1,6 @@
 # 实体键盘
 
-## Android接实体键盘 快捷键
+## Android蓝牙接实体键盘 快捷键
 
 环境：华为手机/termux/pdebian/vim
 
