@@ -142,3 +142,37 @@ tags: qtscrcpy;
 
 
 老硬件debian新硬件fedora，
+
+### Fcitx5-rime
+tags: rime; fcitx5;
+
+apt-cache search fcitx5 
+sudo apt install fcitx5-rime
+ls -ashl .local/share/fcitx5/rime/
+ls -ashl .local/share/fcitx5/rime/build/
+setui add rime, restart
+cd .local/share/fcitx5/rime/build/
+cp default.yaml default.yaml.bak
+cp ~/blog/unix/fcitx5-rime/build/* ./
+setui select, restart
+
+### Timeshift
+tags: timeshift
+
+只要不懂的目录都不排除,
+只排除自己完全懂的.
+
+- Exclude Dir : blog; data2025.------Source.list, upgrade, timeshift.  curl,vim, vim-doc, vim-scripts, universal-ctags,git config,first push-
+- 
+- 
+- 
+- highlight, cp bashrc
+- add fcitx5-rime
+
+
+
+
+
+
+
+
