@@ -166,7 +166,7 @@ tags: timeshift
 - 
 - 
 - 
-- highlight, cp bashrc
+- highlight lost, cp bashrc
 - add fcitx5-rime
 - 
 - 
