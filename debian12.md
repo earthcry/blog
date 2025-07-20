@@ -183,9 +183,10 @@ tags: timeshift
   
 - 
 - 
+- iso-edit
+- grub
 - quicknote
 - vimrc
-- grub
 
 
 
