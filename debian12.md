@@ -168,7 +168,14 @@ tags: timeshift
 - 
 - highlight, cp bashrc
 - add fcitx5-rime
-
+- 
+- 
+- 
+- sync
+- quicknote
+- translate
+- vimrc
+- grub
 
 
 
