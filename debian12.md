@@ -100,7 +100,7 @@ sudo cp /etc/skel/.bashrc ~/
 /bin/bash not
 /usr/local/bin/bash work
 sudo cp /bin/bash /usr/local/bin/bash
-
+tabby: 配置链接-管理配置-新建-新建配置
 
 
 
@@ -171,19 +171,19 @@ tags: timeshift
 
 - Exclude Dir : blog; data2025.------Source.list, upgrade, timeshift.  curl,vim, vim-doc, vim-scripts, universal-ctags,git config,first push-
 - 
-- 
-- 
 - highlight lost, cp bashrc
 - add fcitx5-rime
-- firefox: dark reader
 - rsync: hard usb.
+- 
+- 
+- 
+- firefox: dark reader
 - Firefox,about:addons
   - 沉浸式翻译Immersive Translate
   - dark reader
-  
 - 
 - 
-- iso-edit
+- off-edit
 - grub
 - quicknote
 - vimrc
