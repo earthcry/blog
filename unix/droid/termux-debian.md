@@ -18,7 +18,7 @@ CSDN/DCTANT/【合作原创】使用Termux搭建可以使用的生产力环境�
 - [ ] 切换源
 - termux-change-repo
 - Chinese Mainland”，然后必须按一下空格键确认选择才行！！否则是不生效的！！最后按回车完成该切换！！
-- pkg i -y openssh
+- pkg i -y openssh vim git curl proot-distro pulseaudio 
 - passwd
 - sshd
 - whoami
