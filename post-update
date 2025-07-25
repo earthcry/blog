@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# An example hook script to prepare a packed repository for use over
+# dumb transports.
+#
+# To enable this hook, rename this file to "post-update".
+
+
+#
+WWW=/home/git/www
+#
+git --work-tree=${WWW} clean -fd
+git --work-tree=${WWW} checkout --force
+
+exec git update-server-info
+
+
+
