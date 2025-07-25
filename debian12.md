@@ -171,6 +171,8 @@ tags: timeshift
 
 - Exclude Dir : blog; data2025.------Source.list, upgrade, timeshift.  curl,vim, vim-doc, vim-scripts, universal-ctags,git config,first push-
 - 
+- 
+- 
 - highlight lost, cp bashrc
 - add fcitx5-rime
 - rsync: hard usb.
