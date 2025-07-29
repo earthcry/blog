@@ -27,7 +27,12 @@ sudo dpkg -i xxx.deb
 ```
 
 
+### switch root
 
+su root
+or 
+su -
+sudo passwd root
 
 
 老硬件debian新硬件fedora，
