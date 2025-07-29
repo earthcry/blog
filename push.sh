@@ -14,6 +14,6 @@ read -p "请输入提交注释：" note
 
 git add .
 git commit -m "$note" # 注释要用引号包括。
-git push origin master
+git push origin main
 
 #git reflog
