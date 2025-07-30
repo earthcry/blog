@@ -1,3 +1,30 @@
+
+
+
+
+
+### Plugin: vim-markdown-preview
+
+1. sudo apt install vim-gtk3 # the plugin need python
+2. Install nodejs yarn
+3. Install Vundle and .vimrc
+4. vundle continue install "iamcco/markdown-preview.nvim"
+5. add xxx to .vimrc
+6. short key
+
+" normal/insert
+<Plug>MarkdownPreview
+<Plug>MarkdownPreviewStop
+<Plug>MarkdownPreviewToggle
+
+" example
+nmap <C-s> <Plug>MarkdownPreview
+nmap <M-s> <Plug>MarkdownPreviewStop
+nmap <C-p> <Plug>MarkdownPreviewToggle
+
+-------------------
+
+
 # 追加内容到文件
 
 ## vim界面三模式
