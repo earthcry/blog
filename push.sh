@@ -5,6 +5,7 @@
 echo "..."
 echo "..."
 echo "..."
+echo "是否已经git status，如否ctr+c"
 echo "是否已经拉取pull或储存stash，如否ctr+c"
 echo "..."
 echo "请按任意键继续"
