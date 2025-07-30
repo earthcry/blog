@@ -1,0 +1,9 @@
+# 排除所有. 开头人文件
+.*
+# 排除所有.class 开头人文件
+*.class
+# 不排除文件
+!.gitignore
+!App.class
+
+

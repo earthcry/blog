@@ -74,14 +74,14 @@ git branch -a
 git status
 git stash -l
 git reflog
-
+git diff
 
 ## edit and update 
 
 git add .
 git commit -m "change info"
 git remote -v
-git branch -v
+git branch -a
 git push origin main
 
 Error in the HTTP2 framing layer
@@ -92,8 +92,6 @@ git remote remove origin
 git remote add origin git@github.com:earthcry/blog.git
 git push -u origin main
 
-
-git@github.com:earthcry/blog.git
 
 
 ### 原生SSH协议裸仓库搭建
@@ -124,8 +122,8 @@ sudo -u git git init --bare /home/git/myproject.git
 
 termux开启的sshd服务用的是8022端口，执行echo "sshd" >> ~/.bashrc可让termux自动启动ssh。
 
-ssh admin@10.041.199.36 -p 8022
-git clone ssh://u0_a75@192.168.101.175:2222/~/project1.git
+ssh -p 8022 u0_75@10.041.199.36
+git clone ssh://u0_a75@192.168.101.175:8022/project1.git
 
 在Linux系统中搭建内网DNS服务主要可通过BIND或dnsmasq两种方案实现
 
@@ -451,7 +449,7 @@ https://michaelliao.github.io/gitignore-online-generator/
 !.gitignore
 !App.class
 
-alins
+Alias
 - 
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
