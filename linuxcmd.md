@@ -1,7 +1,16 @@
 
 
 
-cp —r -P 8022 yuan u0-a275@192,168.41.217:wenjianjia
+
+
+
+
+
+
+
+
+
+scp —r -P 8022 yuan u0-a275@192,168.41.217:wenjianjia
 
 
 ### 
