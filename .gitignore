@@ -4,6 +4,7 @@
 *.class
 # 不排除文件
 !.gitignore
+!.bashrc
+!.vimrc
 !App.class
-
 
