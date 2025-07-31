@@ -171,18 +171,20 @@ tags: timeshift
 
 - Exclude Dir : blog; data2025.------Source.list, upgrade, timeshift.  curl,vim, vim-doc, vim-scripts, universal-ctags,git config,first push-
 - 
-- 
-- 
 - highlight lost, cp bashrc
 - add fcitx5-rime
 - rsync: hard usb.
 - 
+- gparted,remove apache2,firefox
+-
+- remove vim,vim-gtk3, update python3-samba,nodejs,yarn,vundle,
+-
+- vim markdown-review, by vundle, but slowly.
 - 
-- 
-- firefox: dark reader
 - Firefox,about:addons
-  - 沉浸式翻译Immersive Translate
   - dark reader
+  -
+  - 沉浸式翻译Immersive Translate
 - 
 - 
 - off-edit
