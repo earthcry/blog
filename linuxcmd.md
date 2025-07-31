@@ -16,7 +16,7 @@ scp —r -P 8022 yuan u0-a275@192,168.41.217:wenjianjia
 ### 
 dpkg --list | grep apache2
 
-### deb appimage
+### Install .deb appimage
 
 **AppImage** 一个程序一个文件。
 ```
