@@ -118,13 +118,14 @@ export NVM_DIR="$HOME/.nvm"
 
 
 
-# Search keyword in a directory and edit in the file at positioning keyword
+# Q: Search keyword in a directory and edit in the file at positioning keyword
+# From deepseek
 # bash apt install fzf
 # search in current directory
 # add the function in ~/.bashrc
 grep_edit() {
   local result
-  result=$(grep -rnI --color=always "$1" ./ | fzf --ansi --preview="echo {} | awk -F: '{print \$1}' | xargs head -n \$(( \$(echo {} | awk -F: '{print \$2}') + 10 ))")
+  result=$(grep -rnI -w --color=always "$1" ./ | fzf --ansi --preview="echo {} | awk -F: '{print \$1}' | xargs head -n \$(( \$(echo {} | awk -F: '{print \$2}') + 10 ))")
   [[ -n "$result" ]] && vim $(echo "$result" | awk -F: '{print "+"$2 " " $1}')
 }
 # usage: 
@@ -134,6 +135,14 @@ grep_edit() {
 # In terminal input grep_edit keyword,
 # on interface of fzf, select line and enter
 # auto open vim and position the keyword for edit.
+#
+# many keys:
+# key1 or key2:
+# grep -E 'key1|key2|key3' file.txt
+# grep  'key1\|key2\|key3' file.txt
+#
+# key1 and key2:
+# grep 'key1' file.txt | grep 'key2' | grep 'key3'
 
 
 
