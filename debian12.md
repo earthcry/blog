@@ -12,11 +12,20 @@
 ### Flatpak
 
  **mirror**
-flatpak remote-add --if-not-exists flathub https://repo.huaweicloud.com/flathub/
+已经添加的话就用modify
+From: https://mirror.sjtu.edu.cn/docs/flathub
 
-flatpak remote-add --if-not-exists flathub https://mirrors.aliyun.com/flathub/
+Usage:
+sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
 
-flatpak remote-add --if-not-exists flathub https://mirrors.tuna.tsinghua.edu.cn/flathub/
+reset:
+sudo flatpak remote-modify flathub --url=https://flathub.org/repo
+
+Error:
+
+wget https://mirror.sjtu.edu.cn/flathub/flathub.gpg
+sudo flatpak remote-modify --gpg-import=flathub.gpg flathub
+
 
 flatpak search LibreOffice
 flatpak install flatpak org.libreoffic.LibreOffice
