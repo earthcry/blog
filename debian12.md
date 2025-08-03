@@ -9,8 +9,21 @@
 
 
 
+### Flatpak
 
+ **mirror**
+flatpak remote-add --if-not-exists flathub https://repo.huaweicloud.com/flathub/
 
+flatpak remote-add --if-not-exists flathub https://mirrors.aliyun.com/flathub/
+
+flatpak remote-add --if-not-exists flathub https://mirrors.tuna.tsinghua.edu.cn/flathub/
+
+flatpak search LibreOffice
+flatpak install flatpak org.libreoffic.LibreOffice
+flatpak list --app
+flatpak run ID
+flatpak update ID
+flatpak uninstall ID
 
 
 ## Install debian
@@ -197,4 +210,6 @@ tags: timeshift
 
 
 
+
+flatpak remove --unused
 
