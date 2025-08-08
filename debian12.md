@@ -2,7 +2,9 @@
 # Debian 12
 
 
+### Python
 
+install python3 python3-dev python3-pip
 
 
 
@@ -12,7 +14,10 @@
 ### Flatpak
 
  **mirror**
-已经添加的话就用modify
+
+sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+经添加的话就用modify
 From: https://mirror.sjtu.edu.cn/docs/flathub
 
 Usage:
@@ -222,3 +227,6 @@ tags: timeshift
 
 flatpak remove --unused
 
+appflowy
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+it will writting to ~/.config/pip/pip.conf
