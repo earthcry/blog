@@ -204,20 +204,17 @@ tags: timeshift
 - 
 - gparted,remove apache2,firefox
 -
-- remove vim,vim-gtk3, update python3-samba,nodejs,yarn,vundle,
+- remove vim,vim-gtk3/gnome, update python3-samba,nodejs,yarn,vundle,
 -
 - vim markdown-review, by vundle, but slowly.
-- 
-- Firefox,about:addons
-  - dark reader
-  -
-  - 沉浸式翻译Immersive Translate
-- 
+- From: zhihu/gaoxiaozhuobiji:vim+markdown, bashrc: grep_edit()
+- flatpak: audiorelay
+- python3,python3-venv,python3-pip,python3-dev
+- firefox about:addons: dark reader, github search, immersive_translate, oludict
 - 
 - off-edit
 - grub
 - quicknote
-- vimrc
 
 
 
@@ -230,3 +227,5 @@ flatpak remove --unused
 appflowy
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 it will writting to ~/.config/pip/pip.conf
+
+
