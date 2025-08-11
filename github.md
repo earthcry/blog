@@ -127,8 +127,12 @@ git clone ssh://u0_a75@192.168.101.175:8022/project1.git
 
 在Linux系统中搭建内网DNS服务主要可通过BIND或dnsmasq两种方案实现
 
+list process in termux:
 ps -ef
 pkill sshd 
+
+process 進程
+progress進展
 
 
 压缩为.tar.gz‌：tar -czvf archive.tar.gz dir/

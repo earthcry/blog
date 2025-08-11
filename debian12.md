@@ -155,6 +155,24 @@ tags: backup;
 - 傲梅，diskgenius, 
 
 diskgenius 系统迁移，或者硬盘克隆，很好用[调皮][调皮][调皮]
+### shortcut key
+
+setup: ctrl + alt + ,
+
+windows:
+alt + F3: gui menu to some shortcut key,
+menu: open gui menu
+menu + pageUp: max the windows, agin, back to origin.
+menu + pageDown: min the windows, agin not back, alt + tab to back origin. 
+
+tab windows:
+ctrl + tab: swtich,
+ctrl + t: new tab,
+ctrl + w: close current tab
+
+
+GUI dir:
+alt + <-|->
 
 
 ### Qtscrcpy

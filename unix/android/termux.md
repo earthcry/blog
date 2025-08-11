@@ -77,6 +77,12 @@ ssh-copy-id -p 8022 u0_a108@192.168.43.1
 
 ssh -p 8022 u0_a108@192.168.43.1
 
+ps -ef
+sshd
+ifconfig
+pwd
+ls -ashl
+
 scp -P 8022 u0_a270@192.168.49.1:/data/data/com.termux/files/home/test.md ~/
 scp -r -P 8022 u0_a270@192.168.49.1:/data/data/com.termux/files/home/apks ~/
 speed is slowly

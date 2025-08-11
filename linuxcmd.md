@@ -9,9 +9,15 @@
 
 
 
-
+sshd
 scp —r -P 8022 yuan u0-a275@192,168.41.217:wenjianjia
 
+### list process
+top
+ps -ef
+pgrep sshd
+lsof -i:port
+kill id
 
 ### 
 dpkg --list | grep apache2
@@ -48,3 +54,6 @@ sudo passwd root
 
 
 老硬件debian新硬件fedora，
+
+ip addr show
+du -sh ./ # display size, du=disk usage
