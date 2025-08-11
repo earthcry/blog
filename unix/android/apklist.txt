@@ -6,9 +6,6 @@ apk list
 
 app manager
 
-
-
-
 ---
 
 Nutstore
@@ -32,6 +29,8 @@ onenote
 
 briar
 
+markor
+audiorelay
 
 
 
