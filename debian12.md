@@ -39,6 +39,19 @@ flatpak run ID
 flatpak update ID
 flatpak uninstall ID
 
+flatpak remove --unused
+
+appflowy
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+it will writting to ~/.config/pip/pip.conf
+
+
+### soft
+- timeshift
+- vim-gtk3/gnome
+- audiorelay
+- qtscrcpy
+-
 
 ## Install debian
 
@@ -221,11 +234,5 @@ tags: timeshift
 
 
 
-
-flatpak remove --unused
-
-appflowy
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-it will writting to ~/.config/pip/pip.conf
 
 

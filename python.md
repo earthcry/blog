@@ -31,4 +31,7 @@ my_project/
 
 pipenv --rm  # 定期清理不用環境
 
+anaconda, pip
+pycharm, vim,
+
 

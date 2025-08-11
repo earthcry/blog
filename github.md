@@ -261,6 +261,21 @@ ls learngit
 ‌仅显示工作区改动‌：运行 git diff --cached 或 git diff --staged，仅对比工作区与暂存区的共同文件。 ‌23
 ‌查看历史版本差异‌：使用 git diff HEAD\~1（查看上一个版本）、git diff HEAD\~2（查看上两个版本）等命令，比较不同历史版本。 ‌1
 
+### git diff
+1. git diff
+   defaut object: not git add, exinlude .files. 
+
+2. git diff --cached or git staged.
+   git add, but not commit,
+
+3. git diff HAED                # all not commit, include workdir and stage. 
+   git diff HEAD -- readme.txt
+
+4. git diff HEAD\~1
+   or
+   git reflog
+   git diff commit1 commit2
+   history commit 
 
 - [ ] 版本退回，时间穿梭功能，
 - git log --pretty=oneline， git reflog, 
