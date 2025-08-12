@@ -28,12 +28,13 @@
 - Transcendence 超验骇客
 - Bicentennial Man 机器管家
 - Chappie 超能查派
+- 完美伴侣
 - Ghost in the Shell 2: 攻壳机动队2：无罪
 - Robot and Frank 机器人与弗兰克
 - Tau 智慧囚屋
 - Child's Play 鬼娃回魂（2019版）
 - The Hitchhiker's Guide to the Galaxy 银河系漫游指南
-- Eva 伊娃
+- Eva2011 伊娃
 
 “Craft life, don't let life craft you.” 
 
