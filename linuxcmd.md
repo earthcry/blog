@@ -6,11 +6,28 @@
 
 
 
+### make install 编译安装
 
+1. download
 
+cd /usr/local/src && \
+wget http://nginx.org/download/nginx-1.15.4.tar.gz
 
-sshd
-scp —r -P 8022 yuan u0-a275@192,168.41.217:wenjianjia
+2. install depend
+
+apt install -y gcc openssl-devel pcre-devel zlib-devel
+
+3. unzip
+
+tar -zxvf nginx-1.15.4.tar.gz -C /usr/local
+cd /usr/local/nginx-1.15.4
+
+4. build makefile and refer install path
+
+./configure --prefix=/usr/local/nginx
+
+5. make && make install
+
 
 ### list process
 top
