@@ -10,9 +10,12 @@ python -m pip install --upgrade pip
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 
-python3 -m venv myenv
-source myenv/bin/activate
+python3 -m venv myvenv/.venv
+cd myvenv
+source .venv/bin/activate
+deactivate
 
+venv       更簡單
 virtualenv 更靈活
 pipenv     更智能
 
