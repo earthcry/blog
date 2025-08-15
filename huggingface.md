@@ -9,7 +9,7 @@ echo 'export HF_ENDPOINT="https://hf-mirror.com"' >> ~/.bashrc
 source ~/.bashrc
 
 # install depend; huggingface_hub client;
-pip install huggingface_hub --upgrade
+pip install -U huggingface_hub --upgrade
 1. hfd.sh
 use arsa2,
 
@@ -63,7 +63,7 @@ huggingface-cli download --repo-type dataset --token [你的token] --resume-down
 '''
 
 
-list-models-name.py
+list-model-names.py
 list-model-files.py
 
 
