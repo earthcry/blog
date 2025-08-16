@@ -98,6 +98,7 @@ sudo mount -a
 ### 修复文件系统错误
 sudo  umount  /dev/sda8
 sudo  fsck  -y  /dev/sda8 
+sudo  fsck  -y  /dev/sda10 
 
 sudo mount /dev/sda8 /mnt/
 sudo mount /dev/sda7 /mnt/boot/efi 
