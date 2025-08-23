@@ -24,6 +24,21 @@ nmap <C-p> <Plug>MarkdownPreviewToggle
 
 -------------------
 
+### windows换行符(由ctrl+v,then ctrl+m 生成)
+:%s///g
+
+### 查找替换substitute
+/ 正查找
+？反查找
+s substitute 替换
+:%s/old/new/gc
+. current line
+% all line
+g all range
+c ask
+
+### display-tab
+:set list
 
 # 追加内容到文件
 
@@ -52,11 +67,12 @@ h j k l
 gg 文件开头行首，
 G  文件尾行行首，
 
-## 追加内容
+## 追加内容 appendsave selectsave
 
 echo 'word' >> file.md
 
 :31,34 w! >>./vhost/res.help.com.conf
+:31,34 w>> test.md
 
 a. 使用 :r 命令（read 的缩写）来将一个文件的内容读取并插入到当前文件的结尾。
 

@@ -1,4 +1,82 @@
 
+# Fcitx5 dict genurate
+fcitx5dict fcitx5table
+
+1. source table from CNMan/rime-data/wubi06-tygfhzb.dict.yaml
+2. rime table -> fcitx5 table
+   convert-rime2fcitx5.py
+3. table -> dict
+   libime-tabledict xxx.txt xxx.main.dict
+
+
+ 
+Frome:
+https://bbs.deepin.org/zh/post/233979
+
+
+发表于 2022-04-02 03:50
+楼主
+
+本人使用新世纪五笔，但是更新系统后新世纪输入法经常消失不见，根据这位老哥的贴子把fcitx升级到了fcitx5：https://bbs.deepin.org/zh/post/233230?offset=1&postId=1314838
+
+但是fcitx和fcitx5的码表文件并不通用，码表需要重新制作，下面是制作方法：
+
+1、准备码表文件，格式如下：
+
+KeyCode=abcdefghijklmnopqrstuvwxy
+Length=4
+Pinyin=@
+[Rule]
+e2=p11+p12+p21+p22
+e3=p11+p21+p31+p32
+a4=p11+p21+p31+n11
+[Data]
+a 工
+aa 式
+aaa 工
+aaaa 工
+aaaa 恭恭敬敬
+aaad 工期
+
+[Data]之前的配置必须要加上，不然转换码表的时候会报错。也可以在/usr/share/libime/中找到.main.dict文件，使用libime_tabledict -d命令把码表转换到文本文件查看格式，如：libime_tabledict -d wbx.main.dict 1.txt
+
+2、从码表文本转换到码表dict：
+
+libime_tabledict 1.txt nwb.main.dict
+
+３、从/usr/share/fcitx5/inputmethod/目录下找个.conf文件做模板，修改Name[*]和File，conf文件还放在此目录
+
+4、把转换的码表文件*.main.dict放到/usr/share/libime/，网上有些说把两个文件放到～/.local...下，但我这样配置无法使用。
+
+5、注销一下输入法就能添加了。
+
+附加自用的新世纪五笔码表：新世纪.zip
+-----------------------------------------------------------------
+reply:
+
+beavailable
+deepin
+发表于 2022-04-02 03:57
+沙发
+
+放在家目录下也是可以的。
+
+这是我的一个码表项目，里面有个安装脚本（支持 fcitx和 fcitx5），你可以看看：https://github.com/beavailable/better-wubi
+-----------------------------------------------------------------------
+https://github.com/CNMan/rime-data
+
+
+--------------------------------------------------------------------
+
+https://github.com/rime/home/wiki/UserGuide
+
+https://github.com/rime/home/wiki/CustomizationGuide
+
+https://github.com/rime/home/wiki/RimeWithSchemata
+
+https://github.com/rime/plum 東風破, 安裝和配置碼表 
+
+
 
 
 
@@ -65,5 +143,7 @@ C、务请注意：2016版软件与2018版软件，只能分别装用，不能�
 2、点开王码网首页上排的【购买／安装】，下拉找到价格表中2018大一统的产品代号“WM18”，点开，再点开右下角【下载安装包】按钮，开始自动下载软件；
 3、运行步骤2中的安装程序时，按照提示，需要正确输入所购买的“产品序列号”。
 
+序列號
 
+wmdyt18--20180-35739-63179-03824-29537
 

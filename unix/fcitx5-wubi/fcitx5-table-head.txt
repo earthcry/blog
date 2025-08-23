@@ -1,0 +1,27 @@
+;fcitx Version 0x03 Table file
+;libime_tabledict -d nwb.main.dict nwb.table.txt
+;libime_tabledict nwb.table.txt nwb.main.dict
+;/usr/share/fcitx5/inputmethod/nwb.conf
+;/usr/share/libime/nwb.main.dict
+;~/.local/share/fcitx5/
+;https://github.com/CNMan/rime-data
+;https://github.com/rime/home/wiki/UserGuide
+;https://github.com/rime/home/wiki/CustomizationGuide
+;https://github.com/rime/home/wiki/RimeWithSchemata
+;https://github.com/rime/plum 東風破, 安裝和配置碼表 
+
+KeyCode=abcdefghijklmnopqrstuvwxy
+Length=4
+Pinyin=@
+PinyinLength=4
+Prompt=&
+ConstructPhrase=^
+
+[Rule]
+e2=p11+p12+p21+p22
+e3=p11+p21+p22+p31
+a4=p11+p21+p31+n11
+
+[Data]
+a 工
+b 了

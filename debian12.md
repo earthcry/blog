@@ -113,6 +113,7 @@ sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=
 
 
 ### install deb
+tar -  #list
 tar -zxvf 文件名.tar.gz -C /目标路径/
 tar -ztvf 文件名.tar.gz
 
