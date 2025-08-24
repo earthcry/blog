@@ -147,3 +147,52 @@ C、务请注意：2016版软件与2018版软件，只能分别装用，不能�
 
 wmdyt18--20180-35739-63179-03824-29537
 
+## Debian & Ubuntu
+
+### fcitx
+
+fcitx5默认系统级安装路径
+/usr/share/fcitx5  #conf
+/usr/share/libime  #table, 是生成的二进制文件，
+
+```shell
+# requires
+# fcitx: sudo apt install fcitx fcitx-table-wubi fcitx-tools
+# fcitx5: sudo apt install fcitx5 fcitx5-chinese-addons libime-bin
+git clone --depth=1 https://github.com/beavailable/better-wubi.git
+cd better-wubi
+./install-for-fcitx.sh
+```
+文件安装到了目录~/.config/fcitx/table/    or
+                ~/.local/share/fcitx5/inputmethod/
+然后在`fcitx`设置面板添加`better-wubi`输入法即可。
+
+## Android
+在内部共享存储空间下面这两个目录分别添加两个文件，xxx.conf, xxx.main.dict。
+xxx.main.dict 是xxx.txt通过libime-tabledict命令生成的二进制文件。
+
+/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/inputmethod/
+/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/table/
+
+再在设置里添加新输入法。
+
+注意：dict&table, 詞庫與碼表，
+
+
+# 脚本
+`convert.py`可以将码表转换为你需要的格式。
+
+`regenerate.py`可以重新生成（根据单字编码）并排序码表。
+
+`statistics.py`可以查看相关的统计信息。
+
+# 鸣谢
+- 王码五笔发明者王永民先生
+- [CNMan](https://github.com/CNMan) 提供原始码表
+- [字甲达宾](https://bbs.deepin.org/user/53398) 制作图标
+
+# 版权
+版权归王码公司所有，禁止商用。
+
+
+
