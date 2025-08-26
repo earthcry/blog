@@ -9,6 +9,11 @@ Source of earthcry.github.io.git
 
 Order:
 
+Before Push or Edit:
+To see:
+- Status of local, if it have uncommit, stash first,
+- Status of remote, pull first, then pop
+
 1. before edit, pull.
 2. after edit, 
   1. first to stash, 
