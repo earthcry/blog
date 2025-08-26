@@ -55,12 +55,24 @@ it will writting to ~/.config/pip/pip.conf
 
 ## Install debian
 
+老硬件debian新硬件fedora，
+
 ### disk
 Btrfs文件系统
 
 
-uefi setup
-part
+UEFI Setup
+- boot mode: UEFI Boot, close Legacy Support
+- SATA Mode: AHCI. IDE/AHCI/RAID
+- Security Boot: windows enable, linux disnable.
+
+sudo gparted
+- EFI sys / Microsoft reserved part / winsys / windata / recovery / unuse / EFI sys / linux root / swap / home / bakup / unuse /
+-
+-
+
+
+
 fdisk -l / lsblk
 df -hT
 
@@ -201,7 +213,6 @@ tags: qtscrcpy;
 注入电脑剪切板文本 	Ctrl+Shift+v 	Cmd+Shift+v
 
 
-老硬件debian新硬件fedora，
 
 ### Fcitx5-rime
 tags: rime; fcitx5;
