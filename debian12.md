@@ -259,6 +259,15 @@ tags: timeshift
 - off-edit
 - grub
 - quicknote
+- source.list, update, timeshift. vim curl, gitconfig. highlight fcitx5-wubi06,gparted,remove apache2, update firefox,
+-mv vim,vim-gtk3,samba,nodejs,yarn,vundle,vim plugin: markdown-preview by vundle,
+From: zhihu/gaoxiaozuobiji:vim+markdown
+bashrc: grep_edit, immersive_translate, firefox-plugin
+flatpak, audiorelay
+python3,python3-dev,python3-pip,python3-venv
+Install Fcitx5-wubi06, upgrade firefox.
+ffmpeg,timeshift only hidden.
+
 
 
 
