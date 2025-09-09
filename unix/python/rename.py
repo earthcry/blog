@@ -12,7 +12,7 @@ from datetime import datetime
 
 file_path="./."
 file_path='./test'
-file_path="../moves/d7"
+file_path="../moves/shield7"
 #file_path=input("Please input the File Path: ")
 
 def ordlist(file_path):
@@ -41,8 +41,8 @@ def ordlist(file_path):
 # 寻找文件名中需要截取字段的号码
 for file in ordlist(file_path):
 #   print(file,file[36:-22] ) 
-    print(file[38],file[36:-22], "***"+file[36:-22]+".中英字幕.WEB-HR.AC3.1.mkv")
-sys.exit()
+    print(file[40:-22], "Agents.of.SHIELD.S01E"+file[40:-22]+".2013.中英字幕.WEB-HR.AC3.1.mkv")
+#sys.exit()
 '''
 
 
@@ -65,8 +65,8 @@ print('Now to rename...')
 
 for file in ordlist(file_path):
     print('将要命名为：')
-#   print(file[36:-22],'-->', "***"+file[36:-22]+".2020.中英字幕.WEB-HR.AC3.1.mkv")
-    print(file[36:-22],'-->', "***"+file[36:-22]+".2020.中英字幕."+ file[48:])
+    print(file[36:-22],'-->', "Agents.of.SHIELD."+file[36:-22]+".2020.中英字幕."+ file[48:])
+#   print(file[36:-22],'-->', "Agents.of.SHIELD."+file[36:-22]+".2015.中英字幕.WEB-HR.AC3.1.mkv")
 #   break
 #sys.exit()
 
@@ -100,9 +100,10 @@ for file in os.listdir(file_path):
 #sys.exit()
 
 for file in ordlist(file_path):
-#   new_name="***"+file[36:-22]+".2020.中英字幕.WEB-HR.AC3.1.mkv"
-    new_name="***"+file[36:-22]+".2020.中英字幕."+file[48:]
+#   new_name="Agents.of.SHIELD."+file[36:-22]+".2015.中英字幕.WEB-HR.AC3.1.mkv"
+    new_name="Agents.of.SHIELD."+file[36:-22]+".2020.中英字幕."+file[48:]
     print(file[36:-22],'-->', new_name)
+    sys.exit()
     old_path=os.path.join(file_path, file)
     new_path=os.path.join(file_path, new_name)
     dest_path=os.path.join(file_path, new_name)
