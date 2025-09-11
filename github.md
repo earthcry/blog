@@ -150,21 +150,22 @@ git remote add origin git@github.com:earthcry/blog.git
 git push -u origin main
 
 
-
 ### 原生SSH协议裸仓库搭建
-‌服务器初始化‌：在Linux环境下安装Git（CentOS使用yum install git，Ubuntu使用apt install git）。‌‌‌‌1
-‌创建专用用户‌：
+@bare
+服务器初始化：在Linux环境下安装Git（CentOS使用yum install git，Ubuntu使用apt install git）。1
+创建专用用户：
 执行命令adduser git创建系统用户。
-修改/home/git/.ssh/authorized_keys文件，添加开发者SSH公钥。‌‌1‌‌2
-‌初始化裸仓库‌：
+修改/home/git/.ssh/authorized_keys文件，添加开发者SSH公钥。12
+初始化裸仓库：
 sudo su - git切换用户。
-git init --bare project.git创建裸仓库。‌‌1‌‌3
-‌权限管理‌：
+git init --bare project.git创建裸仓库。13
+权限管理：
 使用chown -R git:git project.git确保所有权。
-禁用git用户shell登录（修改/etc/passwd中git用户的shell为/usr/bin/git-shell）。‌‌
+禁用git用户shell登录（修改/etc/passwd中git用户的shell为/usr/bin/git-shell）。
 
 git clone user@ip:path
 git remote add origin youruser@your-server-ip:~/gitrepos/myproject.git
+git push -u remote-repo local-branch
 git push -u origin main
 
 
@@ -192,7 +193,7 @@ process 進程
 progress進展
 
 
-压缩为.tar.gz‌：tar -czvf archive.tar.gz dir/
+压缩为.tar.gz：tar -czvf archive.tar.gz dir/
 
 
 .gitignore
@@ -205,15 +206,15 @@ git stash show -p
 git stash 
 git stash push -m "包括暂存区和工作区"
 
-git stash -u：额外保存未追踪文件（Untracked files)。‌‌3‌‌5
-git stash -a：保存所有文件（包括被.gitignore忽略的文件）。‌‌
+git stash -u：额外保存未追踪文件（Untracked files)。35
+git stash -a：保存所有文件（包括被.gitignore忽略的文件）。
 
-3. 恢复修改‌。
+3. 恢复修改。
 
-git stash pop：应用最新记录并删除该存储项（栈结构后进先出）。‌‌3‌‌7
-git stash apply stash@{n}：指定恢复任意存储项但不删除。‌‌2‌‌6
-git stash branch 新分支名：基于存储时的提交创建新分支并自动应用存储。‌‌5
-‌清理存储记录‌。
+git stash pop：应用最新记录并删除该存储项（栈结构后进先出）。37
+git stash apply stash@{n}：指定恢复任意存储项但不删除。26
+git stash branch 新分支名：基于存储时的提交创建新分支并自动应用存储。5
+清理存储记录。
 
 git stash drop stash@{n}：删除指定存储项。
 git stash clear：清空所有
@@ -315,12 +316,12 @@ ls learngit
 
 - [ ] git diff HEAD -- readme.txt 查看工作区与版本库的区别
 
-- [ ] 显示工作区文件与本地仓库最后一次提交版本之间的差异。若工作区有未提交的改动，git diff HEAD 会对比这些改动与本地仓库最新版本；若暂存区（已添加未提交的改动）有文件，则会同时显示工作区和暂存区的差异。 ‌12
+- [ ] 显示工作区文件与本地仓库最后一次提交版本之间的差异。若工作区有未提交的改动，git diff HEAD 会对比这些改动与本地仓库最新版本；若暂存区（已添加未提交的改动）有文件，则会同时显示工作区和暂存区的差异。 12
 
 常见用法
-‌基本用法‌：直接运行 git diff HEAD，显示所有未提交的改动（包括工作区和暂存区）。
-‌仅显示工作区改动‌：运行 git diff --cached 或 git diff --staged，仅对比工作区与暂存区的共同文件。 ‌23
-‌查看历史版本差异‌：使用 git diff HEAD\~1（查看上一个版本）、git diff HEAD\~2（查看上两个版本）等命令，比较不同历史版本。 ‌1
+基本用法：直接运行 git diff HEAD，显示所有未提交的改动（包括工作区和暂存区）。
+仅显示工作区改动：运行 git diff --cached 或 git diff --staged，仅对比工作区与暂存区的共同文件。 23
+查看历史版本差异：使用 git diff HEAD\~1（查看上一个版本）、git diff HEAD\~2（查看上两个版本）等命令，比较不同历史版本。 1
 
 ### git diff
 1. git diff
@@ -364,23 +365,23 @@ Git 的三个核心区域（工作区、暂存区、本地仓库）回退操作�
 
 工作区回退
 
-使用 git checkout -- <file> 命令可撤销当前工作区未提交的修改，恢复为最近一次提交的状态。 ‌‌12
+使用 git checkout -- <file> 命令可撤销当前工作区未提交的修改，恢复为最近一次提交的状态。 12
 
 暂存区回退
 
-通过 git reset HEAD <file> 可将已添加到暂存区的文件移回工作区，保留修改内容。 ‌‌12
+通过 git reset HEAD <file> 可将已添加到暂存区的文件移回工作区，保留修改内容。 12
 
 本地仓库回退
 
 采用 git reset 命令结合不同模式操作：
 
-‌--soft‌：仅移动 HEAD 指针，保留暂存区和工作区内容 ‌‌34
+--soft：仅移动 HEAD 指针，保留暂存区和工作区内容 34
 
-‌--mixed‌：保留工作区内容，移除暂存区相关文件 ‌‌34
+--mixed：保留工作区内容，移除暂存区相关文件 34
 
-‌--hard‌：彻底丢弃工作区和暂存区修改，无法恢复（除非使用 reflog） ‌‌13
+--hard：彻底丢弃工作区和暂存区修改，无法恢复（除非使用 reflog） 13
 
-‌示例‌：
+示例：
 
 回退到最近一次提交（保留修改）
 git reset --soft HEAD\~1

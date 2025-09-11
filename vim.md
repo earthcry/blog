@@ -24,6 +24,9 @@ nmap <C-p> <Plug>MarkdownPreviewToggle
 
 -------------------
 
+###删除特殊字符unicode字符<200c>和<200d>
+:set list
+:%/\%u200c//g
 ### windows换行符(由ctrl+v,then ctrl+m 生成)
 :%s///g
 
@@ -122,3 +125,5 @@ let g:vmt_auto_update_on_save = 0
 
 
  
+
+
