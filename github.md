@@ -5,6 +5,43 @@ Source of earthcry.github.io.git
 
 ## Usage of githunb
 
+## fetch && merge
+git pull = git fetch + git merge
+git fetch: download from remote to local repo.
+git merge: merge commit-id to current branch.
+git merge -b #merge -b branch to current branch.
+
+repo1 = tree1 = branches = main branch + other branch, 
+repo2 = tree2 = branches = main branch + other branch, 
+repo3 = tree3 = default repo = origin = main branch + other branch,
+
+
+git fetch --all
+git fetch origin master
+
+git fetch
+git log origin/master..master [--oneline]   # 本地比远程多的提交
+git log master..origin/master [--oneline]   # 远程比本地多的提交
+
+git fetch         #可比对本地仓库与远程仓库的差异
+git status [-s]   #简单查看多少
+git diff --name-only
+git diff [file]                 #暂存区与工作区的差异current uncommit diff
+git diff --cached[or staged]    #暂存区与上一次提交的差异
+git diff master origin/master   #同一文件提交前后的差异
+git diff commit1 commit2 -- file.txt
+git diff --name-status @{u}
+git difftool
+
+git log --oneline --graph --decorate --all
+git log -p FETCH_HEAD
+
+git merge origin/master
+git merge origin/master --no-ff -m "note"
+
+
+
+
 ## Two device modify at same time.
 
 Order:
@@ -82,6 +119,7 @@ git reflog
 git diff
 
 ## edit and update 
+@remote
 
 git add .
 git commit -m "change info"

@@ -5,9 +5,9 @@
 echo "..."
 echo "..."
 echo "..."
+echo "是否已经git fetch，如否ctr+c"
 echo "是否已经git status | git diff | git reflog，如否ctr+c"
 echo "是否已经git stash，如否ctr+c"
-echo "是否已经git pull，如否ctr+c"
 echo "..."
 echo "请按任意键继续"
 read -n 1
