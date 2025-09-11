@@ -39,7 +39,21 @@ git log -p FETCH_HEAD
 git merge origin/master
 git merge origin/master --no-ff -m "note"
 
+### 修改描述commit
 
+#未推送远程
+git commit --amend -m "new ..."
+or multi-edit
+git rebase -i HEAD~3
+pick-->reword/edit, :wq
+-reword:描述
+-edit:内容和描述
+git rebase --continue  #跳过
+git rebase --abort     #取消
+
+#已推送远程
+git branch backup-branch
+git push origin main --force
 
 
 ## Two device modify at same time.
