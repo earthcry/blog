@@ -25,8 +25,9 @@ nmap <C-p> <Plug>MarkdownPreviewToggle
 -------------------
 
 ###删除特殊字符unicode字符<200c>和<200d>
+@character @非打印字符@noprint
 :set list
-:%/\%u200c//g
+:%s/\%u200c//g
 ### windows换行符(由ctrl+v,then ctrl+m 生成)
 :%s///g
 
@@ -54,12 +55,12 @@ c ask
   - 行模式 V
   - 区域模式 ctrl v
 
-‌使用可视模式‌：按下v进入字符模式，选择你想要复制的内容。如果你想要选择多行，可以使用Shift + v进入行模式，或者使用Ctrl + v进入列模式。
+使用可视模式：按下v进入字符模式，选择你想要复制的内容。如果你想要选择多行，可以使用Shift + v进入行模式，或者使用Ctrl + v进入列模式。
 
 ## 临时显示行号
-‌绝对行号‌：在命令模式（按Esc键）下输入:set number（或简写:set nu），左侧即显示行号；关闭用:set nonumber。‌‌‌‌1
-‌相对行号‌：输入:set relativenumber（或:set rnu），当前行标记为0，其他行显示相对距离，适合快速跳转。‌‌2‌‌3
-‌混合行号‌：同时输入:set number relativenumber，当前行显示绝对行号，其余显示相对行号。‌‌2‌‌4
+绝对行号：在命令模式（按Esc键）下输入:set number（或简写:set nu），左侧即显示行号；关闭用:set nonumber。1
+相对行号：输入:set relativenumber（或:set rnu），当前行标记为0，其他行显示相对距离，适合快速跳转。23
+混合行号：同时输入:set number relativenumber，当前行显示绝对行号，其余显示相对行号。24
 
 
 ## 移动光标

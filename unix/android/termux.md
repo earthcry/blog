@@ -1,15 +1,49 @@
 
 termux
 
+install from:
+github.com/
 
+ssh login termux->
 
-pkg search
-pkg install
-pkg upgrade
-pkg install vim-python
-       curl wget unzip unrar 
-       openssh git
-       
+#mirror repo.
+termux-change-repo 
+
+挂载手机目录
+termux-setup-storage 允许存储权限, 
+ls storage/shared/
+
+install normal soft
+upgrade ssh git vim 
+
+@ssh login termux
+
+passwd 123456
+
+ssh-keygen -t rsa
+
+ssh-copy-id -p 8022 u0_a108@192.168.43.1
+
+ssh -p 8022 u0_a108@192.168.43.1
+touch .bashrc
+echo 'sshd' >> .bashrc
+
+ps -ef
+sshd
+ifconfig
+pwd
+ls -ashl
+
+scp -P 8022 u0_a270@192.168.49.1:/data/data/com.termux/files/home/test.md ~/
+scp -r -P 8022 u0_a270@192.168.49.1:/data/data/com.termux/files/home/apks ~/
+speed is slowly
+
+git origin url
+origin  ssh://u0_a108@192.168.43.1:8022/data/data/com.termux/files/home/art.git (fetch)
+
+------------------------------------------------------------
+Config git env:
+
 ssh
 cd .ssh // Test if have
 pwd      // current dir
@@ -48,12 +82,6 @@ zsh for outside storage
 
 sh -c "$(curl -fsSL https://github.com/Cabbagec/termux-ohmyzsh/raw/master/install.sh)"
 
-@挂载设备存储
-termux 默认情况下无法直接访问 Android 设备的存储。你可以通过运行以下命令来请求存储权限：
-termux-setup-storage
-运行该命令后，你可以通过~/storage 目录访问存储。
-ls ~/storage
-
 
 @root
 pkg install proot
@@ -68,25 +96,4 @@ DNS记录管理
 
 https://www.sqlsec.com/2018/05/termux.html#Jupyter-Notebook
 
-
-@ssh login termux
-
-ssh-keygen -t rsa
-
-ssh-copy-id -p 8022 u0_a108@192.168.43.1
-
-ssh -p 8022 u0_a108@192.168.43.1
-
-ps -ef
-sshd
-ifconfig
-pwd
-ls -ashl
-
-scp -P 8022 u0_a270@192.168.49.1:/data/data/com.termux/files/home/test.md ~/
-scp -r -P 8022 u0_a270@192.168.49.1:/data/data/com.termux/files/home/apks ~/
-speed is slowly
-
-git origin url
-origin  ssh://u0_a108@192.168.43.1:8022/data/data/com.termux/files/home/art.git (fetch)
 
