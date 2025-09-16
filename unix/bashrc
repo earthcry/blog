@@ -1,0 +1,24 @@
+# pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time=-1
+
+sshd
+
+
+
+# Search keyword in a directory and edit in the file at positioning keyword
+# bash apt install fzf
+# search in current directory
+# add the function in ~/.bashrc
+grep-edit() {
+  local result
+  result=$(grep -rnIw --color=always "$1" ./ | fzf --ansi --preview="echo {} | awk -F: '{print \$1}' | xargs head -n \$(( \$(echo {} | awk -F: '{print \$2}') + 10 ))")
+  [[ -n "$result" ]] && vim $(echo "$result" | awk -F: '{print "+"$2 " " $1}')
+}
+# usage: 
+# bash source ~/.bashrc
+# bash grep_edit keyword
+# operate progress:
+# In terminal input grep_edit keyword,
+# on interface of fzf, select line and enter
+# auto open vim and position the keyword for edit.
+
+
