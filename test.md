@@ -24,3 +24,4 @@ Linux backup and restore with timeshift.
 
 test gitsync
 test gitsync2
+test gitsync7
