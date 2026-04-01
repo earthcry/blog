@@ -111,6 +111,7 @@ sudo mount -a
 sudo  umount  /dev/sda8
 sudo  fsck  -y  /dev/sda8 
 sudo  fsck  -y  /dev/sda10 
+sudo  fsck.ext4  -y  /dev/sda10
 
 sudo mount /dev/sda8 /mnt/
 sudo mount /dev/sda7 /mnt/boot/efi 
