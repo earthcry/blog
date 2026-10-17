@@ -1801,3 +1801,9 @@ Collabora Office是以Libre Office为基础和认证的微软开发的开源软�
 
 
 ### 自然农耕与自然农产品。
+
+刷成功了，关键要刷入fastboot flash vbmeta vbmeta.img --disable-verity --disable-verification
+Rewriting vbmeta struct at offset: 0
+Sending 'vbmeta' (0 KB)                            OKAY [  0.001s]
+Writing 'vbmeta'                                   OKAY [  0.001s]
+Finished. Total time: 0.013s
