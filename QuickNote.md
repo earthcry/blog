@@ -1802,11 +1802,34 @@ Collabora Office是以Libre Office为基础和认证的微软开发的开源软�
 
 ### 自然农耕与自然农产品。
 
+### 1+6.Nure OS.
 刷成功了，关键要刷入fastboot flash vbmeta vbmeta.img --disable-verity --disable-verification
 Rewriting vbmeta struct at offset: 0
 Sending 'vbmeta' (0 KB)                            OKAY [  0.001s]
 Writing 'vbmeta'                                   OKAY [  0.001s]
 Finished. Total time: 0.013s
+
+1. 建议更新到氧系统的最新版本，11.1.22。
+2. 必须引导程序解锁。
+3. 删除DTBO分区，
+Erase DTBO  删除 DTBO
+Notice 	Erasing the dtbo partition will make Android (and ALL Android-based software like Ubuntu Touch or TWRP recovery) unbootable on the current slot (read this page if you're not sure what that means). You can re-flash an Android ROM via fastboot by extracting the payload.bin from the OTA zip and using a tool like android-ota-payload-extractor to get the individual partition images, or following sizzlinfajita’s write-up on the XDA forums. It is almost never necessary to resort to extreme measures like "MSM Download tool" to reflash the device via EDL.
+删除 dtbo 分区会导致 Android 系统（以及所有基于 Android 的软件，如 Ubuntu Touch 或 TWRP 恢复系统）在当前的插槽中无法启动（如果你不明白这意味着什么，可以阅读这篇文档）。你可以通过从 OTA 压缩包中提取 payload.bin 文件，然后使用如 android-ota-payload-extractor 这样的工具来获取各个分区的镜像文件，从而重新刷入 Android 系统。或者，也可以参考 sizzlinfajita 在 XDA 论坛上的教程。实际上，几乎不需要采取“MSM Download 工具”这样的极端措施来通过 EDL 重新刷入系统。
+
+dtbo 分区中包含了一些信息，这些信息会导致引导加载程序破坏 Nura 镜像，因此在进行刷入操作之前，必须先删除这些文件。
+fastboot erase dtbo
+fastboot reboot 只能用这种方式，而不能用电源的方式重启。
+
+
+
+### 懦弱的人，不支持，
+- 就欺凌他，让他更害怕你。这样就能获得弱者的支持，增强自己的实力。
+- 骄横强势之人的支持。
+- 
+- 
+
+
+
 
 ### 呼吸
 思外息内
@@ -1819,3 +1842,4 @@ Finished. Total time: 0.013s
 发表“息”的字源评论
 2025-10-05 20:15:22  来自安徽省合肥市  电脑端
 息，首先不会是胎儿凭借母亲的心脏来呼吸。因为胎儿其实没有呼吸。息最大可能就是传统呼吸法，当人仅关注于自己呼吸时，便是最好休息。眼观鼻、鼻观心，抛除杂念，仅听到自己的呼吸，这样很快让人静下心来，这是最好的休息。另外，呼吸有循环增长与停滞两种状态，即一口气呼出去之后不是立即吸气，而是有一个停顿，所以息有增长与停顿两个意象。增长意象可以解释瘜、息壤、利息、媳妇、螅等含义；而停止意象则可以解释休息、稍息、熄、憩等字词。
+
