@@ -1864,3 +1864,16 @@ b7226af6
 - frigate
 - deepCamera
 - 
+
+一加6能不能刷氧系统
+可以刷，如果你现在用的是氢最新版本要下载5.1.3包刷回出厂版本，然后下载氧系统的包升级就可以了！
+
+
+| 来自：OnePlus6 |
+
+https://otafsg1.h2os.com/patch/amazone2/GLO/OnePlus8ProOxygen/OnePlus8ProOxygen_15.O.22_GLO_022_2008080055/OnePlus8ProOxygen_15.O.22_OTA_022_all_2008080055_29200cde68411c2.zip
+
+
+http://otafsg.h2os.com/patch/amazone2/GLO/OnePlus6Oxygen/OnePlus6Oxygen_22.O.07_GLO_007_1805131952/OnePlus6Oxygen_22_OTA_007_all_1805131952_82563d349f.zip
+
+
