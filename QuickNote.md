@@ -1877,3 +1877,59 @@ https://otafsg1.h2os.com/patch/amazone2/GLO/OnePlus8ProOxygen/OnePlus8ProOxygen_
 http://otafsg.h2os.com/patch/amazone2/GLO/OnePlus6Oxygen/OnePlus6Oxygen_22.O.07_GLO_007_1805131952/OnePlus6Oxygen_22_OTA_007_all_1805131952_82563d349f.zip
 
 
+
+
+
+# For Ubuntu
+- sudo apt install android-tools-fastboot android-tools-adb
+- 启用 USB 调试和解锁 Bootloader
+- 使用 Fastboot 备份 userdata 分区
+- Step 2: 进入 Fastboot 模式：
+    - 在终端或命令提示符中输入以下命令检查设备是否连接：
+
+fastboot devices
+1.
+如果设备成功连接，将会看到设备的序列号。接下来，将设备引导至 Fastboot 模式：
+adb reboot bootloader
+1.
+Step 3: 备份 userdata 分区
+在 Fastboot 模式下，输入以下命令来备份 userdata 分区：
+
+fastboot getvar all > backup.txt
+1.
+上述命令实际上并不直接备份 userdata 分区，但会为后续备份提供信息。我们可以验证设备状态及其分区信息作为准备。
+
+Step 4: 进行完整的备份
+Fastboot 并不直接支持备份 userdata。到这里，我们需要使用 ADB 进行操作：
+
+adb pull /data/local/tmp/userdata_backup.img
+1.
+这将会把 userdata 分区输出至本地文件中，确保数据得到保存。
+
+示例
+假设我们已成功通过 Fastboot 列出设备信息，并获得了相关的备份。示例命令将会是：
+
+fastboot getvar all > android_device_backup.txt
+adb pull /data/local/tmp/userdata_backup.img
+1.
+2.
+结束语
+通过以上步骤，我们成功使用 Fastboot 和 ADB 工具备份了 Android 设备的 userdata 分区。这些步骤虽然可能看起来复杂，但只要按照流程进行，备份工作就会变得非常简单。此外，请注意定期备份，以最小化因数据丢失而导致的问题。对于 Android 用户而言，数据安全始终是极为重要的，所以希望这篇文章能对你有所帮助。
+- dtbo
+- vbmeta
+- vendor
+- boot
+- 
+
+
+OnePlus6Hydrogen_22_OTA_064_all_2002191413_7adcfe8f1dff4531提取无修改boot.img
+
+- 
+
+一个星期前就氧958了，氧要比氢高2个版才能本地升级
+
+
+| 来自：OnePlus7Pro |
+
+
+
