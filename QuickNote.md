@@ -1933,3 +1933,7 @@ OnePlus6Hydrogen_22_OTA_064_all_2002191413_7adcfe8f1dff4531提取无修改boot.i
 
 
 
+sudo apt --only-upgrade install <package_name>
+# 标记包为保留状态
+sudo apt-mark hold <package_name>
+
