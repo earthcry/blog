@@ -1937,3 +1937,4 @@ sudo apt --only-upgrade install <package_name>
 # 标记包为保留状态
 sudo apt-mark hold <package_name>
 
+微塑料致癌机制，遇水释放活性氧损伤DNA。
