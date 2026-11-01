@@ -1,12 +1,16 @@
-## 手机刷机知识
+# linux phone
 
+Linux Phone 
+Linux手机，Android手机。
 
+### 手机刷android 
 
+msm tool
+线刷
+卡logo, recovery, format
 
 
 ### 一加6刷Nura/PostMarketOS 
-Linux Phone 
-Linux 手机，Android的手机。
 
 PostMarketOS/Nura/AlpineLinux
 apk add vim
@@ -51,7 +55,7 @@ install android-tools
 二、自定义构建custom built
 PMBootstrap会在电脑上先构建出nura再刷进手机
 apt install pmbootstrap
-github download newer to update pmbootstrap.
+github download newer to update pmbootstrap.?
 pmbootstrap init
     - 一般默认
     - qmenu oneplus
