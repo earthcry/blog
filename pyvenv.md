@@ -8,7 +8,8 @@ venv
 python -m venv <环境名称>
 例如，创建一个名为myproject的虚拟环境：
 
-python -m venv myproject
+install python3-venv python3-dev python3-pip
+python3 -m venv myproject
 激活虚拟环境
 
 Linux/macOS系统

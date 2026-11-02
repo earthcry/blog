@@ -56,7 +56,7 @@ it will writting to ~/.config/pip/pip.conf
 -
 
 ## Install debian
-
+debian swich usboot to filesystem errors
 老硬件debian新硬件fedora，
 
 ### disk
@@ -71,8 +71,36 @@ UEFI Setup
 sudo gparted
 - EFI sys / Microsoft reserved part / winsys / windata / recovery / unuse / EFI sys / linux root / swap / home / bakup / unuse /
 -
--
+将打乱的磁盘编号sda1-sda3-sda2恢复为物理分区顺序
+使用这条命令可以按照物理顺序进行排序，重启系统即可，UUID不会变
 
+sudo sfdisk -r /dev/sda
+
+sudo sfdisk -r /dev/nvme0n1
+? can not mount /home
+
+-
+- [ ] sudo user permission 
+su root 
+vim /etc/sudoers 
+
+1、安装sudo\n
+# apt-get install sudo\n
+2、修改 /etc/sudoers 文件属性为可写\n
+# chmod +w /etc/sudoers\n
+3、编辑 /etc/sudoers ,添加如下行\n
+# vim /etc/sudoers\n
+root ALL=(ALL) ALL\n
+user ALL=(ALL) ALL 
+用户user执行sudo时需要密码。\n
+# user ALL=NOPASSWD:ALL 
+用户user执行sudo时不需要密码。\n
+#user ALL=NOPASSWD:/etc/network/interfaces 用户user执行只有sudo执行/etc/network/interfaces的权限，执行时不需要密码。\n
+4、修改/etc/sudoers 文件属性为只读\n
+# chmod -w /etc/sudoers\n
+5、使用user登录系统，执行以下命令启动
+# /etc/network/interfaces\n
+$ sudo /etc/network/interfaces restart
 
 
 fdisk -l / lsblk

@@ -121,7 +121,13 @@ system分区不够大，装不下这个镜像。
     - main：经过完整兼容性测试的核心组件；
     - community：开发者提交的第三方应用；
     - testing：实验性功能预发布区。
-- https://wiki.alpinelinux.cn/wiki/Comparison_with_other_distros
+- Shell 既是一种脚本编程语言，也是一个连接内核和用户的软件。
+- sh, cat/etc /shells 
+- Terminal 负责输入和显示的交互界面，
+- TTY/PTY 负责连接终端程序与进程，
+- SSH 负责把这种交互安全地延伸到远程计算机。
+- Shell 是命令解释程序Shell 负责理解和执行命令，
+-  https://wiki.alpinelinux.cn/wiki/Comparison_with_other_distros
 - 
 
 ### PostMarketOS/Nura
@@ -139,3 +145,34 @@ system分区不够大，装不下这个镜像。
 - that command should be run as a regular user ($), or as root (#).
 - 
 
+### pmbootstap install and build img
+
+debian source , mirror.zju.edu.cn 
+Python 3.10 或更高版本、安装了 OpenSSL 和 Git 的 Linux 发行版上运行。
+install python3 python3-dev python3-pip 
+
+apt install pmbootstrap
+pmbootstrap --version
+
+wget https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pmbootstrap/pmbootstrapx.deb
+apt install pmbootstrapx.deb
+
+
+pmbootstrap init 
+work path /home/user/.local/var/pmbootstrap
+- last release stable not edge 
+- 
+mkdir nura cd nura
+pmbootstrap install 
+
+
+pmbootstrap flasher flash_rootfs --partition=userdata
+pmbootstrap flasher flash_kernel
+sudo fastboot reboot
+
+#### Fully uninstall pmbootstrap
+$ pmbootstrap shutdown
+$ pmbootstrap zap -p
+
+
+### pmbootstrap usage 
