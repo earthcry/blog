@@ -1,3 +1,24 @@
+# Install Linux五笔输入法，新世纪五笔
+
+#Alpine Linux #fcitx5 #rime
+
+### Custom Table CSDN\风扇爱好者
+ibus,fcitx4
+
+- fcitx5.inside.wubi86，仅有
+- fcitx5.custom.wubi06，两张表扔进去。
+- fcitx5.rime.wubi06 复杂
+- 
+现实问题。码表庞杂，不标准，不丰富。
+找码表、洗数据、转格式到最终正常上屏的完整过程梳理一遍.
+
+### Insatll 
+apk search fcitx5
+apk add fcitx5 fcitx5-configtool fcitx5-chinese-addons
+
+
+
+
 
 # Fcitx5 dict genurate
 fcitx5dict fcitx5table
