@@ -27,7 +27,10 @@ apk add vim
 
 
 adb fastboot
-install android-tools
+install android-tools-adb
+install android-tools-fastboot
+
+install android-sdk-platform-tools
 
 分区：
 
@@ -54,14 +57,28 @@ install android-tools
 
 二、自定义构建custom built
 PMBootstrap会在电脑上先构建出nura再刷进手机
+### pmbootstap install and build img
+
+Python 3.10 或更高版本、安装了 OpenSSL 和 Git 的 Linux 发行版上运行。
+install python3 python3-dev python3-pip -venv
+
 apt install pmbootstrap
-github download newer to update pmbootstrap.?
-pmbootstrap init
+pmbootstrap --version
+
+wget https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pmbootstrap/pmbootstrapx.deb
+apt install pmbootstrapx.deb
+
+if maxnew:
+    pmbootstrap update 
+    pmbootstrap pull
+
+pmbootstrap init 
+work path /home/user/.local/var/pmbootstrap
+    - last release stable not edge 
     - 一般默认
     - qmenu oneplus
     - stable not nightly，
     - vim
-pmbootstrap pull
 pmbootstrap install
 
 设置换镜像源
@@ -89,8 +106,12 @@ mkdir plasma-mobile && cd plasma-mobile
 wget https://images.postmarketos.org/bpo/v25.12/oneplus-fajita/plasma-mobile/20251222-1250/20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita-boot.img.xz
  
 wget https://images.postmarketos.org/bpo/v25.12/oneplus-fajita/plasma-mobile/20251222-1250/20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita.img.xz
- 
-xz -d 20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita-boot.img.xz ### boot.img 20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita.img.xz  ### system.img
+ sha256sum path-to-image-file.img.xz
+$ sha512sum path-to-image-file.img.xz
+
+$ xz --decompress path-to-image-file.img.xz
+
+xz -tk 20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita-boot.img.xz ### boot.img 20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita.img.xz  ### system.img
 
 sudo fastboot flash boot boot.img
 sudo fastboot erase system ### 防出错
@@ -145,30 +166,7 @@ system分区不够大，装不下这个镜像。
 - that command should be run as a regular user ($), or as root (#).
 - 
 
-### pmbootstap install and build img
 
-debian source , mirror.zju.edu.cn 
-Python 3.10 或更高版本、安装了 OpenSSL 和 Git 的 Linux 发行版上运行。
-install python3 python3-dev python3-pip 
-
-apt install pmbootstrap
-pmbootstrap --version
-
-wget https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pmbootstrap/pmbootstrapx.deb
-apt install pmbootstrapx.deb
-
-
-pmbootstrap init 
-work path /home/user/.local/var/pmbootstrap
-- last release stable not edge 
-- 
-mkdir nura cd nura
-pmbootstrap install 
-
-
-pmbootstrap flasher flash_rootfs --partition=userdata
-pmbootstrap flasher flash_kernel
-sudo fastboot reboot
 
 #### Fully uninstall pmbootstrap
 $ pmbootstrap shutdown

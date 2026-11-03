@@ -1,9 +1,9 @@
 
 
 
+Terminal --- TTY --- shell
 
-
-
+界面、传输、翻译。
 
 
 ### make install 编译安装
