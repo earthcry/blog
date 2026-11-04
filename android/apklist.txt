@@ -5,9 +5,26 @@ apk list
 
 
 app manager
-
+obtainium
 ---
-
+fcitx5
+gitsync
+syncthing 衍生版
+localsend
+eudic.net
+vividict
+termux
+imagetoolbox
+aves
+firefox 
+kiwi
+pdfgear
+materialfiles
+appmanager
+fopeed
+collabora office
+ovitalmap
+pure writer
 Nutstore
 
 f-droid

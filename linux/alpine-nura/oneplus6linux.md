@@ -99,34 +99,47 @@ work path /home/user/.local/var/pmbootstrap
     - qmenu oneplus
     - stable not nightly，
     - vim
-pmbootstrap update  --non-existing
 
 - [ ] 设置换镜像源！！！
 通过 pmbootstrap config 更新镜像配置。
-
-pmbootstrap config mirrors.alpine https://mirrors.cernet.edu.cn/alpine/
-pmbootstrap config mirrors.pmaports https://mirrors.cernet.edu.cn/postmarketOS/
-pmbootstrap config mirrors.systemd https://mirrors.cernet.edu.cn/postmarketOS/extra-repos/systemd/
-
-https://mirrors.nju.edu.cn/
+测试镜像源速度，
+pmbootstrap config mirrors.alpine https://mirrors.nju.edu.cn/alpine/
+pmbootstrap config mirrors.pmaports https://mirrors.nju.edu.cn/postmarketOS/
+pmbootstrap config mirrors.systemd https://mirrors.nju.edu.cn/postmarketOS/extra-repos/systemd/
+mirrors.tuna.tsinghua.edu.cn
 其中 mirrors.alpine 部分也可前往 Alpine 帮助 选择其他的镜像站。
+
+init 6
 
 移除镜像配置
 pmbootstrap config -r mirrors.alpine
 pmbootstrap config -r mirrors.pmaports
 pmbootstrap config -r mirrors.systemd
 
+pmbootstrap status
+pmbootstrap update  --non-existing
+
 - [ ] pmbootstrap install, build img
 
 - [ ] full del pmbootstrap 
+- pmbootstrap export
+- pmbootstrap log
+- 许多问题可以通过清除缓存或删除用于构建镜像/包的文件来解决。如果其他方法都无效，可以尝试运行 pmbootstrap zap （对所有问题回答“y”）
+以通过添加 -a 标志来强制删除所有缓存数据：
+$ pmbootstrap zap -a
+
+日志文件位于 pmbootstrap 的工作目录下；默认情况下，其位置是 ~/.local/var/pmbootstrap/log.txt 。如果你不确定自己的工作目录在哪里，可以使用以下命令进行检查：
+
+$ pmbootstrap config work
+/home/user/.local/var/pmbootstrap
 
 
 三、刷机
+fastboot format system
 sudo fastboot erase userdata
 pmbootstrap fasher flash_rootfs --partition=userdata
 pmbootstrap fasher flash_kernel
-sudo fastboot reboot
-
+pmbootstrap chroot fastboot reboot 命令
 
 四、备份userdata 
 fastboot getvar all > android_device_backup.txt
