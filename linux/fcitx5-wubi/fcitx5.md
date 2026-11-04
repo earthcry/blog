@@ -2,6 +2,10 @@
 
 #Alpine Linux #fcitx5 #rime
 
+fcitx-im.org
+rime.im
+CSDN/
+
 ### Custom Table CSDN\风扇爱好者
 ibus,fcitx4
 
@@ -12,12 +16,107 @@ ibus,fcitx4
 现实问题。码表庞杂，不标准，不丰富。
 找码表、洗数据、转格式到最终正常上屏的完整过程梳理一遍.
 
-### Insatll 
-apk search fcitx5
-apk add fcitx5 fcitx5-configtool fcitx5-chinese-addons
+- 一、环境准备：检查 fcitx5 与依赖
+- 自定义组件包含在这个扩展里码表引擎fcitx5-chinese-addons，
+- 不同发行版的安装组件：
+~# Debian / Ubuntu / Linux Mint\nsudo apt install fcitx5 fcitx5-chinese-addons fcitx5-config-qt\n\n
+~# Arch / Manjaro\nsudo pacman -S fcitx5 fcitx5-chinese-addons fcitx5-configtool\n
+- 装完之后，先运行一次 fcitx5-configtool，确认“附加组件”列表里能看到“码表”这个组件。
+- 准备一个临时工作目录，我习惯在 ~/wubi-build 下操作，把原始码表和脚本放一起，方便反复调试。
+- 
+- 二、处理码表
+- 检查编码规范，编码 词条 权重，
+- 一般用 head -n 20 先看前 20 行，再用 wc -l 统计总行数。
+- 查编码是否有全角字符。有些 Windows 下导出的码表会把全角空格或者全角字母混进去，
+- # 看看有没有包含非 ASCII 可打印字符的行
+grep -P '[^\x00-\x7F\t ]' 原始码表.txt | head -n 20
+- 如果有大量包含中文或其他非 ASCII 字符的行，那说明这个文件本身可能是 GBK 编码，需要先转码，而不是急着清洗。
+- 
+- 格式转换脚本与批量处理：脚本保存成 clean_wubi.py
+- python3 clean_wubi.py 原始码表.txt 新世五笔_fcitx5.txt
+- 
+- 如果原始文件是 GBK 编码，脚本里直接以 UTF-8 读取会报错。这种时候先转码一步：
+- iconv -f GBK -t UTF-8 原始码表.txt > 原始码表_utf8.txt
+- 转完再看一眼内容，确认没有乱码，再跑清洗脚本。
+- 
+- 三、导入码表
+- 
+-  fcitx5-configtool，在“附加组件”选项卡里找到“码表”。注意，这里不是直接勾选启用，而是要点击右侧的齿轮图标，进入码表管理界面。
+- 确认之后，fcitx5 会开始编译生成 .mb 文件，这个编译过程通常几秒钟就完成。
+- 编译完成后，回到“输入法”选项卡，点左下角的“+”号添加输入法。
+- 
+- 重启一下 fcitx5 让配置完全生效。
+- fcitx5-remote -e
+- fcitx5-remote -r
+- 第一条命令是退出输入法进程（强制结束），第二条是重启。我实际操作中经常用这两条命令来快速重置输入法状态，不需要重新登录系统。
+- 按下 Ctrl + Space ，切换到新世纪五笔输入，试试打“工”字，输入 a 
+- 
+- 候选词与词频的个性化调教：
+- 然后是唯一候选直接上屏
+- “即时编码提示”打开
+- 
+
+### Install fcitx5-rime CSDN/用户甲
+
+apt-cache search fcitx5 # Debian/Ubuntu
+
+sudo apt update
+sudo apt install \
+fcitx5 fcitx5-chinese-addons \
+fcitx5-rime fcitx5-table-extra libime-bin \
+fcitx5-material-color 
+7.1 桌面环境兼容性\n不同DE需要额外配置：\n\n
+GNOME：安装gnome-shell-extension-kimpanel
+
+https://fcitx-im.org/wiki/fcitx5
+- [ ] 一个基本的fcitx5安装包括：
+- fcitx5, 主程序
+- fcitx5-gtk, fcitx5-qt, 针对最受欢迎的几种UI开发工具包的输入法模块。
+- fcitx5-configtool, GUI配置程序。
+- 
+- [ ] 对于不同语言，有许多的输入法引擎。中文
+- fcitx5-chinese-addons。它包括简体中文最常用的输入法，包括拼音和码表（五笔等）引擎。
+- fcitx5-table-extra。附加中文表
+- fcitx5-rime。一种可自定义的输入法，但默认情况下其默认配置为拼音。
+- fcitx5-chewing。基于libchewing的咀嚼引擎。
+- fcitx5-zhuyin。基于lib注音的注音输入法引擎。
+- 
+- [ ] 一些额外的插件和主题支持：
+- fcitx5-lua, 提供lua脚本支持
+- fcitx5-material-color, 一个Fcitx5漂亮主题的合集
+- libime-bin, 编译工具和运行库，把纯文本码表编译成fcitx5 能读的二进制 dict
+
+
+- [ ] 设置环境变量，让 fcitx5 真正接管输入
+在 ~/.profile 或 ~/.bashrc（或 ~/.zshrc）中加入：\n\n
+echo $0
+if bash then
+ ~/.bash_profile
+export XMODIFIERS=@im=fcitx
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+
+这个配置确保GTK/QT程序都能正确调用fcitx5输入法框架。设置环境变量，把 GTK/Qt 程序的输入模块指到 fcitx5。
+然后重新加载配置：\n\n
+source ~/.bash_profile
+验证：
+fcitx5-diagnose
+
+- [ ] 设置自启动，相关
+- im-config
+- fcitx5-configtool
 
 
 
+- [ ] rime的配置
+- 插件/usr/share/fcitx5/addon
+- 主要存放在~/.local/share/fcitx5/rime/目录下：\n\n
+default.custom.yaml：全局配置
+ls ~/.local/share/fcitx5/rime/ | head
+
+
+
+fcitx5 -rd
 
 
 # Fcitx5 dict genurate
@@ -29,8 +128,25 @@ fcitx5dict fcitx5table
 3. table -> dict
    libime-tabledict xxx.txt xxx.main.dict
 
-
+Rime 的 dict 通常是 词按 Tab 编码 。
+ Windows 环境下压出来的，文件名和内容编码很可能是 GBK/GB18030。在 Linux 下用默认方式解压，文件名直接变成乱码
  
+sudo apt install unar
+lsar 新世纪五笔.zip
+unar 新世纪五笔.zip
+
+file -i newcentury.txt
+iconv -f gbk -t utf-8 -o newcentury_utf8.txt newcentury.txt
+
+-# 去掉空行和以 # 开头的注释
+grep -v '^[[:space:]]*$' newcentury_utf8.txt | grep -v '^#' > newcentury_clean.txt
+
+-# 按编码排序，方便肉眼检查
+sort newcentury_clean.txt -o newcentury_sorted.txt
+
+-# 统计重复情况
+sort newcentury_sorted.txt | uniq -d | head -50
+
 Frome:
 https://bbs.deepin.org/zh/post/233979
 

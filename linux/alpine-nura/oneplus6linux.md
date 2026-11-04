@@ -4,6 +4,16 @@ Linux Phone
 Linux手机，Android手机。
 
 ### 手机刷android 
+- 资源地址
+- 操作步骤
+- 概念原理本质道理说明
+- 
+- [ ] android update to 11.1.22
+- yun.daxiaamu.com baidudisk oos10.3.8,update620
+- dev-oem-usbdebug
+- debian, android-tools-adb, fastboot
+- 
+
 
 msm tool
 线刷
@@ -59,31 +69,57 @@ install android-sdk-platform-tools
 PMBootstrap会在电脑上先构建出nura再刷进手机
 ### pmbootstap install and build img
 
+- [ ] 用pip 安装
+"# 更新Ubuntu镜像源 
+sudo apt-get update && upgrade
+
+"# 安装刷机所需要的软件
+sudo apt-get install -y git python-pip3 android-tools-adb android-tools-fastboot
+
+"# 初始化pmbootstrap环境
+pip3 install --user pmbootstrap
+
+"# 生效当前环境变量，如果不生效环境变量 pmbootstrap命令使用不用了
+source ~/.profile
+"
+
+- [ ] 用deb文件安装
 Python 3.10 或更高版本、安装了 OpenSSL 和 Git 的 Linux 发行版上运行。
 install python3 python3-dev python3-pip -venv
 
-apt install pmbootstrap
+- [ ] wget https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pmbootstrap/pmbootstrapx.deb
+apt install pmbootstrapx.deb
 pmbootstrap --version
 
-wget https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pmbootstrap/pmbootstrapx.deb
-apt install pmbootstrapx.deb
 
-if maxnew:
-    pmbootstrap update 
-    pmbootstrap pull
-
-pmbootstrap init 
+- [ ] pmbootstrap init 
 work path /home/user/.local/var/pmbootstrap
     - last release stable not edge 
     - 一般默认
     - qmenu oneplus
     - stable not nightly，
     - vim
-pmbootstrap install
+pmbootstrap update  --non-existing
 
-设置换镜像源
+- [ ] 设置换镜像源！！！
+通过 pmbootstrap config 更新镜像配置。
 
-del pmbootstrap built
+pmbootstrap config mirrors.alpine https://mirrors.cernet.edu.cn/alpine/
+pmbootstrap config mirrors.pmaports https://mirrors.cernet.edu.cn/postmarketOS/
+pmbootstrap config mirrors.systemd https://mirrors.cernet.edu.cn/postmarketOS/extra-repos/systemd/
+
+https://mirrors.nju.edu.cn/
+其中 mirrors.alpine 部分也可前往 Alpine 帮助 选择其他的镜像站。
+
+移除镜像配置
+pmbootstrap config -r mirrors.alpine
+pmbootstrap config -r mirrors.pmaports
+pmbootstrap config -r mirrors.systemd
+
+- [ ] pmbootstrap install, build img
+
+- [ ] full del pmbootstrap 
+
 
 三、刷机
 sudo fastboot erase userdata
