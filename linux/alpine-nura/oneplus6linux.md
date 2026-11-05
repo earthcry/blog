@@ -11,8 +11,8 @@ Linux手机，Android手机。
 - [ ] android update to 11.1.22
 - yun.daxiaamu.com baidudisk oos10.3.8,update620
 - dev-oem-usbdebug
-- debian, android-tools-adb, fastboot
-- 
+- debian, android-tools-adb, android-tools-fastboot
+- android-sdk-platform-tools
 
 
 msm tool
@@ -34,13 +34,6 @@ apk add vim
 - 如果只是想把它当服务器用，纯命令行，选“console”，最省资源。\n
 - 如果想体验图形桌面，选“xfce4”，这是轻量级桌面环境，2GB内存跑得动。\n
 - 想尝鲜类似智能手机的触控界面，可以选“phosh”或“plasma-mobile”，但红米Note3跑起来会有些吃力，体验一般。
-
-
-adb fastboot
-install android-tools-adb
-install android-tools-fastboot
-
-install android-sdk-platform-tools
 
 分区：
 
@@ -91,6 +84,10 @@ install python3 python3-dev python3-pip -venv
 apt install pmbootstrapx.deb
 pmbootstrap --version
 
+为了避免权限问题，导致无法访问设备的情况，接下来以root用户进行操作。\n\n \n\n1\n2\n
+sudo -i\n
+alias pmbootstrap='pmbootstrap --as-root'
+
 
 - [ ] pmbootstrap init 
 work path /home/user/.local/var/pmbootstrap
@@ -100,7 +97,7 @@ work path /home/user/.local/var/pmbootstrap
     - stable not nightly，
     - vim
 
-- [ ] 设置换镜像源！！！
+- [ ] 设置换镜像源！！！no
 通过 pmbootstrap config 更新镜像配置。
 测试镜像源速度，
 pmbootstrap config mirrors.alpine https://mirrors.nju.edu.cn/alpine/
@@ -116,34 +113,65 @@ pmbootstrap config -r mirrors.alpine
 pmbootstrap config -r mirrors.pmaports
 pmbootstrap config -r mirrors.systemd
 
+- [ ] pmbootstrap install, build img
 pmbootstrap status
 pmbootstrap update  --non-existing
+pmbootstrap pull
 
-- [ ] pmbootstrap install, build img
 
-- [ ] full del pmbootstrap 
+- [ ] trouble
 - pmbootstrap export
 - pmbootstrap log
 - 许多问题可以通过清除缓存或删除用于构建镜像/包的文件来解决。如果其他方法都无效，可以尝试运行 pmbootstrap zap （对所有问题回答“y”）
 以通过添加 -a 标志来强制删除所有缓存数据：
 $ pmbootstrap zap -a
 
-日志文件位于 pmbootstrap 的工作目录下；默认情况下，其位置是 ~/.local/var/pmbootstrap/log.txt 。如果你不确定自己的工作目录在哪里，可以使用以下命令进行检查：
+若遇到依赖错误，尝试 pmbootstrap zap -hc
 
+日志文件位于 pmbootstrap 的工作目录下；默认情况下，其位置是 ~/.local/var/pmbootstrap/log.txt 。如果你不确定自己的工作目录在哪里，可以使用以下命令进行检查：
 $ pmbootstrap config work
 /home/user/.local/var/pmbootstrap
 
+建议学会看日志， dmesg 和 journalctl -b 是首选的排查工具，多出现在哪，多半问题就在哪。
 
-三、刷机
-fastboot format system
+三、备份
+
+- [ ] fastboot mode 
+fastboot getvar all > android_device_backup.txt
+adb pull /data/local/tmp/userdata_backup.img
+
+- [ ] twrp mode 
+刷TWRP的通用做法是把 twrp-xxx-fajita.img 放到电脑，手机关机进Fastboot，执行 fastboot boot twrp-xxx-fajita.img 。注意这里用的命令是 fastboot boot 而不是 fastboot flash ，它只会临时引导一次TWRP，不写死到分区，对新手更安全。
+或通过adb pull拉出来。
+
+使用\"adb push 包名.zip /sdcard/\"命令推送。
+
+- [ ] 9008 msm download tool
+手机进入Qualcomm 9008深度下载模式。
+驱动。打开设备管理器能看到一个\"Qualcomm HS-USB QDLoader 9008\"的端口。这是高通方案的底层救机模式，普通卡刷已经没用，必须用MSM工具配合线刷包，走EDL（Emergency Download）烧录通道把整个闪存重新写入一遍。只要电脑能识别到高通9008端口，
+
+手机只按音量加键，不按电源键，连接入电脑。
+
+最稳妥的恢复方式还是一加官方的MSM Download Tool深刷工具。这个工具可以在手机完全变砖、连Fastboot都进不去的情况下，把机器直接刷回出厂Android。
+
+MSM工具使用前一定要选择正确的固件版本，6T国行和国际版的软件通道不一样，错刷会导致分区表不匹配，严重时连9008模式都救不回来。
+
+
+四、刷机
+
+关于 userdata 分区，一定要执行 fastboot erase userdata 或者进rec里格式化data。原因很简单：原有Android的数据加密格式与Linux系统的用户数据不兼容，不清空的话，postmarketOS首次启动时无法挂载数据分区，会出现各种奇怪的权限问题。
+
+fastboot getvar current-slot
+fastboot erase boot_x  //非当前分区
+fastboot erase dtbo
+fastboot erase system
 sudo fastboot erase userdata
 pmbootstrap fasher flash_rootfs --partition=userdata
 pmbootstrap fasher flash_kernel
 pmbootstrap chroot fastboot reboot 命令
 
-四、备份userdata 
-fastboot getvar all > android_device_backup.txt
-adb pull /data/local/tmp/userdata_backup.img
+//fastboot set_active b  ##上面的命令已经显示在b 的话就不用执行这条命令了
+//fastboot format system
 
 
 2.2 定制Recovery与备份：最好别省这一步\npostmarketOS的官方镜像走的是Fastboot直刷路线，理论上不装TWRP也能刷机。但我还是强烈建议先刷一个TWRP恢复环境，用它把当前的Android系统完整备份一份，尤其是 boot 、 system 、 vendor 、 persist 这4个分区。\n\n为什么要备份这些分区：\n\nboot里是Android内核和dtb，刷机后想回Android系统时，可以直接用备份恢复。\nsystem里是完整Android系统，体积大但备份了等于有后悔药。\nvendor里存的是硬件固件和驱动，postmarketOS某些组件可能会依赖vendor分区里的固件，保持原样最稳妥。\npersist分区存放最终校准数据，包括传感器、Wi-Fi MAC等敏感参数，这个分区一般不用刷但一定要知道它是干什么的。\n刷TWRP的通用做法是把 twrp-xxx-fajita.img 放到电脑，手机关机进Fastboot，执行 fastboot boot twrp-xxx-fajita.img 。注意这里用的命令是 fastboot boot 而不是 fastboot flash ，它只会临时引导一次TWRP，不写死到分区，对新手更安全。进TWRP后就能在界面上操作“Backup”功能，把备份文件存到外接U盘或通过adb pull拉出来。
@@ -161,6 +189,11 @@ $ sha512sum path-to-image-file.img.xz
 $ xz --decompress path-to-image-file.img.xz
 
 xz -tk 20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita-boot.img.xz ### boot.img 20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita.img.xz  ### system.img
+
+
+fastboot getvar current-slot
+fastboot set_active b  ##上面的命令已经显示在b 的话就不用执行这条命令了
+fastboot erase dtbo
 
 sudo fastboot flash boot boot.img
 sudo fastboot erase system ### 防出错

@@ -22,6 +22,7 @@ pdfgear
 materialfiles
 appmanager
 fopeed
+etar
 collabora office
 ovitalmap
 pure writer
