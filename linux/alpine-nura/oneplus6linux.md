@@ -7,7 +7,10 @@ Linux手机，Android手机。
 - 资源地址
 - 操作步骤
 - 概念原理本质道理说明
-- 
+
+手机其实是属于嵌入式设备，你要把它当成是嵌入式看待，你的内核想要具备哪些功能也不是你自己说了算而是 内核上游 以及 设备树 提供了哪些代码。可以说，你的Linux Phone具备哪些能力是在构建的时候就已经大体上确定了，嵌入式都是定制的系统。
+
+
 - [ ] android update to 11.1.22
 - yun.daxiaamu.com baidudisk oos10.3.8,update620
 - dev-oem-usbdebug
@@ -134,17 +137,65 @@ $ pmbootstrap config work
 
 建议学会看日志， dmesg 和 journalctl -b 是首选的排查工具，多出现在哪，多半问题就在哪。
 
+启动链：
+bootloader - kernel - initramfs - android framework
+
+原生的安卓fastboot无法引导到Linux系统，所以刷机前手机需要刷一个ln2nd的“伪”fastboot，安装文件可以去GitHub上找。下载镜像后手机连接电脑进入fastboot模式，刷入ln2nd（关机后：音量减 + 关机键）
+
+#fastboot flash:raw boot ln2nd.img
+安装lk2nd作为2nd bootloader， 2nd fastboot
+备注1:lk2nd 0.10.0 版本之后，不需要再刷入传统的*-boot.img文件，所以可以考虑跳过刷入该文件。
+
 三、备份
+
+还是强烈建议先刷一个TWRP恢复环境，用它把当前的Android系统完整备份一份，尤其是 boot 、 system 、 vendor 、 persist 这4个分区。
+
 
 - [ ] fastboot mode 
 fastboot getvar all > android_device_backup.txt
 adb pull /data/local/tmp/userdata_backup.img
 
 - [ ] twrp mode 
+
 刷TWRP的通用做法是把 twrp-xxx-fajita.img 放到电脑，手机关机进Fastboot，执行 fastboot boot twrp-xxx-fajita.img 。注意这里用的命令是 fastboot boot 而不是 fastboot flash ，它只会临时引导一次TWRP，不写死到分区，对新手更安全。
 或通过adb pull拉出来。
-
 使用\"adb push 包名.zip /sdcard/\"命令推送。
+
+存储为 0，解密data分区加密方法：
+从清除项进入，转换 data 分区文件系统为f2fs,再回到Ex4。Data 分区数据会全部丢失 也即是恢复出厂设置。
+TWRP备份文件默认存放在内部存储目录
+`/data/media/0/TWRP/BACKUPS/`
+
+test Only backup : 
+modem vendor
+boot system data 
+not dtbo tersist efs
+
+fastboot boot twrp.img
+adb backup -f modem.ab --twrp modem --compress
+adb backup  --twrp 
+// default bootsystemdata.ab=backup.ab
+
+dtbo
+DTBO（Device Tree Overlay Blob）：编译后的叠加设备树二进制文件。它并非一个完整的硬件描述，而是作为“补丁”或“扩展包”存在，
+fastboot getvar all 的命令查看分区表，确定 dtbo 分区的名称（如 dtbo_a），然后使用 fastboot flash dtbo_a（不带镜像路径）或专用的提取脚本来获取原始 dtbo.img 文件到本地。
+
+在 ADB Shell 中以 Root 权限运行以下命令，将 dtb 提取到 SD 卡：
+备份 DTBO 分区： 启动进入 Recovery 模式，运行以下命令备份 DTBO 分区：
+dd if=/dev/block/by-name/dtbo_b of=/sdcard/dtbo_b.img
+随后使用 ADB 将文件拉取到电脑的安全位置保存：
+adb pull /sdcard/dtbo_b.img
+如果你的设备使用的是 A/B 分区架构，你可以直接切换到未激活槽位（fastboot set_active a/b），并在该槽位下直接擦除 DTBO，而无需备份。
+or
+twrp boot
+进入高级，文件管理或终端命令，cp to sdcard
+
+刷入设备
+最后，在 Fastboot 模式下，使用命令 fastboot flash dtbo_a dtbo_new.img 将新镜像刷入设备的 dtbo 分区，完成后重启设备。
+
+adb restore  <filename>
+
+- [ ] 钛备份titanium
 
 - [ ] 9008 msm download tool
 手机进入Qualcomm 9008深度下载模式。
@@ -156,6 +207,7 @@ adb pull /data/local/tmp/userdata_backup.img
 
 MSM工具使用前一定要选择正确的固件版本，6T国行和国际版的软件通道不一样，错刷会导致分区表不匹配，严重时连9008模式都救不回来。
 
+如果卡在 logo 界面。开机前要格式化 data 分区。Android 与 Linux 的加密方式不一样。
 
 四、刷机
 
@@ -173,6 +225,7 @@ pmbootstrap chroot fastboot reboot 命令
 //fastboot set_active b  ##上面的命令已经显示在b 的话就不用执行这条命令了
 //fastboot format system
 
+adb sideload pmos-xiaomi-sagit.zip
 
 2.2 定制Recovery与备份：最好别省这一步\npostmarketOS的官方镜像走的是Fastboot直刷路线，理论上不装TWRP也能刷机。但我还是强烈建议先刷一个TWRP恢复环境，用它把当前的Android系统完整备份一份，尤其是 boot 、 system 、 vendor 、 persist 这4个分区。\n\n为什么要备份这些分区：\n\nboot里是Android内核和dtb，刷机后想回Android系统时，可以直接用备份恢复。\nsystem里是完整Android系统，体积大但备份了等于有后悔药。\nvendor里存的是硬件固件和驱动，postmarketOS某些组件可能会依赖vendor分区里的固件，保持原样最稳妥。\npersist分区存放最终校准数据，包括传感器、Wi-Fi MAC等敏感参数，这个分区一般不用刷但一定要知道它是干什么的。\n刷TWRP的通用做法是把 twrp-xxx-fajita.img 放到电脑，手机关机进Fastboot，执行 fastboot boot twrp-xxx-fajita.img 。注意这里用的命令是 fastboot boot 而不是 fastboot flash ，它只会临时引导一次TWRP，不写死到分区，对新手更安全。进TWRP后就能在界面上操作“Backup”功能，把备份文件存到外接U盘或通过adb pull拉出来。
 
@@ -193,11 +246,11 @@ xz -tk 20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita-boot.img
 
 fastboot getvar current-slot
 fastboot set_active b  ##上面的命令已经显示在b 的话就不用执行这条命令了
-fastboot erase dtbo
 
+fastboot erase dtbo
+sudo fastboot flash userdata system.img
 sudo fastboot flash boot boot.img
 sudo fastboot erase system ### 防出错
-sudo fastboot flash userdata system.img
 sudo fastboot reboot
 
 刷写进去后使用fastboot reboot重启设备，主要不要长按电源开关机键重启，这样是确保数据正确写入。

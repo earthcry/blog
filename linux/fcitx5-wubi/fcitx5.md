@@ -1,6 +1,10 @@
 # Install Linux五笔输入法，新世纪五笔
 
-#Alpine Linux #fcitx5 #rime
+#fcitx5 #rime
+
+fcitx5-table-wubi06  Fcitx5TableWubi06
+fcitx5-rime-wubi06   Fcitx5RimeWubi06
+
 
 fcitx-im.org
 rime.im
@@ -10,8 +14,12 @@ CSDN/
 ibus,fcitx4
 
 - fcitx5.inside.wubi86，仅有
-- fcitx5.custom.wubi06，两张表扔进去。
-- fcitx5.rime.wubi06 复杂
+- fcitx5.custom.wubi06，两张表扔进去 简单重复麻烦
+- fcitx5.rime.wubi06 复杂灵活简便，
+- 
+- 资源地址，
+- 操作步骤，
+- 义理说明，
 - 
 现实问题。码表庞杂，不标准，不丰富。
 找码表、洗数据、转格式到最终正常上屏的完整过程梳理一遍.
