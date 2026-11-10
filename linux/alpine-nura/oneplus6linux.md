@@ -309,3 +309,22 @@ $ pmbootstrap zap -p
 
 
 ### pmbootstrap usage 
+
+
+### transfer  file 
+linux - usb - android 
+
+- [ ] adb mode 
+chmod 755 /home/xxx/down/
+adb shell, to see android dir and file 
+adb pull  android:/data/media/  linux:/home/xxx/down
+adb push linux:/home/xxx/ android:/data/media/
+
+批量传输
+bash
+#!/bin/bash
+adb push ~/doc/*.pdf /sdcard/books
+adb pull  /sdcard/screenshots/ ~/pics
+
+
+- [ ] jmtpfs
