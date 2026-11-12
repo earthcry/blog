@@ -148,6 +148,10 @@ bootloader - kernel - initramfs - android framework
 
 三、备份
 
+
+- [ ] adb mount android
+
+
 还是强烈建议先刷一个TWRP恢复环境，用它把当前的Android系统完整备份一份，尤其是 boot 、 system 、 vendor 、 persist 这4个分区。
 
 
@@ -236,7 +240,7 @@ mkdir plasma-mobile && cd plasma-mobile
 wget https://images.postmarketos.org/bpo/v25.12/oneplus-fajita/plasma-mobile/20251222-1250/20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita-boot.img.xz
  
 wget https://images.postmarketos.org/bpo/v25.12/oneplus-fajita/plasma-mobile/20251222-1250/20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita.img.xz
- sha256sum path-to-image-file.img.xz
+   sha256sum path-to-image-file.img.xz
 $ sha512sum path-to-image-file.img.xz
 
 $ xz --decompress path-to-image-file.img.xz
@@ -315,7 +319,16 @@ $ pmbootstrap zap -p
 linux - usb - android 
 
 - [ ] adb mode 
+fastboot devices
+adb devices
+adb shell 
+
+fastboot boot twrp.img 
+or boot android 
+adb devices
+
 chmod 755 /home/xxx/down/
+421 rwx user group other 
 adb shell, to see android dir and file 
 adb pull  android:/data/media/  linux:/home/xxx/down
 adb push linux:/home/xxx/ android:/data/media/
@@ -328,3 +341,14 @@ adb pull  /sdcard/screenshots/ ~/pics
 
 
 - [ ] jmtpfs
+dl.google.com/android/repository/platform-tools-latest-linux.zip
+
+
+- [ ] twrp
+/data/
+
+
+1.1 修改必要的权限：\n编辑 /etc/fuse.conf 注释掉一下行：\n（使用各自喜欢的文本编辑工具编辑，记得提供权限进行修改）\n\n\tuser_allow_other
+
+sudo fusermount -u ~/mtp
+-# 后面的目录是你挂载的位置

@@ -8,12 +8,13 @@
 
 @grub @menu @boot @config
 not/boot/grub/grub.cfg
-/etc/grub.d/custom
+/etc/grub.d/40_custom
 update-grub
 
+mount -o loop ~/xxx.iso /mnt
 
-
-
+debian-13.7.0-amd64-DVD-1.iso
+install.amd/vmlinuz initrd.gz
 
 
 
@@ -34,6 +35,7 @@ _@path grub2 in ubuntu:
 /etc/grub.d/		//custom menu; grub scripts to create grub.cfg;
 /etc/default/grub	//custom menu;
 
+grub>ls 
 
 _@ubuntu install _@menu _@installubuntu
 
@@ -43,6 +45,42 @@ _@ubuntu install _@menu _@installubuntu
 3. easybcd
 
 /etc/grub.d/40_custom
+
+
+
+menuentry ‘Win11’ {
+insmod part_gpt
+insmod chain
+insmod ntfs
+set root=‘(hd0,gpt1)’
+chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+}
+
+menuentry "Install Ubuntu 24.04 from Hard Drive" {
+    insmod part_gpt
+    insmod ext2
+    insmod ntfs
+    insmod fat
+    insmod loopback
+    # 设置存放ISO的分区
+    set root=(hd0,3)
+    # 将ISO文件挂载为loop设备
+    loopback loop /ubuntu-24.04-desktop-amd64.iso
+    # 从loop设备加载内核和initrd
+    linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/ubuntu-24.04-desktop-amd64.iso quiet splash
+    initrd (loop)/casper/initrd
+}
+
+
+menuentry 'RunDebian Live 
+#insmod part_msdos\n\n
+insmod ext2\n\n
+set root=(hd0,msdos1)\n\n
+set isofile='/boot/debian-live.iso'\n\n
+loopback loop ${isofile}\n\n
+linux (loop)/live/vmlinuz findiso=${isofile} boot=live config quiet splash\n\n
+initrd (loop)/live/initrd.img\n\n}
+
 
 menuentry 'SystemRescueCD' {
     loopback loop (hd0,9)/iso/sysrescue.iso

@@ -3,15 +3,27 @@
 
 ### short key 桌面快捷键
 
+### adb fastboot
+-# Download newest platform-tools
+wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip
+unzip platform-tools-latest-linux.zip
+sudo mv platform-tools/adb /usr/local/bin/adb
+sudo mv platform-tools/fastboot /usr/local/bin/fastboot
+-#（sure ≥ 32.0.0）
+adb version
 
-### Python
-
-install python3 python3-dev python3-pip
-
-
-
+- platform-tools, adb fastboot
+- libmtp-dev jmtpfs mtp-tools
+- 
+- 
 
 
+### deb13 install 
+- [ ] iso bootloader 
+dl iso
+can not mount /home
+del /home/.file+.dir
+usb/explore for iso/grub mode/\grub menu
 
 ### Flatpak
 
@@ -48,7 +60,7 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 it will writting to ~/.config/pip/pip.conf
 
 
-### soft
+### soft app list 
 - timeshift
 - vim-gtk3/gnome
 - audiorelay
@@ -160,8 +172,7 @@ tar -  #list
 tar -zxvf 文件名.tar.gz -C /目标路径/
 tar -ztvf 文件名.tar.gz
 
-sudo dpkg -i xxx.deb
-sudo apt -f -y install
+sudo apt install  ~/xxx.deb
 
 
 
@@ -273,34 +284,26 @@ tags: timeshift
 
 - Exclude Dir : blog; data2025.------Source.list, upgrade, timeshift.  curl,vim, vim-doc, vim-scripts, universal-ctags,git config,first push-
 - 
-- highlight lost, cp bashrc
-- add fcitx5-rime
-- rsync: hard usb.
+- fcitx5-rime,gparted
+- vim-gtk3/gnome 
 - 
-- gparted,remove apache2,firefox
--
-- remove vim,vim-gtk3/gnome, update python3-samba,nodejs,yarn,vundle,
+python3,python3-dev,python3-pip,python3-venv
 -
 - vim markdown-review, by vundle, but slowly.
 - From: zhihu/gaoxiaozhuobiji:vim+markdown, bashrc: grep_edit()
 - flatpak: audiorelay
-- python3,python3-venv,python3-pip,python3-dev
+,samba,nodejs,yarn,vundle,vim plugin: markdown-preview by vundle,
 - firefox about:addons: dark reader, github search, immersive_translate, oludict
-- 
-- off-edit
-- grub
-- quicknote
-- source.list, update, timeshift. vim curl, gitconfig. highlight fcitx5-wubi06,gparted,remove apache2, update firefox,
--mv vim,vim-gtk3,samba,nodejs,yarn,vundle,vim plugin: markdown-preview by vundle,
-From: zhihu/gaoxiaozuobiji:vim+markdown
-bashrc: grep_edit, immersive_translate, firefox-plugin
-flatpak, audiorelay
-python3,python3-dev,python3-pip,python3-venv
-Install Fcitx5-wubi06, upgrade firefox.
-ffmpeg,timeshift only hidden.
+- curl, gitconfig
+bashrc: grep_edit, 
+ffmpeg
 
 
-
+### os boot faild, timeshift  restore
+uboot cdrom
+apt install timeshift 
+fdisk -l 
+timeshift restore 
 
 
 
