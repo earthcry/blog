@@ -108,7 +108,7 @@ sudo dnf groupinstall "Development Tools" && sudo dnf install -y autoconf automa
 sudo pacman -S --needed base-devel autoconf automake libtool pkgconf libusb libgcrypt
 
 # 下载并编译 libmtp（跳过此步将导致 Android 12+ 识别失败）
-wget https://github.com/libmtp/libmtp/releases/download/libmtp-1.1.18/libmtp-1.1.18.tar.gz
+wget https://github.com/libmtp/libmtp/releases/download/libmtp-1-1-18/libmtp-1.1.18.tar.gz
 tar -xzf libmtp-1.1.18.tar.gz && cd libmtp-1.1.18
 ./configure --prefix=/usr --enable-libusb_1_0 --disable-mtpz
 make -j$(nproc) && sudo make install
@@ -143,16 +143,18 @@ adb shell echo "OK"  # 应返回 "OK"，证明 shell 可用
 3.4 创建挂载点并设置权限
 
 # 创建挂载目录（不要用 /media 或 /run/media，那些被 udisks2 管理）
-sudo mkdir -p /mnt/android
-sudo chown $USER:$USER /mnt/android
-sudo chmod 755 /mnt/android
+sudo mkdir -p /mnt/6676fb27
+sudo chown $USER:$USER /mnt/6676
+sudo chmod 755 /mnt/6676
 
 # 验证权限（非 root 用户必须能进入）
-ls -ld /mnt/android  # 应显示 drwxr-xr-x 1 youruser yourgroup ...
+ls -ld /mnt/6676  # 应显示 drwxr-xr-x 1 youruser yourgroup ...
 
 3.5 执行挂载命令（含防崩参数）
 
 # 单次挂载（调试用）
+sudo vim /etc/fuse.conf
+user-allow-other
 jmtpfs -o allow_other,uid=$(id -u),gid=$(id -g),umask=000 -d $(adb get-serialno) /mnt/android
 
 # 生产环境推荐：后台守护 + 自动重连
