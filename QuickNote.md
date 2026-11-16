@@ -1943,3 +1943,11 @@ sudo apt-mark hold <package_name>
 - 意义，个人愿望与世间公理的统一。
 - 
 
+
+- [ ] 氧 OS 5.1.2 全量包下载地址。
+http://otafsg1.h2os.com/patch/amazone2/GLO/OnePlus5Oxygen/OnePlus5Oxygen_23.O.35_GLO_035_1805230242/OnePlus5Oxygen_23_OTA_035_all_1805230242_7bcaec.zip
+
+
+http://otafsg1.h2os.com/patch/amazone2/GLO/
+
+
