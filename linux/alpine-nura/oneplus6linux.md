@@ -53,13 +53,31 @@ apk add vim
 
 
 一、前置条件
+如果你使用的是非常旧的 OxygenOS 版本（例如，通过“MSM 下载工具”下载的 Android 10 系统），那么你可能需要进行两次更新，因为该设备采用了 A/B 分区方式。
+
+Administrator
+2022年12月30日 已导入
+
+@ams69 I think you have older firmware on one of the slots.
+
+Switch to the slot where the latest OOS is booting. Download the latest update from
+
+https://forum.xda-developers.com/t/oneplus-6-rom-ota-oxygen-os-mirrors-for-official-oxygen-os-roms-and-ota-updates.3792244/
+
+Place it in root of /sdcard. Go to updater, local updater and install that zip.
+
+After that, you should have identical firmware (and OOS version) on both slots and your issues with black screen or touchscreen should be fixed.
+
+By Daviteusz on 2022-12-30T04:51:11
+由 Administrator 编辑于 2022年12月30日
+
+
 1. 更新氧系统到最新，线刷氧os10.3.8后可直接更新至11.1.22
 2. sudo fastboot devices 
 3. unclock，开发者usb调试，
     - sudo fastboot oem unlock
     - fastboot reboot
-4. del dtbo
-5. fastboot reboot
+
 
 二、自定义构建custom built
 PMBootstrap会在电脑上先构建出nura再刷进手机
@@ -69,27 +87,15 @@ PMBootstrap会在电脑上先构建出nura再刷进手机
 "# 更新Ubuntu镜像源 
 sudo apt-get update && upgrade
 
-"# 安装刷机所需要的软件
-sudo apt-get install -y git python-pip3 android-tools-adb android-tools-fastboot
+install python3 git cd venv
 
-"# 初始化pmbootstrap环境
-pip3 install --user pmbootstrap
-
-"# 生效当前环境变量，如果不生效环境变量 pmbootstrap命令使用不用了
-source ~/.profile
-"
-
-- [ ] 用deb文件安装
-Python 3.10 或更高版本、安装了 OpenSSL 和 Git 的 Linux 发行版上运行。
-install python3 python3-dev python3-pip -venv
-
-- [ ] wget https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pmbootstrap/pmbootstrapx.deb
-apt install pmbootstrapx.deb
+git clone https://gitlab.postmarketos.org/postmarketOS/pmbootstrap.git --depth 1
+cd pmbootstrap
+pip install .
 pmbootstrap --version
 
-为了避免权限问题，导致无法访问设备的情况，接下来以root用户进行操作。\n\n \n\n1\n2\n
-sudo -i\n
-alias pmbootstrap='pmbootstrap --as-root'
+apt install kpartx
+
 
 
 - [ ] pmbootstrap init 
@@ -147,6 +153,10 @@ bootloader - kernel - initramfs - android framework
 备注1:lk2nd 0.10.0 版本之后，不需要再刷入传统的*-boot.img文件，所以可以考虑跳过刷入该文件。
 
 三、备份
+
+
+删除 dtbo 分区会导致 Android 系统（以及所有基于 Android 的软件，如 Ubuntu Touch 或 TWRP 恢复系统）在当前的插槽中无法启动（如果你不明白这意味着什么，可以阅读这篇文档）。你可以通过从 OTA 压缩包中提取 payload.bin 文件，然后使用如 android-ota-payload-extractor 这样的工具来获取各个分区的镜像文件，从而重新刷入 Android 系统。或者，也可以参考 sizzlinfajita 在 XDA 论坛上的教程。实际上，几乎不需要采取“MSM Download 工具”这样的极端措施来通过 EDL 重新刷入系统。
+
 
 
 - [ ] adb mount android
@@ -214,6 +224,9 @@ MSM工具使用前一定要选择正确的固件版本，6T国行和国际版的
 如果卡在 logo 界面。开机前要格式化 data 分区。Android 与 Linux 的加密方式不一样。
 
 四、刷机
+"# 安装刷机所需要的软件
+ wget platform-tools
+cp adb fastboot
 
 关于 userdata 分区，一定要执行 fastboot erase userdata 或者进rec里格式化data。原因很简单：原有Android的数据加密格式与Linux系统的用户数据不兼容，不清空的话，postmarketOS首次启动时无法挂载数据分区，会出现各种奇怪的权限问题。
 
@@ -245,20 +258,34 @@ $ sha512sum path-to-image-file.img.xz
 
 $ xz --decompress path-to-image-file.img.xz
 
-xz -tk 20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita-boot.img.xz ### boot.img 20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita.img.xz  ### system.img
+xz -dk 20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita-boot.img.xz ### boot.img 20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita.img.xz  ### system.img
 
 
-fastboot getvar current-slot
-fastboot set_active b  ##上面的命令已经显示在b 的话就不用执行这条命令了
+Question：
+After flashing the Nura system, it always enters Bootloader mode after reboot, instead of entering the Nura system.
 
+Details : 
+android oxygen os update to 11.1.2.2, because slot AB, update twice.
+After the Android system is automatically updated. Copy the cached upgrade package file from the hidden folder ". ota" in the sdcard root directory to the phone sdcard root directory, and then manually update it again.
+
+fastboot oem unlock 
 fastboot erase dtbo
 sudo fastboot flash userdata system.img
-sudo fastboot flash boot boot.img
-sudo fastboot erase system ### 防出错
-sudo fastboot reboot
+sudo fastboot flash boot_a boot.img
+sudo fastboot flash boot_b boot.img
+sudo fastboot erase system_a
+sudo fastboot erase system_b 
 
-刷写进去后使用fastboot reboot重启设备，主要不要长按电源开关机键重启，这样是确保数据正确写入。
-system分区不够大，装不下这个镜像。
+fastboot getvar current-slot
+b 
+fastboot set_active a
+fastboot set_active b
+
+sudo fastboot reboot 
+
+After refreshing the system, it always enters Bootloader mode instead of entering Nura system, and I don't know where the problem lies.
+
+
 进入系统的默认密码是147147。
 
 六、
