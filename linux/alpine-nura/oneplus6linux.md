@@ -265,6 +265,8 @@ Question：
 After flashing the Nura system, it always enters Bootloader mode after reboot, instead of entering the Nura system.
 
 Details : 
+device:oneplus enchilada
+latest stable img.
 android oxygen os update to 11.1.2.2, because slot AB, update twice.
 After the Android system is automatically updated. Copy the cached upgrade package file from the hidden folder ". ota" in the sdcard root directory to the phone sdcard root directory, and then manually update it again.
 
@@ -285,6 +287,7 @@ sudo fastboot reboot
 
 After refreshing the system, it always enters Bootloader mode instead of entering Nura system, and I don't know where the problem lies.
 
+Thank you for your answer.
 
 进入系统的默认密码是147147。
 

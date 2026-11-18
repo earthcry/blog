@@ -27,8 +27,9 @@ ibus,fcitx4
 - 一、环境准备：检查 fcitx5 与依赖
 - 自定义组件包含在这个扩展里码表引擎fcitx5-chinese-addons，
 - 不同发行版的安装组件：
-~# Debian / Ubuntu / Linux Mint\nsudo apt install fcitx5 fcitx5-chinese-addons fcitx5-config-qt\n\n
-~# Arch / Manjaro\nsudo pacman -S fcitx5 fcitx5-chinese-addons fcitx5-configtool\n
+
+
+
 - 装完之后，先运行一次 fcitx5-configtool，确认“附加组件”列表里能看到“码表”这个组件。
 - 准备一个临时工作目录，我习惯在 ~/wubi-build 下操作，把原始码表和脚本放一起，方便反复调试。
 - 
@@ -73,7 +74,8 @@ sudo apt install \
 fcitx5 fcitx5-chinese-addons \
 fcitx5-rime fcitx5-table-extra libime-bin \
 fcitx5-material-color 
-7.1 桌面环境兼容性\n不同DE需要额外配置：\n\n
+7.1 桌面环境兼容性
+不同DE需要额外配置：
 GNOME：安装gnome-shell-extension-kimpanel
 
 https://fcitx-im.org/wiki/fcitx5
@@ -84,7 +86,7 @@ https://fcitx-im.org/wiki/fcitx5
 - 
 - [ ] 对于不同语言，有许多的输入法引擎。中文
 - fcitx5-chinese-addons。它包括简体中文最常用的输入法，包括拼音和码表（五笔等）引擎。
-- fcitx5-table-extra。附加中文表
+- fcitx5-table-extra。附加中文表等各种码表
 - fcitx5-rime。一种可自定义的输入法，但默认情况下其默认配置为拼音。
 - fcitx5-chewing。基于libchewing的咀嚼引擎。
 - fcitx5-zhuyin。基于lib注音的注音输入法引擎。
@@ -113,8 +115,6 @@ fcitx5-diagnose
 - [ ] 设置自启动，相关
 - im-config
 - fcitx5-configtool
-
-
 
 - [ ] rime的配置
 - 插件/usr/share/fcitx5/addon
