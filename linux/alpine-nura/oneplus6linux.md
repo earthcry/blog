@@ -265,8 +265,14 @@ Question：
 After flashing the Nura system, it always enters Bootloader mode after reboot, instead of entering the Nura system.
 
 Details : 
-device:oneplus enchilada
-latest stable img.
+
+Device: Oneplus 6 Enchilada 
+Work Machine: Very old PC. 
+System: Debian13 
+Image: Using the latest stable version. I have tried both official precompilation and self construction.
+
+The operation steps are as follows.
+
 android oxygen os update to 11.1.2.2, because slot AB, update twice.
 After the Android system is automatically updated. Copy the cached upgrade package file from the hidden folder ". ota" in the sdcard root directory to the phone sdcard root directory, and then manually update it again.
 
@@ -287,7 +293,24 @@ sudo fastboot reboot
 
 After refreshing the system, it always enters Bootloader mode instead of entering Nura system, and I don't know where the problem lies.
 
+
+Summary of the entire trial process: 
+
+At the beginning, the latest stable version image pre compiled was used. It started up and crashed on the login interface. Later, custom installation was adopted. The default edge version is used. But there was an error during software installation. After investigation, it is recommended to install the stable version. And neither the precompiled version nor the custom version has been launched in the future. I tried various possibilities that came to my mind and spent many days. I just can't start it no matter what. Every time I wake up, I enter Bootloader mode. Very sad. 
+
+Trying method: 
+- Replaced two One Plus 6 phones. 
+- Switch the operating system from Debian 12 to Debian 13. 
+- The mobile operating system, hydrogen system has been updated to the latest version 10.03, and oxygen system has been updated to the latest version 11.1.2.2. 
+- Nura image, replaced with several stable versions in the past one or two months; 
+- AB slot, activated in reverse order. 
+- AB slot, refresh one slot and refresh both slots. 
+- dtbo， Delete or not delete. 
+
 Thank you for your answer.
+
+
+
 
 进入系统的默认密码是147147。
 

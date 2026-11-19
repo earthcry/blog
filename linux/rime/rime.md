@@ -1,16 +1,145 @@
 
-rime
+# rime
 
 rime.im
+
 https://github.com/rime/home/wiki/UserGuide
+
 https://github.com/rime/home/wiki/RimeWithIBus
 https://github.com/rime/ibus-rime
 https://www.cnblogs.com/BlackStorm/p/Install-IBUS-RIME-Input-Method-On-Ubuntu-16-04-LTS.html
 
 
+##@fcitx5 
 
 
-@ibus-rime
+## @fcitx
+###ubuntu-14.04################################################3
+fcitx-im.org
+language support:chinese(simp)pinyin(trad)rime
+add-apt-repository ppa:fcitx-team/nightly #add source
+apt-get update
+apt-cache search fcitx
+apt-get install fcitx			#flexible IM framework
+#config fcitx
+GUI config
+sudo im-config
+#sudo im-config -s fcitx
+reboot
+apt-cache search fcitx
+apt-get install fcitx-rime		#rime engine
+fcitx -r
+
+#apt-get install fcitx-table-wubi	# f framework table
+
+copy file of wubi2008
+reploy:
+rm -rf ~/.config/fcitx/default.yaml
+fcitx -r
+it will auto create table.
+
+import userdict:
+# ~/.config/fcitx/rime
+# close rime
+rime_dict_manager -r wubi2008.userdb.txt
+
+
+#config:
+~/.config/fcitx/rime
+/use/share/rime-data
+
+#wubi2008 @wubi2008
+custom wubi2008:
+default.custom.yaml
+wubi2008.schema.yaml
+wubi2008.dict.yaml
+reploy:
+rm -rf ~/.config/fcitx/default.yaml
+restart im
+
+sync userdict:
+# ~/.config/fcitx/rime
+# installation.yaml
+#	id: nudoubuntu
+#	sync_dir: /home/xxx
+rime_dict_manager -s
+
+
+添词、删词、调序；
+添词：1.每个字都拼出，再按space; 2.entry 4 char, and select by number;
+调序：select number;
+删词：select, shift+delete
+微信
+
+script_translator 支持自动造词
+rime输入法怎么自造词
+方法：修改配置文件，实现智能自动造词
+rime支持根据用户输入习惯进行自动造词。比如我要打“多线程”这个词，可是没有qxtk这个编码。那么我使用单字多打一次或几次“多”、“线”、“程”，rime就会给你自动造词。
+如果是修改默认配置文件，只要将上面那句话translator/enable_user_dict: true加在patch下就行了 。
+
+对于自造词,第一次输入的时候用辅助码选字,第二次直接输入双拼码就...
+
+解决自动造词时词序固定问题
+translator:
+dictionary: yourdict.extended#导入你自己的词库
+disable_user_dict_for_patterns:#一简和二简禁止自动调频
+- "^z.*$"
+- "^.$"
+- "^..$"
+
+
+上下选择光标，然后按shift+delete
+###ubuntu-14.04###############################################3
+
+
+
+###ubuntu-12.04
+fqrouter:
+https://code.google.com/p/rimeime/
+Ubuntu PPA:
+launchpad.net/ubuntu/+ppas
+
+### install fcitx:
+# this repo provides libkyotocabinet, libgoogle-glog for Ubuntu 12.04;
+# these packages are officially supported since Ubuntu 12.10.
+sudo add-apt-repository ppa:fcitx-team/nightly
+sudo add-apt-repository ppa:fcitx-team/dailybuild-fcitx-master
+sudo apt-get update
+sudo apt-get install fcitx-rime
+
+# http://wiki.ubuntu.org.cn/fcitx
+# setup in english environment:
+
+>sudo apt-get install fcitx-pinyin im-switch
+>im-switch -s fcitx -z all_ALL
+
+# edit /etc/X11/xinit/xinput.d/fcitx
+xim=fcitx
+xim_program=/usr/bin/fcitx
+xim_arg=''
+gtk_im_module=fcitx
+qt4_im_module=fcitx
+depends='fcitx'
+
+# not appear fcitx in GTK program at sometime, so
+# modify: gtk.immodules, immodules.cache
+# /usr/lib/gtk-3.0/3.0.0/immodules.cache
+# 如果immodules.cache文件没有，Ubuntu用户可以用生成
+# sudo gtk-query-immodules-3.0 >/usr/lib/gtk-3.0/3.0.0/immodules.cache 
+#将：
+#"fcitx" "Fcitx (Free Chinese Input Toy of X)" "fcitx" "/usr/share/locale" "ja:ko:zh:*" 
+#更改为：
+#"fcitx" "Fcitx (Free Chinese Input Toy of X)" "fcitx" "/usr/share/locale" "en:ja:ko:zh:*" 
+
+###ubuntu-12.04
+
+
+
+
+
+
+
+## @ibus-rime
 
 ### install ibus-rime: ubuntu-16.04.4
 # providing libyaml-cpp0.5, librime, rime-data, ibus-rime
@@ -249,131 +378,6 @@ sudo apt-get install librime-data-zyenpheng librime-data-triungkox3p
 sudo apt-get install librime-data-scj6
 2.14 笔顺五码
 sudo apt-get install librime-data-stroke6
-
-
-
-
-
-
-@fcitx
-###ubuntu-14.04################################################3
-fcitx-im.org
-language support:chinese(simp)pinyin(trad)rime
-add-apt-repository ppa:fcitx-team/nightly #add source
-apt-get update
-apt-cache search fcitx
-apt-get install fcitx			#flexible IM framework
-#config fcitx
-GUI config
-sudo im-config
-#sudo im-config -s fcitx
-reboot
-apt-cache search fcitx
-apt-get install fcitx-rime		#rime engine
-fcitx -r
-
-#apt-get install fcitx-table-wubi	# f framework table
-
-copy file of wubi2008
-reploy:
-rm -rf ~/.config/fcitx/default.yaml
-fcitx -r
-it will auto create table.
-
-import userdict:
-# ~/.config/fcitx/rime
-# close rime
-rime_dict_manager -r wubi2008.userdb.txt
-
-
-#config:
-~/.config/fcitx/rime
-/use/share/rime-data
-
-#wubi2008 @wubi2008
-custom wubi2008:
-default.custom.yaml
-wubi2008.schema.yaml
-wubi2008.dict.yaml
-reploy:
-rm -rf ~/.config/fcitx/default.yaml
-restart im
-
-sync userdict:
-# ~/.config/fcitx/rime
-# installation.yaml
-#	id: nudoubuntu
-#	sync_dir: /home/xxx
-rime_dict_manager -s
-
-
-添词、删词、调序；
-添词：1.每个字都拼出，再按space; 2.entry 4 char, and select by number;
-调序：select number;
-删词：select, shift+delete
-微信
-
-script_translator 支持自动造词
-rime输入法怎么自造词
-方法：修改配置文件，实现智能自动造词
-rime支持根据用户输入习惯进行自动造词。比如我要打“多线程”这个词，可是没有qxtk这个编码。那么我使用单字多打一次或几次“多”、“线”、“程”，rime就会给你自动造词。
-如果是修改默认配置文件，只要将上面那句话translator/enable_user_dict: true加在patch下就行了 。
-
-对于自造词,第一次输入的时候用辅助码选字,第二次直接输入双拼码就...
-
-解决自动造词时词序固定问题
-translator:
-dictionary: yourdict.extended#导入你自己的词库
-disable_user_dict_for_patterns:#一简和二简禁止自动调频
-- "^z.*$"
-- "^.$"
-- "^..$"
-
-
-上下选择光标，然后按shift+delete
-###ubuntu-14.04###############################################3
-
-
-
-###ubuntu-12.04
-fqrouter:
-https://code.google.com/p/rimeime/
-Ubuntu PPA:
-launchpad.net/ubuntu/+ppas
-
-### install fcitx:
-# this repo provides libkyotocabinet, libgoogle-glog for Ubuntu 12.04;
-# these packages are officially supported since Ubuntu 12.10.
-sudo add-apt-repository ppa:fcitx-team/nightly
-sudo add-apt-repository ppa:fcitx-team/dailybuild-fcitx-master
-sudo apt-get update
-sudo apt-get install fcitx-rime
-
-# http://wiki.ubuntu.org.cn/fcitx
-# setup in english environment:
-
->sudo apt-get install fcitx-pinyin im-switch
->im-switch -s fcitx -z all_ALL
-
-# edit /etc/X11/xinit/xinput.d/fcitx
-xim=fcitx
-xim_program=/usr/bin/fcitx
-xim_arg=''
-gtk_im_module=fcitx
-qt4_im_module=fcitx
-depends='fcitx'
-
-# not appear fcitx in GTK program at sometime, so
-# modify: gtk.immodules, immodules.cache
-# /usr/lib/gtk-3.0/3.0.0/immodules.cache
-# 如果immodules.cache文件没有，Ubuntu用户可以用生成
-# sudo gtk-query-immodules-3.0 >/usr/lib/gtk-3.0/3.0.0/immodules.cache 
-#将：
-#"fcitx" "Fcitx (Free Chinese Input Toy of X)" "fcitx" "/usr/share/locale" "ja:ko:zh:*" 
-#更改为：
-#"fcitx" "Fcitx (Free Chinese Input Toy of X)" "fcitx" "/usr/share/locale" "en:ja:ko:zh:*" 
-
-###ubuntu-12.04
 
 
 

@@ -73,6 +73,8 @@ sudo apt update
 sudo apt install \
 fcitx5 fcitx5-chinese-addons \
 fcitx5-rime fcitx5-table-extra libime-bin \
+fcitx5-frontend-* \
+fcitx5-gtk-*
 fcitx5-material-color 
 7.1 桌面环境兼容性
 不同DE需要额外配置：
@@ -113,8 +115,8 @@ source ~/.bash_profile
 fcitx5-diagnose
 
 - [ ] 设置自启动，相关
-- im-config
-- fcitx5-configtool
+- im-config,  select fcitx5,
+- fcitx5-configtool, add rime
 
 - [ ] rime的配置
 - 插件/usr/share/fcitx5/addon
