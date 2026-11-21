@@ -225,8 +225,8 @@ MSM工具使用前一定要选择正确的固件版本，6T国行和国际版的
 
 四、刷机
 "# 安装刷机所需要的软件
- wget platform-tools
-cp adb fastboot
+ wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip
+cp adb fastboot /usr/local/bin
 
 关于 userdata 分区，一定要执行 fastboot erase userdata 或者进rec里格式化data。原因很简单：原有Android的数据加密格式与Linux系统的用户数据不兼容，不清空的话，postmarketOS首次启动时无法挂载数据分区，会出现各种奇怪的权限问题。
 
@@ -394,7 +394,7 @@ adb pull  /sdcard/screenshots/ ~/pics
 
 
 - [ ] jmtpfs
-dl.google.com/android/repository/platform-tools-latest-linux.zip
+
 
 
 - [ ] twrp
