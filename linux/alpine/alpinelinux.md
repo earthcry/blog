@@ -1,29 +1,84 @@
-### install 
+
+### ‌Adb # Fastboot
+```
+apk add android-tools
+```
+### Install 
 
 在 Linux 或 macOS 上用 lsblk 或 diskutil list 看当前挂载的磁盘，插上读卡器之后再执行一次，多出来的那个就是目标设备。
 
-lsblk
-diskutil list
+Disk partation and format : gparted
 
-#先卸载目标设备上已自动挂载的分区
+先卸载目标设备上已自动挂载的分区
+```
 sudo umount /dev/sdX* 2>/dev/null
-
-#写入镜像，块大小 4M 是速度与稳定性的平衡点
+```
+写入镜像，块大小 4M 是速度与稳定性的平衡点
+```
 sudo dd if=2024-xx-xx-raspios-bookworm-arm64-lite.img of=/dev/sdX bs=4M status=progress conv=fsync
+```
+...status=progress; eject /dev/sdX
 
 bs=4M 这个参数值得说一下。块太小（比如默认的 512 字节）会导致大量系统调用，写入速度极慢；块太大在某些读卡器上会出问题。4M 是实测下来兼容性和速度都不错的取值。 status=progress 让你能看到进度，不然 dd 全程静默，很容易误以为卡死了。 conv=fsync 保证数据真正落到卡上再返回，避免拔卡时数据还在缓存里。
-
-#dd if=alpine-standard-3.24.4-x86_64.iso of=/dev/sdX bs=4M status=progress; eject /dev/sdX
-
 If your version of dd does not support the option "status=progress", remove it. The eject command removes the target device from the system and ensures the write cache is completely flushed.
 如果您使用的 dd 版本不支持“status=progress”选项，请移除该选项。 eject 命令可以将目标设备从系统中移除，并确保写缓存完全清除。
 
-root 
-pwd blank
+**Setup install**
+- root 
+- pwd blank
+- us-alt-intl
+- hongkong
+- mmcblk
+- sys
+- ssh
+
+### Mirrors
+
+ERROR: unable to select packages:
+  docker (no such package):
+    required by: world[docker]
+
+问题解决：
+因为默认的镜像源中没有Docker，需要增加一个社区的镜像源，在/etc/apk/repositories增加一行：
+
+http://dl-cdn.alpinelinux.org/alpine/latest-stable/community
 
 
+### wlan0
+
+**Display IP**
+查看网络内IP和手机热点IP命令
+```
+sudo nmap -sn 192.168.138.0/24    
+ip neigh
+```
+#ip的前三位在电脑端就能确定
+
+**Restart net CMD**
+
+```
+ip addr show wlan0
+vi /etc/network/interfaces
+rc-service networking restart
+ifdown eth0
+ifup eth0
+```
+
+### SSH
+
+add sudors
+openrc
+rc-service -l
+[SSH](../ssh.md)
+vi /etc/ssh/sshd_config
 
 
+### backup system
+[backupdd](../backupdd.md)
+
+
+### Reboot 
+poweroff
 
 
 ### alpinelinux

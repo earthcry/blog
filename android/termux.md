@@ -9,30 +9,35 @@ ssh login termux->
 #mirror repo.
 termux-change-repo 
 
-挂载手机目录
+挂载手机目录 访问手机目录
 termux-setup-storage 允许存储权限, 
 ls storage/shared/
 
 install normal soft
 upgrade ssh git vim 
 
-@ssh login termux
+@ssh login termux from linux
 
+linux and termux in same wifi.
+
+**Termux:**
 passwd 123456
+apk install openssh 
+sshd
+ifconfig
+pwd
+ls -ashl 
+ps -ef
 
+**Linux:**
 ssh-keygen -t rsa
-
 ssh-copy-id -p 8022 u0_a108@192.168.43.1
+the id_rsa wrote to authorized_keys 
 
 ssh -p 8022 u0_a108@192.168.43.1
 touch .bashrc
 echo 'sshd' >> .bashrc
 
-ps -ef
-sshd
-ifconfig
-pwd
-ls -ashl
 
 scp -P 8022 u0_a270@192.168.49.1:/data/data/com.termux/files/home/test.md ~/
 scp -r -P 8022 u0_a270@192.168.49.1:/data/data/com.termux/files/home/apks ~/
