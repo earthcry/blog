@@ -1,4 +1,4 @@
-# linux phone
+# Linux Phone && Nura OS
 
 Linux Phone 
 Linux手机，Android手机。
@@ -250,9 +250,11 @@ adb sideload pmos-xiaomi-sagit.zip
 五、使用官方预构建的镜像，pre-built
 mkdir plasma-mobile && cd plasma-mobile
  
-wget https://images.postmarketos.org/bpo/v25.12/oneplus-fajita/plasma-mobile/20251222-1250/20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita-boot.img.xz
+wget https://images.nura.eco/bpo/v26.06/oneplus-enchilada/phosh/20261120-0803/20261120-0803-nura-v26.06-phosh-oneplus-enchilada-boot.img.xz
+ https://images.postmarketos.org/bpo/v25.12/oneplus-fajita/plasma-mobile/20251222-1250/20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita-boot.img.xz
  
-wget https://images.postmarketos.org/bpo/v25.12/oneplus-fajita/plasma-mobile/20251222-1250/20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita.img.xz
+wget https://images.nura.eco/bpo/v26.06/oneplus-enchilada/phosh/20261120-0803/20261120-0803-nura-v26.06-phosh-oneplus-enchilada.img.xz
+ https://images.postmarketos.org/bpo/v25.12/oneplus-fajita/plasma-mobile/20251222-1250/20251222-1250-postmarketOS-v25.12-plasma-mobile-6-oneplus-fajita.img.xz
    sha256sum path-to-image-file.img.xz
 $ sha512sum path-to-image-file.img.xz
 
