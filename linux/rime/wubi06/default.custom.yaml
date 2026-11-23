@@ -1,0 +1,7 @@
+# default.custom.yaml
+patch:
+  schema_list:
+    - {schema: wubixinshiji}
+    - {schema: pingyin_simp}
+#   - {schema: zyenpheng}   # 中古汉语全拼
+#   - {schema: ipa_xsampa}  # x-SAMPA 国际音标
