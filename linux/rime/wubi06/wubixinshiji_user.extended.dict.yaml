@@ -1,0 +1,63 @@
+name: wubixinshiji_user.extended
+version: "2.0"
+sort: by_weight
+columns:
+  - text
+  - code
+  - weight
+  - stem
+encoder:
+  exclude_patterns:
+    - '^z.*$'
+  rules:
+    - length_equal: 2
+      formula: "AaAbBaBb"
+    - length_equal: 3
+      formula: "AaBaCaCb"
+    - length_in_range: [4, 90]
+      formula: "AaBaCaZa"
+...
+牛码
+天下
+牛码天下第一
+pengfeixing@foxmail.com	mail
+512798587@qq.con	mail
+sopengfeixing@gmail.com	mail
+pengfeixing@hotmail.com	mail
+彭飞星	fnjt
+袁小珍	figw
+彭文强	fyxk
+彭飞苑	fnaq
+彭艳	fkdh
+【C键码元：又巴甬矣马失蹄】	cz
+【A键码元：工戈草头右框七】	az
+【B键码元：子耳了也乃齿底】	bz
+【D键码元：大三肆头古石厂】	dz
+【E键码元：月舟衣力豕豸臼】	ez
+【F键码元：土士二干十寸雨】	fz
+【G键码元：王旁青头五一提】	gz
+【H键码元：目止具头卜虎皮】	hz
+【I键码元：水边一族三点小】	iz
+【J键码元：日曰两竖与虫依】	jz
+【K键码元：口中两川三个竖】	kz
+【L键码元：田框四车甲单底】	lz
+【M键码元：山由贝骨下框里】	mz
+【N键码元：已类左框心尸羽】	nz
+【O键码元：火变三态广二米】	oz
+【P键码元：之字宝盖补示衣】	pz
+【Q键码元：金夕犭儿包头鱼】	qz
+【R键码元：白斤气头叉提手】	rz
+【S键码元：木丁西边要无女】	sz
+【T键码元：禾竹牛旁卧人立】	tz
+【U键码元：立带两点病门里】	uz
+【V键码元：女刀九巡录无水】	vz
+【W键码元：人八登祭风头几】	wz
+【X键码元：幺母绞丝弓三匕】	xz
+【Y键码元：言文方点在四一】	yz
+觉知	iptd
+思感	lndg
+抖音	ruuj
+同感共受	mdae
+航拍	terr
+跃迁	khtf
+应激	oiir
