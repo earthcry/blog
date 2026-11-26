@@ -1,6 +1,12 @@
+
+
 # Install Linux五笔输入法，新世纪五笔
 
-#fcitx5 #rime
+Linux-fcitx5-rime
+Android-fcitx5-rime
+
+
+#fcitx5 #rime #linux-fcitx5-rime
 
 fcitx5-table-wubi06  Fcitx5TableWubi06
 fcitx5-rime-wubi06   Fcitx5RimeWubi06
