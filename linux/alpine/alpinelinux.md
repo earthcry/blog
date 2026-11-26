@@ -26,11 +26,21 @@ If your version of dd does not support the option "status=progress", remove it. 
 **Setup install**
 - root 
 - pwd blank
+- setup-alpine
 - us-alt-intl
+- init wlan0 eth0,  open mobile hotspot
+- root passwd 8
 - hongkong
-- mmcblk
-- sys
+- apk mirror: s - 13
+- add user : 
 - ssh
+- disk install: y-mmcblk0-sys-y
+- reboot
+- vi /etc/apk/repositories: enable community mirror
+- apk add sudo && vi /etc/sudoers:add user
+- add lsblk
+- user login
+- 
 
 ### Mirrors
 
@@ -43,6 +53,13 @@ ERROR: unable to select packages:
 
 http://dl-cdn.alpinelinux.org/alpine/latest-stable/community
 
+### SSH
+
+ls -ashl: .ssh
+openrc
+rc-service -l:sshd
+#vi /etc/ssh/sshd_config
+[SSH](../ssh.md)
 
 ### wlan0
 
@@ -50,6 +67,7 @@ http://dl-cdn.alpinelinux.org/alpine/latest-stable/community
 查看网络内IP和手机热点IP命令
 ```
 sudo nmap -sn 192.168.138.0/24    
+install iproute2
 ip neigh
 ```
 #ip的前三位在电脑端就能确定
@@ -64,13 +82,6 @@ ifdown eth0
 ifup eth0
 ```
 
-### SSH
-
-add sudors
-openrc
-rc-service -l
-[SSH](../ssh.md)
-vi /etc/ssh/sshd_config
 
 
 ### backup system

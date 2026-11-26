@@ -189,6 +189,7 @@ awesome
 
 <!-- --------------- -->
 
+
 ## Links
 [Link](https://duckduckgo.com/)
 
@@ -203,7 +204,7 @@ awesome
 | Test                 | Test                      | Test                    |
 | Test                 | Test                      | Test                    |
 
-÷÷÷÷
+
 
 Shorter | Table | Syntax
 :---: | ---: | :---

@@ -3,11 +3,12 @@
 
 apk list
 
-
+serverbox
 app manager
 obtainium
 ---
-fcitx5
+fcitx5-android
+fcitx5-updater
 gitsync
 syncthing 衍生版
 localsend
@@ -21,11 +22,18 @@ kiwi
 pdfgear
 materialfiles
 appmanager
-fopeed
+gopeed
 etar
+qrserv
+binaryeye
+vlc3.6.5
+recordyou
+
 collabora office
+librera fd
 ovitalmap
 pure writer
+obsidian
 Nutstore
 
 f-droid
@@ -49,7 +57,7 @@ briar
 
 markor
 audiorelay
-
+connectbot
 
 
 

@@ -149,7 +149,8 @@ sudo mount -a
 - 
 
 
-### 修复文件系统错误
+### 修复文件系统错误 
+#fix #fsck
 sudo  umount  /dev/sda8
 sudo  fsck  -y  /dev/sda8 
 sudo  fsck  -y  /dev/sda10 
@@ -174,7 +175,9 @@ tar -ztvf 文件名.tar.gz
 
 sudo apt install  ~/xxx.deb
 
+依赖问题处理
 
+Debian系：sudo apt --fix-broken install
 
 听不懂就学一样孟德尔遗传定律！高中有学，再不行，让小辈教
 

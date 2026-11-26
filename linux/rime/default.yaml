@@ -138,6 +138,9 @@ schema_list:
   - schema: cangjie5
   - schema: stroke
   - schema: terra_pinyin
+  - schema: wubi2008
+  - schema: zyenpheng
+  - schema: ipa_xsampa
 switcher:
   abbreviate_options: true
   caption: "〔方案選單〕"
